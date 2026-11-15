@@ -206,3 +206,5 @@ Object.assign(LANG.de.ui,{"trQ": "Wohin geht es?", "trHow": "So kommst du hin", 
 Object.assign(LANG.de.ui,{"trPk": "Route zum Parkplatz", "trLast": "letzte heute", "trMt": "Zug", "trMc": "Seilbahn", "trMb": "Bus", "trS": "Rechts steht die nächste Abfahrt. Tippe für weitere Zeiten, Verspätung und Gleis.", "trF": {"wen": [["940", "Parkplätze in Lauterbrunnen"], ["15 min", "mit der Zahnradbahn"], ["±40", "Züge pro Tag"]], "mur": [["4 min", "Seilbahn ab Stechelberg"], ["P", "bei der Schilthornbahn in Stechelberg"]], "gri": [["1000", "Plätze beim Terminal"], ["252", "Parkhaus Eiger+"], ["160", "Sportzentrum"]]}});
 
 Object.assign(LANG.de.ui,{"trTom":"morgen"});
+
+Object.assign(LANG.de.ui,{"eQ1": "Was suchst du?", "eQ2": "Wo?", "ePiste": "Mittag an der Piste", "eTer": "Sonnenterrasse", "eAp": "Après-Ski", "eDorp": "Abendessen im Dorf", "eAllW": "Überall", "eN": "{n} Adressen", "eTerOne": "Terrasse", "eCu": {"sw": "Schweizer Küche", "pz": "Pizza", "it": "Italienisch", "in": "Indisch", "as": "Asiatisch", "bu": "Burger", "cf": "Kaffee und Kuchen", "int": "International"}, "eatSub": "Wähle, was du suchst und wo. Speichere Favoriten mit dem Herz."});

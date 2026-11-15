@@ -206,3 +206,5 @@ Object.assign(LANG.nl.ui,{"trQ": "Waar ga je heen?", "trHow": "Zo kom je er", "t
 Object.assign(LANG.nl.ui,{"trPk": "Route naar de parkeerplaats", "trLast": "laatste vandaag", "trMt": "Trein", "trMc": "Kabelbaan", "trMb": "Bus", "trS": "Rechts staat de eerstvolgende vertrektijd. Tik voor meer tijden, vertraging en perron.", "trF": {"wen": [["940", "parkeerplaatsen in Lauterbrunnen"], ["15 min", "met de tandradtrein"], ["±40", "treinen per dag"]], "mur": [["4 min", "kabelbaan vanaf Stechelberg"], ["P", "bij de Schilthornbahn in Stechelberg"]], "gri": [["1000", "plaatsen bij Terminal"], ["252", "Parkhaus Eiger+"], ["160", "Sportzentrum"]]}});
 
 Object.assign(LANG.nl.ui,{"trTom":"morgen"});
+
+Object.assign(LANG.nl.ui,{"eQ1": "Wat zoek je?", "eQ2": "Waar?", "ePiste": "Lunch aan de piste", "eTer": "Zonneterras", "eAp": "Après-ski", "eDorp": "Diner in het dorp", "eAllW": "Overal", "eN": "{n} adressen", "eTerOne": "terras", "eCu": {"sw": "Zwitsers", "pz": "Pizza", "it": "Italiaans", "in": "Indiaas", "as": "Aziatisch", "bu": "Burgers", "cf": "Koffie en taart", "int": "Internationaal"}, "eatSub": "Kies wat je zoekt en waar. Bewaar je favorieten met het hartje."});

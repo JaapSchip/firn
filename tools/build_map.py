@@ -61,7 +61,7 @@ for e in els:
         try: out['peaks'].append({'p': pt(e), 'n': n, 'e': int(float(t['ele'].replace(',', '.').split()[0]))})
         except ValueError: pass
     elif (t.get('amenity') in ('restaurant', 'cafe', 'bar') or t.get('tourism') == 'alpine_hut') and n and pt(e):
-        out['food'].append({'p': pt(e), 'n': n, 't': t.get('amenity') or 'hut', 'w': t.get('website') or t.get('contact:website', ''), 'c': t.get('cuisine', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip()})
+        out['food'].append({'p': pt(e), 'n': n, 't': t.get('amenity') or 'hut', 'w': t.get('website') or t.get('contact:website', ''), 'c': t.get('cuisine', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip(), 'o': 1 if t.get('outdoor_seating') in ('yes', 'terrace', 'garden', 'patio') else 0})
     elif (t.get('shop') in ('sports', 'ski', 'outdoor') or t.get('amenity') == 'ski_rental') and n and pt(e):
         rent = t.get('amenity') == 'ski_rental' or t.get('shop') == 'ski' or 'yes' in (t.get('rental', ''), t.get('ski:rental', ''), t.get('service:ski:rental', '')) or 'ski' in t.get('rental', '')
         out['shops'].append({'p': pt(e), 'n': n, 'r': 1 if rent else 0, 'w': t.get('website') or t.get('contact:website', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip()})

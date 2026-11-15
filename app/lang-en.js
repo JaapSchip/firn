@@ -207,3 +207,5 @@ Object.assign(LANG.en.ui,{"trQ": "Where are you going?", "trHow": "How to get th
 Object.assign(LANG.en.ui,{"trPk": "Directions to the car park", "trLast": "last today", "trMt": "Train", "trMc": "Cable car", "trMb": "Bus", "trS": "The next departure is shown on the right. Tap for more times, delays and platform.", "trF": {"wen": [["940", "parking spaces in Lauterbrunnen"], ["15 min", "by cog railway"], ["±40", "trains a day"]], "mur": [["4 min", "cable car from Stechelberg"], ["P", "at the Schilthornbahn in Stechelberg"]], "gri": [["1000", "spaces at Terminal"], ["252", "Parkhaus Eiger+"], ["160", "Sportzentrum"]]}});
 
 Object.assign(LANG.en.ui,{"trTom":"tomorrow"});
+
+Object.assign(LANG.en.ui,{"eQ1": "What are you after?", "eQ2": "Where?", "ePiste": "Lunch on the piste", "eTer": "Sun terrace", "eAp": "Après-ski", "eDorp": "Dinner in the village", "eAllW": "Anywhere", "eN": "{n} places", "eTerOne": "terrace", "eCu": {"sw": "Swiss", "pz": "Pizza", "it": "Italian", "in": "Indian", "as": "Asian", "bu": "Burgers", "cf": "Coffee and cake", "int": "International"}, "eatSub": "Choose what you are after and where. Save your favourites with the heart."});

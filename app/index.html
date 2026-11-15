@@ -409,6 +409,7 @@ select,input[type=text]{background:var(--snow)}
 .sr>button.go{flex:1;min-width:0;text-align:left;background:none;border:0;padding:14px 0;color:var(--ink);font:400 17px "Hanken Grotesk",sans-serif;display:flex;flex-direction:column;gap:2px}
 .sr small{font-size:12.5px;color:var(--muted)}
 .shint{color:var(--muted);margin:18px 0}
+.erow .go .etg{color:var(--ink);opacity:.8;margin-top:3px}.egh{margin:26px 0 6px}.egh span{opacity:.55;margin-left:4px}
 .trban{margin:20px 0 22px;position:relative}.trban figcaption{position:absolute;right:10px;bottom:8px;font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.65)}.trban figcaption a{color:#fff}
 .trhow{background:var(--card);border-radius:16px;padding:16px 18px;margin:18px 0 26px}.trhow p{margin:8px 0 0;line-height:1.5}
 .trh3{font-size:1.35rem;font-weight:400;margin:0}
@@ -619,9 +620,11 @@ a{color:var(--ink)}
 
 <section class="view" id="v-eten">
   <p class="lead" data-i="eatSub"></p>
-  <div class="chips" id="eatChips">
-  </div>
-  <div class="row" style="margin:12px 0"><button class="btn" id="eatPick" data-i="pick"></button></div>
+  <div class="sgh" style="margin:14px 0 8px" data-i="eQ1"></div>
+  <div class="chips" id="eatChips"></div>
+  <div class="sgh" style="margin:16px 0 8px" data-i="eQ2"></div>
+  <div class="chips" id="eatWhere"></div>
+  <div class="row" style="margin:18px 0 6px;justify-content:space-between;align-items:center"><span class="small muted" id="eatCount"></span><button class="btn sm ghost" id="eatPick" data-i="pick"></button></div>
   <div id="eatList" style="border-bottom:1px solid var(--line)"></div>
   <button class="btn ghost" id="eatAll" style="margin-top:18px"></button>
   <p class="small muted" style="margin-top:14px" data-i="eatNote"></p>
@@ -1015,19 +1018,30 @@ let eatA='rec',eatP=null;
 function eatFilter(){return eatList()}
 const openE={};
 let EALL=null;
+const EFLAG={ter:['e1','e4','e5','e12','e15','e18','e19'],ap:['e3','e7','e20']};
+const EAREA=[['ks',[[46.585,7.961],[46.575,7.975],[46.589,7.938],[46.607,8.0]]],['man',[[46.613,7.941],[46.628,7.985]]],['fir',[[46.659,8.054],[46.642,8.048],[46.652,8.05]]],['sch',[[46.557,7.835],[46.5615,7.859],[46.566,7.882]]]];
+const EAN={ks:'Kleine Scheidegg',man:'Männlichen',fir:'First',sch:'Mürren-Schilthorn',wen:'Wengen',mur:'Mürren',gw:'Grindelwald',lau:'Lauterbrunnen'},EORD=['ks','man','fir','sch','wen','mur','gw','lau'],EMT=['ks','man','fir','sch'];
+let eatW=S.get('eatw','all');
+function eCu(c){const k=String(c||'').toLowerCase(),m=/regional|schweiz|swiss|local|fondue|raclette/.test(k)?'sw':/pizza/.test(k)?'pz':/ital/.test(k)?'it':/indian/.test(k)?'in':/asian|chinese|korean|thai|sushi|japan|vietnam/.test(k)?'as':/burger|steak/.test(k)?'bu':/coffee|cake|ice_cream|dessert/.test(k)?'cf':/international/.test(k)?'int':'';return m?(t('eCu')||{})[m]||'':''}
 function eatBuild(){const M=window.FIRN_MAP||{food:[],pistes:[]},V=[['wen',NLL.wen],['mur',NLL.mur],['gw',NLL.gw],['lau',NLL.lau]],ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')};
+  const mt=p=>{let b=null;EAREA.forEach(g=>g[1].forEach(c=>{const m=dist(p,c);if(!b||m<b.m)b={a:g[0],m}}));return b.a};
   const area=p=>{let b=null;V.forEach(v=>{const m=dist(p,v[1]);if(m<1300&&(!b||m<b.m))b={a:v[0],m}});if(b)return b.a;
-    return M.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-p[0])<.0045&&Math.abs(c[1]-p[1])<.0065&&dist(p,c)<500))?'berg':null};
+    return M.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-p[0])<.0045&&Math.abs(c[1]-p[1])<.0065&&dist(p,c)<500))?mt(p):null};
   const out=[];
-  EAT.forEach(e=>{const p=EM[e.id]!=null?M.food[EM[e.id]].p:NLL[e.at];out.push({key:'e:'+e.id,n:e.n,rec:1,a:area(p)||'berg',sub:N[e.at].n+' · '+N[e.at].h+' m'})});
-  M.food.forEach((f,i)=>{if(FM[i]!=null)return;const a=area(f.p);if(!a)return;out.push({key:'f:'+f.n,n:f.n,rec:0,a,sub:[ft[f.t]||'',f.c?f.c.split(/[;_]/)[0]:''].filter(Boolean).join(' · ')})});
+  EAT.forEach(e=>{const f=EM[e.id]!=null?M.food[EM[e.id]]:null,p=f?f.p:NLL[e.at],tg=g('eat',e.id)[0]||[];out.push({key:'e:'+e.id,n:e.n,rec:1,p,a:area(p)||mt(p),ty:f?f.t:'restaurant',sub:N[e.at].n+' · '+N[e.at].h+' m',tags:tg.join(' · '),ter:EFLAG.ter.includes(e.id)||!!(f&&f.o),ap:EFLAG.ap.includes(e.id)})});
+  M.food.forEach((f,i)=>{if(FM[i]!=null)return;const a=area(f.p);if(!a)return;out.push({key:'f:'+f.n,n:f.n,rec:0,p:f.p,a,ty:f.t,sub:[ft[f.t]||'',eCu(f.c)].filter(Boolean).join(' · '),tags:f.o?t('eTerOne'):'',ter:!!f.o,ap:f.t==='bar'})});
   const seen={};EALL=out.filter(o=>seen[o.key]?0:(seen[o.key]=1)).sort((x,y)=>y.rec-x.rec||x.n.localeCompare(y.n))}
-function eatList(){if(!EALL)eatBuild();return EALL.filter(o=>eatA==='rec'?o.rec:o.a===eatA)}
-function drawEat(){try{NLL;favs;MD}catch(e){return}if(!EALL)eatBuild();const fv=favs(),CH=[['rec','eRec'],['wen','Wengen'],['mur','Mürren'],['gw','Grindelwald'],['lau','Lauterbrunnen'],['berg','eBerg']];
-  if(!CH.some(c=>c[0]===eatA))eatA='rec';
-  $('#eatChips').innerHTML=CH.map(c=>`<button class="chip" aria-pressed="${eatA===c[0]}" onclick="eatA='${c[0]}';drawEat()">${/^e[RB]/.test(c[1])?t(c[1]):c[1]} <span style="opacity:.55">${EALL.filter(o=>c[0]==='rec'?o.rec:o.a===c[0]).length}</span></button>`).join('');
-  const list=eatList();
-  $('#eatList').innerHTML=list.map(o=>{const f=fv.includes(o.key);return `<div class="sr erow"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}${o.rec&&eatA!=='rec'?' <span class="bdg" style="background:var(--solid);font-size:9px">'+t('eRecOne')+'</span>':''}</span><small>${esc(o.sub)}</small></button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}).join('')}
+function eatIs(o,k){return k==='rec'?o.rec:k==='piste'?EMT.includes(o.a):k==='ter'?o.ter:k==='apres'?o.ap:k==='dorp'?(!EMT.includes(o.a)&&o.ty==='restaurant'):true}
+function eatList(){if(!EALL)eatBuild();return EALL.filter(o=>eatIs(o,eatA)&&(eatW==='all'||o.a===eatW))}
+function drawEat(){try{NLL;favs;MD}catch(e){return}if(!EALL)eatBuild();const fv=favs(),CH=[['rec','eRec'],['piste','ePiste'],['ter','eTer'],['apres','eAp'],['dorp','eDorp']];
+  if(!CH.some(c=>c[0]===eatA))eatA='rec';if(eatW!=='all'&&!EAN[eatW])eatW='all';
+  $('#eatChips').innerHTML=CH.map(c=>`<button class="chip" aria-pressed="${eatA===c[0]}" onclick="eatA='${c[0]}';drawEat()">${t(c[1])}</button>`).join('');
+  const avail=EORD.filter(a=>EALL.some(o=>o.a===a&&eatIs(o,eatA)));
+  $('#eatWhere').innerHTML=[['all',t('eAllW')]].concat(avail.map(a=>[a,EAN[a]])).map(c=>`<button class="chip" aria-pressed="${eatW===c[0]}" onclick="eatW='${c[0]}';S.set('eatw',eatW);drawEat()">${esc(c[1])}</button>`).join('');
+  if(eatW!=='all'&&!avail.includes(eatW))eatW='all';
+  const list=eatList(),row=o=>{const f=fv.includes(o.key);return `<div class="sr erow"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}${o.rec&&eatA!=='rec'?' <span class="bdg" style="background:var(--solid);font-size:9px">'+t('eRecOne')+'</span>':''}</span><small>${esc(o.sub)}</small>${o.tags?`<small class="etg">${esc(o.tags)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`};
+  $('#eatCount').textContent=t('eN',{n:list.length});
+  $('#eatList').innerHTML=!list.length?`<p class="shint">${t('sNone')}</p>`:eatW==='all'?EORD.map(a=>{const g=list.filter(o=>o.a===a);return g.length?`<div class="sgh egh">${esc(EAN[a])} <span>${g.length}</span></div>`+g.map(row).join(''):''}).join(''):list.map(row).join('')}
 function toggleFav(id){favTog('e:'+id)}
 $('#eatPick').onclick=()=>{const list=eatList();if(!list.length)return;openPlace(list[Math.floor(Math.random()*list.length)].key)};
 $('#eatList').addEventListener('click',e=>{const f=e.target.closest('[data-f]');if(f){favTog(f.dataset.f);return}const b=e.target.closest('[data-k]');if(b)openPlace(b.dataset.k)});
