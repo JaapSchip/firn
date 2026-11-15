@@ -31,7 +31,7 @@ def rings(e):
 
 DIFF = {'novice': 'b', 'easy': 'b', 'intermediate': 'r', 'advanced': 'k', 'expert': 'k', 'freeride': 'f'}
 SKIP_LIFT = {'zip_line', 'goods', 'station', 'pylon', 'yes'}
-out = {k: [] for k in ('wc', 'hike', 'pistes', 'areas', 'sled', 'lifts', 'rail', 'stations', 'places', 'peaks', 'food', 'parking', 'rivers', 'ice', 'water', 'roads')}
+out = {k: [] for k in ('wc', 'hike', 'pistes', 'areas', 'sled', 'lifts', 'rail', 'stations', 'places', 'peaks', 'food', 'parking', 'shops', 'rivers', 'ice', 'water', 'roads')}
 for e in els:
     t = e.get('tags', {}); n = t.get('name', '')
     pt_ = t.get('piste:type')
