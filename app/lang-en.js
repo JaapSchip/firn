@@ -201,3 +201,5 @@ Object.assign(LANG.en.ui,{"wH": "Welcome to Firn", "wSub": "Your independent ski
 Object.assign(LANG.en.ui,{"qaRent": "Rental", "rnS": "Ski rental and sports shops in the villages. Book ahead in high season.", "rnAll": "All", "rnRent": "Rental", "rnShop": "Sports shop", "rnMap": "Directions"});
 
 Object.assign(LANG.en.ui,{"qaRent": "Ski shops", "rnS": "Sports shops in the villages and on the mountain. Many also rent skis: call or check the website, and book ahead in high season.", "rnMt": "On the mountain"});
+
+Object.assign(LANG.en.ui,{"trQ": "Where are you going?", "trHow": "How to get there", "trTo": "Outbound", "trBack": "Return", "trUp": "Up the mountain", "trRail": "To and from Interlaken", "trMore": "More to know", "trS": "Tap a connection for the next departures, with delays and platform."});

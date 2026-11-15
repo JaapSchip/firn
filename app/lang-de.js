@@ -200,3 +200,5 @@ Object.assign(LANG.de.ui,{"wH": "Willkommen bei Firn", "wSub": "Dein unabhängig
 Object.assign(LANG.de.ui,{"qaRent": "Verleih", "rnS": "Skiverleih und Sportgeschäfte in den Dörfern. In der Hochsaison vorab reservieren.", "rnAll": "Alle", "rnRent": "Verleih", "rnShop": "Sportgeschäft", "rnMap": "Route"});
 
 Object.assign(LANG.de.ui,{"qaRent": "Sportgeschäfte", "rnS": "Sportgeschäfte in den Dörfern und am Berg. Viele verleihen auch Ski: ruf an oder schau auf die Website und reserviere in der Hochsaison vorab.", "rnMt": "Am Berg"});
+
+Object.assign(LANG.de.ui,{"trQ": "Wohin geht es?", "trHow": "So kommst du hin", "trTo": "Hin", "trBack": "Zurück", "trUp": "Auf den Berg", "trRail": "Von und nach Interlaken", "trMore": "Gut zu wissen", "trS": "Tippe auf eine Strecke für die nächsten Abfahrten, mit Verspätung und Gleis."});

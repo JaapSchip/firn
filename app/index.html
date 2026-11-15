@@ -409,6 +409,11 @@ select,input[type=text]{background:var(--snow)}
 .sr>button.go{flex:1;min-width:0;text-align:left;background:none;border:0;padding:14px 0;color:var(--ink);font:400 17px "Hanken Grotesk",sans-serif;display:flex;flex-direction:column;gap:2px}
 .sr small{font-size:12.5px;color:var(--muted)}
 .shint{color:var(--muted);margin:18px 0}
+.trban{margin:20px 0 22px;position:relative}.trban figcaption{position:absolute;right:10px;bottom:8px;font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.65)}.trban figcaption a{color:#fff}
+.trhow{background:var(--card);border-radius:16px;padding:16px 18px;margin:18px 0 26px}.trhow p{margin:8px 0 0;line-height:1.5}
+.trh3{font-size:1.35rem;font-weight:400;margin:0}
+#trBody .sgh{margin:18px 0 0}
+
 #welc{position:absolute;inset:0;z-index:30;background:var(--snow);display:none;flex-direction:column;padding:calc(env(safe-area-inset-top) + 28px) 26px calc(env(safe-area-inset-bottom) + 22px);overflow-y:auto}
 #welc.on{display:flex}
 .hhero{margin:0 0 22px;position:relative}.hhero img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:18px}
@@ -619,13 +624,10 @@ a{color:var(--ink)}
 </section>
 
 <section class="view" id="v-reis">
-  <div class="banner" id="banTravel"></div>
-  <p class="lead" data-i="fTravelS"></p>
-  <h2 style="margin-top:6px" data-i="trH"></h2>
-  <p class="small muted" style="margin:6px 0 10px" data-i="trS"></p>
-  <div id="trList"></div>
-  <h2 style="margin-top:38px" data-i="trInfo"></h2>
-  <div id="travelList"></div>
+  <figure class="banner trban" id="banTravel"></figure>
+  <h2 style="margin:4px 0 12px" data-i="trQ"></h2>
+  <div class="chips" id="trChips"></div>
+  <div id="trBody"></div>
 </section>
 
 <section class="view" id="v-doen">
@@ -865,10 +867,9 @@ function drawStart(){
   const G={blue:'#1C6DD0',red:'#D42A3A',black:'#2B2B31'},lv=t('lv');
   $('#tiles').innerHTML=ROUTES.map(r=>{const d=R(r.id);return `<button class="tile" onclick="openRoute(${r.id})">${rtImg(r.id,'loading="lazy"')}<span class="label">${t('route')} ${r.id} · ${lv[r.lv]}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></button>`}).join('');
   $('#heroSun').textContent=zt(sunTimes(Date.now())[1]);
-    $('#banTravel').innerHTML=pic('village');
+    $('#banTravel').innerHTML=`<img src="https://dam.media.jungfrau.ch/image/upload/s--GcE6Jh4g--/c_limit,f_auto,h_800/v1772439890/Wengernalpbahn-Zug-im-Schnee-mit-KLS-im-Hintergrund" onerror="this.onerror=null;this.src='media/e-wengen2.jpg';var n=this.nextElementSibling;if(n)n.hidden=true" alt=""><figcaption>Wengernalpbahn · ${JBCR}</figcaption>`;
   $('#imgNote').hidden=!IMG.ai;
   $('#rulesL').innerHTML=sec('rules').map(r=>`<li>${r}</li>`).join('');$('#tipsL').innerHTML=sec('tips').map(r=>`<li>${r}</li>`).join('');
-  $('#travelList').innerHTML=sec('travel').map(x=>`<div class="trow"><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('');
   $('#ttl').textContent=curView==='start'?'Firn':t(TITLE[curView]);
   drawSchools();
   drawRadarSum();
@@ -1235,7 +1236,17 @@ $$('nav.tabs button').forEach(b=>b.onclick=()=>{NAV.length=0;navSaved=true;show(
 /* ---------- treintijden (transport.opendata.ch, gegevens van de Zwitserse vervoerders) ---------- */
 const TRIPS=[['Lauterbrunnen','Wengen'],['Wengen','Lauterbrunnen'],['Lauterbrunnen','Mürren BLM'],['Mürren BLM','Lauterbrunnen'],['Stechelberg, Schilthornbahn','Mürren BLM'],['Interlaken Ost','Lauterbrunnen'],['Interlaken Ost','Grindelwald'],['Grindelwald','Kleine Scheidegg'],['Wengen','Kleine Scheidegg'],['Lauterbrunnen','Interlaken Ost'],['Grindelwald','Interlaken Ost']];
 const trNm=x=>x.replace(' BLM','').replace(', Schilthornbahn','');
-function drawTrips(){$('#trList').innerHTML=TRIPS.map((x,i)=>`<details class="lf tr" ontoggle="if(this.open)loadTrip(${i},this)"><summary><span>${esc(trNm(x[0]))} → ${esc(trNm(x[1]))}</span><span class="arr">›</span></summary><div class="trb"><p class="small muted">…</p></div></details>`).join('')}
+const TRG={wen:[['trTo',[0]],['trBack',[1]],['trUp',[8]],['trRail',[5,9]]],mur:[['trTo',[2,4]],['trBack',[3]],['trRail',[5,9]]],gri:[['trTo',[6]],['trBack',[10]],['trUp',[7]]]};
+let trV=S.get('trv','wen');
+function drawTrips(){const el=$('#trBody');if(!el)return;const tv=sec('travel'),V=[['wen',0],['mur',1],['gri',2]];if(!TRG[trV])trV='wen';
+  $('#trChips').innerHTML=V.map(v=>`<button class="chip" aria-pressed="${trV===v[0]}" data-v="${v[0]}">${esc(tv[v[1]][0])}</button>`).join('');
+  $('#trChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{trV=b.dataset.v;S.set('trv',trV);drawTrips()});
+  const me=tv[V.find(v=>v[0]===trV)[1]],row=i=>{const x=TRIPS[i];return `<details class="lf tr" ontoggle="if(this.open)loadTrip(${i},this)"><summary><span>${esc(trNm(x[0]))} → ${esc(trNm(x[1]))}</span><span class="arr">›</span></summary><div class="trb"><p class="small muted">…</p></div></details>`};
+  el.innerHTML=`<div class="trhow"><span class="shopk">${t('trHow')}</span><p>${me[1]}</p></div>
+   <h3 class="trh3">${t('trH')}</h3><p class="small muted" style="margin:2px 0 6px">${t('trS')}</p>
+   ${TRG[trV].map(g=>`<div class="sgh">${t(g[0])}</div>${g[1].map(row).join('')}`).join('')}
+   <h3 class="trh3" style="margin-top:34px">${t('trMore')}</h3>
+   ${[3,4].map(k=>`<details class="lf tr"><summary><span>${tv[k][0]}</span><span class="arr">›</span></summary><div class="trb"><p style="margin:0 0 14px">${tv[k][1]}</p></div></details>`).join('')}`}
 function loadTrip(i,el){const x=TRIPS[i],box=el.querySelector('.trb');box.innerHTML='<p class="small muted">…</p>';
   fetch('https://transport.opendata.ch/v1/connections?limit=5&from='+encodeURIComponent(x[0])+'&to='+encodeURIComponent(x[1])).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const c=(j.connections||[]);if(!c.length){box.innerHTML=`<p class="small muted">${t('trNone')}</p>`;return}
     const hm=s=>s?s.slice(11,16):'';box.innerHTML=`<table class="trt">${c.map(q=>{const d=q.from.delay,du=(q.duration||'').match(/(\d+):(\d+):/),min=du?(+du[1]*60+ +du[2]):null;return `<tr><td>${hm(q.from.departure)}${d?`<span class="dl">+${d}</span>`:''}</td><td>→ ${hm(q.to.arrival)}${q.from.platform?` · ${t('trPl')} ${esc(q.from.platform)}`:''}</td><td>${min!=null?min+' min':''}${q.transfers?` · ${q.transfers}×`:''}</td></tr>`}).join('')}</table>`}).catch(()=>{box.innerHTML=`<p class="small muted">${t('trErr')}</p>`})}
@@ -1387,7 +1398,7 @@ function routeToday(){const p=WX&&WX.pts&&WX.pts.find(x=>x.k==='ks'),ic=p&&p.d[0
 function drawHome(){const el=$('#home');if(!el)return;let rt;try{rt=routeToday();NLL;EM}catch(e){return}
   const loc=cur==='en'?'en-GB':cur,ks=WX&&WX.pts&&WX.pts.find(x=>x.k==='ks'),h0=ks&&ks.h[0],d1=ks&&ks.d[1],se=season(),r=rt.r,d=R(r.id),lv=t('lv'),e=EAT.find(x=>x.id===r.eat),ed=g('eat',e.id),f=EM[e.id]!=null?MD.food[EM[e.id]]:null;
   const today=h0?`${t('wc')[h0[5]]} ${t('hmAt')} Kleine Scheidegg, ${deg(h0[1])}.${d1?` ${t('hmTom')}: ${t('wc')[d1[5]].toLowerCase()}, ${deg(d1[1])} / ${deg(d1[2])}.`:''}`:t('wxNo');
-  el.innerHTML=`<figure class="hhero"><img src="${jbUrl('hero')}" onerror="this.onerror=null;this.src='media/e-hero.jpg';this.nextElementSibling.hidden=true" alt=""><figcaption>Kleine Scheidegg · <a href="${JBC.u}" target="_blank" rel="noopener">${JBC.a}</a></figcaption></figure><div class="hb"><h2>${t('hmToday')}</h2><p>${today}</p><div id="nowIn"></div></div>
+  el.innerHTML=`<figure class="hhero"><img src="${jbUrl('hero')}" onerror="this.onerror=null;this.src='media/e-hero.jpg';var n=this.nextElementSibling;if(n)n.hidden=true" alt=""><figcaption>Kleine Scheidegg · <a href="${JBC.u}" target="_blank" rel="noopener">${JBC.a}</a></figcaption></figure><div class="hb"><h2>${t('hmToday')}</h2><p>${today}</p><div id="nowIn"></div></div>
    ${se?`<div class="hb"><div class="hbig"><b>${se.n}</b><span>${t(se.k)}</span></div><p>Grindelwald-Wengen ${t('d1')} · Mürren-Schilthorn ${t('d2')}</p></div>`:''}
    <div class="hb"><h2>${t('hmRoute')}</h2><p>${t(rt.bad?'hmRouteBad':'hmRouteSun')}</p>
      <button class="hcard" onclick="openRoute(${r.id})">${rtImg(r.id,'loading="lazy"')}<span class="in"><span><span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span></span><b>${esc(d[0])}</b><span class="tm">${esc(d[1])} → ${esc(d[2])} · ${esc(d[4])}</span></span></button>

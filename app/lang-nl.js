@@ -200,3 +200,5 @@ Object.assign(LANG.nl.ui,{"wH": "Welkom bij Firn", "wSub": "Je onafhankelijke sk
 Object.assign(LANG.nl.ui,{"qaRent": "Verhuur", "rnS": "Skiverhuur en sportwinkels in de dorpen. Reserveer in het hoogseizoen vooraf.", "rnAll": "Alles", "rnRent": "Verhuur", "rnShop": "Sportwinkel", "rnMap": "Route"});
 
 Object.assign(LANG.nl.ui,{"qaRent": "Sportwinkels", "rnS": "Sportwinkels in de dorpen en op de berg. Veel ervan verhuren ook ski’s: bel of kijk op de website, en reserveer in het hoogseizoen vooraf.", "rnMt": "Op de berg"});
+
+Object.assign(LANG.nl.ui,{"trQ": "Waar ga je heen?", "trHow": "Zo kom je er", "trTo": "Heen", "trBack": "Terug", "trUp": "De berg op", "trRail": "Van en naar Interlaken", "trMore": "Meer weten", "trS": "Tik op een traject voor de eerstvolgende treinen, met vertraging en perron."});

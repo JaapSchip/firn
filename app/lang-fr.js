@@ -201,3 +201,5 @@ Object.assign(LANG.fr.ui,{"qaRent": "Location", "rnS": "Location de skis et maga
 
 Object.assign(LANG.fr.ui,{"qaRent": "Magasins de ski", "rnS": "Magasins de sport dans les villages et sur la montagne. Beaucoup louent aussi des skis : appelez ou consultez le site, et réservez à l’avance en haute saison.", "rnMt": "En montagne"});
 Object.assign(LANG.fr.ui,{"qaRent":"Magasins"});
+
+Object.assign(LANG.fr.ui,{"trQ": "Où allez-vous ?", "trHow": "Comment y aller", "trTo": "Aller", "trBack": "Retour", "trUp": "Vers les pistes", "trRail": "De et vers Interlaken", "trMore": "À savoir", "trS": "Touchez un trajet pour les prochains départs, avec retard et voie."});
