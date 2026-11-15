@@ -205,3 +205,5 @@ Object.assign(LANG.fr.ui,{"qaRent":"Magasins"});
 Object.assign(LANG.fr.ui,{"trQ": "Où allez-vous ?", "trHow": "Comment y aller", "trTo": "Aller", "trBack": "Retour", "trUp": "Vers les pistes", "trRail": "De et vers Interlaken", "trMore": "À savoir", "trS": "Touchez un trajet pour les prochains départs, avec retard et voie."});
 
 Object.assign(LANG.fr.ui,{"trPk": "Itinéraire vers le parking", "trLast": "dernier aujourd’hui", "trMt": "Train", "trMc": "Téléphérique", "trMb": "Bus", "trS": "Le prochain départ s’affiche à droite. Touchez pour plus d’horaires, retards et voie.", "trF": {"wen": [["940", "places à Lauterbrunnen"], ["15 min", "en train à crémaillère"], ["±40", "trains par jour"]], "mur": [["4 min", "téléphérique depuis Stechelberg"], ["P", "au Schilthornbahn à Stechelberg"]], "gri": [["1000", "places au Terminal"], ["252", "Parkhaus Eiger+"], ["160", "Sportzentrum"]]}});
+
+Object.assign(LANG.fr.ui,{"trTom":"demain"});

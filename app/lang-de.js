@@ -204,3 +204,5 @@ Object.assign(LANG.de.ui,{"qaRent": "Sportgeschäfte", "rnS": "Sportgeschäfte i
 Object.assign(LANG.de.ui,{"trQ": "Wohin geht es?", "trHow": "So kommst du hin", "trTo": "Hin", "trBack": "Zurück", "trUp": "Auf den Berg", "trRail": "Von und nach Interlaken", "trMore": "Gut zu wissen", "trS": "Tippe auf eine Strecke für die nächsten Abfahrten, mit Verspätung und Gleis."});
 
 Object.assign(LANG.de.ui,{"trPk": "Route zum Parkplatz", "trLast": "letzte heute", "trMt": "Zug", "trMc": "Seilbahn", "trMb": "Bus", "trS": "Rechts steht die nächste Abfahrt. Tippe für weitere Zeiten, Verspätung und Gleis.", "trF": {"wen": [["940", "Parkplätze in Lauterbrunnen"], ["15 min", "mit der Zahnradbahn"], ["±40", "Züge pro Tag"]], "mur": [["4 min", "Seilbahn ab Stechelberg"], ["P", "bei der Schilthornbahn in Stechelberg"]], "gri": [["1000", "Plätze beim Terminal"], ["252", "Parkhaus Eiger+"], ["160", "Sportzentrum"]]}});
+
+Object.assign(LANG.de.ui,{"trTom":"morgen"});
