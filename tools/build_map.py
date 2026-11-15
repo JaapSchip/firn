@@ -26,7 +26,7 @@ def rings(e):
 
 DIFF = {'novice': 'b', 'easy': 'b', 'intermediate': 'r', 'advanced': 'k', 'expert': 'k', 'freeride': 'f'}
 SKIP_LIFT = {'zip_line', 'goods', 'station', 'pylon', 'yes'}
-out = {k: [] for k in ('pistes', 'areas', 'sled', 'lifts', 'rail', 'stations', 'places', 'peaks', 'food', 'parking', 'rivers', 'ice', 'water', 'roads')}
+out = {k: [] for k in ('hike', 'pistes', 'areas', 'sled', 'lifts', 'rail', 'stations', 'places', 'peaks', 'food', 'parking', 'rivers', 'ice', 'water', 'roads')}
 for e in els:
     t = e.get('tags', {}); n = t.get('name', '')
     pt_ = t.get('piste:type')
@@ -39,6 +39,9 @@ for e in els:
     elif e['type'] == 'way' and pt_ and 'sled' in pt_:
         c = line(e)
         if len(c) > 1: out['sled'].append({'c': c, 'n': n, 'm': length(c)})
+    elif e['type'] == 'way' and pt_ == 'hike':
+        c = line(e)
+        if len(c) > 1: out['hike'].append({'c': c, 'n': n, 'm': length(c)})
     elif e['type'] == 'way' and 'aerialway' in t and t['aerialway'] not in SKIP_LIFT:
         c = line(e)
         if len(c) > 1: out['lifts'].append({'c': c, 'n': n, 't': t['aerialway'], 'm': length(c), 'cap': t.get('aerialway:occupancy', '')})

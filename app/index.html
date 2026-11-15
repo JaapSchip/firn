@@ -502,6 +502,12 @@ select,input[type=text]{background:var(--snow)}
   <div id="travelList"></div>
 </section>
 
+<section class="view" id="v-doen">
+  <p class="lead" style="margin-top:20px" data-i="fDoS"></p>
+  <div id="doList"></div>
+  <p class="small muted" style="margin-top:14px" data-i="doNote"></p>
+</section>
+
 <section class="view" id="v-zoek">
   <input id="sq" type="search" autocomplete="off" autocapitalize="off" spellcheck="false">
   <div id="sres"></div>
@@ -646,8 +652,8 @@ const PHR=['Grüessech','Merci vilmal','Ä Guete!','Uf Widerluege','Es Rivella, 
 const R=id=>g('routes',id);
 
 /* ---------- NAV ---------- */
-const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1};
-const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH'};
+const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1};
+const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH',doen:'qaDo'};
 let curView='start';
 function show(tb,push){
   if(!VIEWS.includes(tb))tb='start';curView=tb;
@@ -706,7 +712,7 @@ function season(){const now=new Date(),open=new Date(2026,10,21),close=new Date(
 
 function drawStart(){
   sky();
-  $('#qa').innerHTML=[['eten','qaEat',IC.eat],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['reis','qaTravel',IC.car]].map(q=>`<button class="qab" onclick="show('${q[0]}',true)">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
+  $('#qa').innerHTML=[['eten','qaEat',IC.eat],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['doen','qaDo',IC.sun],['reis','qaTravel',IC.car]].map(q=>`<button class="qab" onclick="show('${q[0]}',true)">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
   const G={blue:'#1C6DD0',red:'#D42A3A',black:'#2B2B31'},lv=t('lv');
   $('#tiles').innerHTML=ROUTES.map(r=>{const d=R(r.id);return `<button class="tile" onclick="routeOnMap(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="label">${t('route')} ${r.id} · ${lv[r.lv]}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></button>`}).join('');
   $('#heroSun').textContent=zt(sunTimes(Date.now())[1]);
@@ -1033,6 +1039,10 @@ routeOnMap=function(id){const r=ROUTES.find(x=>x.id===id);if(!r)return;$$('.moda
 nodeOnMap=function(id){if(!NLL[id])return;$$('.modal').forEach(m=>m.classList.remove('on'));show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:NLL[id],n:N[id].n}),120)};
 const _setLang=setLang;setLang=function(c){_setLang(c);mapMsg({k:'lang',lang:cur})};
 $('#realmap').addEventListener('load',()=>mapMsg({k:'lang',lang:cur}));
+/* ---------- activiteiten naast het skiën ---------- */
+const DO=[{id:'sled',lay:'sled',z:[46.6,7.99]},{id:'hike',lay:'hike',z:[46.6,7.99]},{id:'jfj',at:'jfj'},{id:'piz',at:'sch'},{id:'birg',at:'bir'},{id:'cliff',at:'fir'},{id:'fly',at:'fir'},{id:'velo',at:'gw'},{id:'ice',at:'wen'},{id:'park',at:'fir'}];
+function doOnMap(id){const d=DO.find(x=>x.id===id);if(!d)return;show('kaart',true);setTimeout(()=>{if(d.lay)mapMsg({k:'layer',l:d.lay,on:true});else mapMsg({k:'go',p:NLL[d.at],n:g('doen',id)[0]})},150)}
+function drawDo(){$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<div class="trow sc"><span class="label">${esc(x[1])}</span><h3>${esc(x[0])}</h3><p>${esc(x[2])}</p><button class="btn sm ghost" style="margin-top:12px" onclick="doOnMap('${d.id}')">${t('onMap')}</button></div>`}).join('')}
 /* ---------- zoeken en favorieten ---------- */
 const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
 const nrm=x=>String(x).toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]/g,'').replace(/\b(berg)?(restaurant|haus|gasthaus|hotel)\b/g,'').replace(/\s+/g,' ').trim();
@@ -1047,6 +1057,7 @@ function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut
   MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',go:()=>mapPick('food',i)})});
   MD.lifts.forEach((l,i)=>add({key:'l:'+l.n,kind:'lift',n:l.n,sub:'',go:()=>mapPick('lift',i)}));
   MD.pistes.forEach((p,i)=>{const nm=p.n&&p.n!==p.ref?p.n:(p.ref?t('kPisteOne')+' '+p.ref:'');if(!nm)return;add({key:'p:'+nm,kind:'piste',n:nm,sub:(p.n&&p.n!==p.ref&&p.ref?t('kPisteOne')+' '+p.ref+' · ':'')+t({b:'pB',r:'pR',k:'pK',f:'pF'}[p.d]),go:()=>mapPick('piste',i)})});
+  DO.forEach(d=>{const x=g('doen',d.id);add({key:'d:'+d.id,kind:'do',n:x[0],sub:x[1],go:()=>show('doen',true)})});
   SCHOOLS.forEach(c=>add({key:'s:'+c.n,kind:'school',n:c.n,sub:c.v,go:()=>show('school',true)}));
   MD.places.concat(MD.stations).forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:'',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
   MD.peaks.forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:x.e+' m',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
@@ -1054,7 +1065,7 @@ function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut
 function mapPick(kind,i){show('kaart',true);setTimeout(()=>mapMsg({k:'pick',kind,i}),150)}
 const favs=()=>S.get('fav2',[]).concat(st('fav',[]).map(x=>'e:'+x));
 function favTog(key){if(key.startsWith('e:')){toggleFav(key.slice(2))}else{const f=S.get('fav2',[]),i=f.indexOf(key);i<0?f.push(key):f.splice(i,1);S.set('fav2',f)}drawSearch()}
-const KIND=[['eat','kEat'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
+const KIND=[['eat','kEat'],['do','qaDo'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
 function srow(o,fv){const f=fv.includes(o.key);return `<div class="sr"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}</span>${o.sub?`<small>${esc(o.sub)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}
 function drawSearch(){if(!IDX)buildIdx();const q=nrm($('#sq').value),raw=$('#sq').value.trim().toLowerCase(),fv=favs();$('#sq').placeholder=t('sPh');let h='';
   if(!raw){const fl=IDX.filter(o=>fv.includes(o.key));h=`<div class="sgh">${t('sFav')}</div>`+(fl.length?fl.map(o=>srow(o,fv)).join(''):`<p class="shint">${t('sNoFav')}</p>`)}
@@ -1067,7 +1078,7 @@ $('#srchBtn').onclick=()=>{show('zoek',true);drawSearch();setTimeout(()=>$('#sq'
 $('#eatAll').onclick=()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'layer',l:'food',on:true}),150)};
 addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id)});
 $('#realmap').addEventListener('load',()=>mapMsg({k:'cur',m:FM}));
-const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch()};
+const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch()};
 const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek'};
 /* ---------- weer per hoogte (MeteoSwiss) ---------- */
 let WX=null,wxAt=0;
@@ -1097,6 +1108,7 @@ const _ra=renderAll;renderAll=function(){_ra();drawWx()};
 const _show2=show;show=function(tb,push){_show2(tb,push);if(curView==='liften')loadWx()};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView==='liften')loadWx()});
 drawWx();loadWx(true);
+renderAll();
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>

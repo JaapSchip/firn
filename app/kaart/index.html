@@ -42,6 +42,11 @@ html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif
 .emb .bar{display:none}.emb .top{padding-top:4px}.emb .toast{top:70px}.emb .side{bottom:74px}.emb .legend{bottom:14px}.emb .rbar{bottom:58px}
 .rbar{position:fixed;left:14px;right:76px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:1000;background:var(--ink);color:#fff;border-radius:14px;padding:11px 12px 11px 16px;display:none;align-items:center;gap:10px;font-size:14px}
 .rbar.on{display:flex}.rbar span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rbar button{background:none;border:0;color:#fff;font-size:20px;line-height:1;padding:0 4px}
+.pin{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:var(--hi);border:3px solid #fff;box-shadow:0 2px 8px rgba(10,22,51,.35)}
+.pin::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:3px solid var(--hi);opacity:.55;animation:pulse 1.6s ease-out infinite}
+.pin b{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);white-space:nowrap;background:var(--ink);color:#fff;font:500 13px "Hanken Grotesk",sans-serif;padding:6px 12px;border-radius:99px;box-shadow:0 2px 8px rgba(10,22,51,.25)}
+@keyframes pulse{from{transform:scale(.55);opacity:.8}to{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pin::before{animation:none}}
 .stop{width:24px;height:24px;border-radius:50%;background:var(--hi);color:#fff;font:500 12px "IBM Plex Mono",monospace;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(10,22,51,.3);transform:translate(-50%,-50%);position:absolute}
 .stopn{position:absolute;left:28px;top:3px;white-space:nowrap;font:500 12px "Hanken Grotesk",sans-serif;color:var(--ink);text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
 .toast{position:fixed;left:50%;top:calc(120px + env(safe-area-inset-top));transform:translateX(-50%);z-index:1200;background:var(--ink);color:#fff;padding:11px 18px;border-radius:99px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
@@ -87,13 +92,13 @@ html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif
 const D=window.FIRN_MAP,$=s=>document.querySelector(s);
 const COL={b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'};
 const TX={
- nl:{more:'Beschrijving in Firn',lifts:'Liften',sled:'Sleeën',food:'Eten',park:'Parkeren',blue:'Blauw',red:'Rood',black:'Zwart',lift:'Lift',piste:'Piste',noname:'Piste zonder naam',part:'dit deel',len:'lengte',pers:'personen',sledp:'Sleepiste',kitchen:'keuken',site:'Website',places:'plaatsen',fee:'tarief',paid:'Betaald',free:'Gratis',parkp:'Parkeerplaats',zoom:'Zoom in om alle punten te zien',nogeo:'Positie is op dit toestel niet beschikbaar',perm:'Geef toestemming voor je locatie om jezelf te zien',nofix:'Positie nu niet te bepalen',out:'Je bent nu buiten het skigebied',me:'Mijn positie',close:'Sluiten',
+ nl:{hike:'Wandelen',hikep:'Winterwandelpad',more:'Beschrijving in Firn',lifts:'Liften',sled:'Sleeën',food:'Eten',park:'Parkeren',blue:'Blauw',red:'Rood',black:'Zwart',lift:'Lift',piste:'Piste',noname:'Piste zonder naam',part:'dit deel',len:'lengte',pers:'personen',sledp:'Sleepiste',kitchen:'keuken',site:'Website',places:'plaatsen',fee:'tarief',paid:'Betaald',free:'Gratis',parkp:'Parkeerplaats',zoom:'Zoom in om alle punten te zien',nogeo:'Positie is op dit toestel niet beschikbaar',perm:'Geef toestemming voor je locatie om jezelf te zien',nofix:'Positie nu niet te bepalen',out:'Je bent nu buiten het skigebied',me:'Mijn positie',close:'Sluiten',
   d:{b:'makkelijk',r:'gemiddeld',k:'moeilijk',f:'niet geprepareerd'},dn:{b:'Blauw',r:'Rood',k:'Zwart',f:'Freeride'},lt:{gondola:'Gondel',cable_car:'Kabelbaan',chair_lift:'Stoeltjeslift',drag:'Sleeplift',rope_tow:'Touwlift',magic_carpet:'Loopband'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Berghut'}},
- en:{more:'Description in Firn',lifts:'Lifts',sled:'Sledging',food:'Food',park:'Parking',blue:'Blue',red:'Red',black:'Black',lift:'Lift',piste:'Piste',noname:'Unnamed piste',part:'this section',len:'length',pers:'people',sledp:'Sledging run',kitchen:'cuisine',site:'Website',places:'spaces',fee:'fee',paid:'Paid',free:'Free',parkp:'Car park',zoom:'Zoom in to see all points',nogeo:'Location is not available on this device',perm:'Allow location access to see yourself',nofix:'Cannot get your position right now',out:'You are outside the ski area',me:'My position',close:'Close',
+ en:{hike:'Hiking',hikep:'Winter hiking trail',more:'Description in Firn',lifts:'Lifts',sled:'Sledging',food:'Food',park:'Parking',blue:'Blue',red:'Red',black:'Black',lift:'Lift',piste:'Piste',noname:'Unnamed piste',part:'this section',len:'length',pers:'people',sledp:'Sledging run',kitchen:'cuisine',site:'Website',places:'spaces',fee:'fee',paid:'Paid',free:'Free',parkp:'Car park',zoom:'Zoom in to see all points',nogeo:'Location is not available on this device',perm:'Allow location access to see yourself',nofix:'Cannot get your position right now',out:'You are outside the ski area',me:'My position',close:'Close',
   d:{b:'easy',r:'intermediate',k:'difficult',f:'ungroomed'},dn:{b:'Blue',r:'Red',k:'Black',f:'Freeride'},lt:{gondola:'Gondola',cable_car:'Cable car',chair_lift:'Chairlift',drag:'Drag lift',rope_tow:'Rope tow',magic_carpet:'Magic carpet'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Mountain hut'}},
- de:{more:'Beschreibung in Firn',lifts:'Lifte',sled:'Schlitteln',food:'Essen',park:'Parken',blue:'Blau',red:'Rot',black:'Schwarz',lift:'Lift',piste:'Piste',noname:'Piste ohne Namen',part:'dieser Abschnitt',len:'Länge',pers:'Personen',sledp:'Schlittelweg',kitchen:'Küche',site:'Website',places:'Plätze',fee:'Tarif',paid:'Kostenpflichtig',free:'Gratis',parkp:'Parkplatz',zoom:'Hineinzoomen, um alle Punkte zu sehen',nogeo:'Standort ist auf diesem Gerät nicht verfügbar',perm:'Standortzugriff erlauben, um dich zu sehen',nofix:'Standort gerade nicht bestimmbar',out:'Du bist ausserhalb des Skigebiets',me:'Mein Standort',close:'Schliessen',
+ de:{hike:'Wandern',hikep:'Winterwanderweg',more:'Beschreibung in Firn',lifts:'Lifte',sled:'Schlitteln',food:'Essen',park:'Parken',blue:'Blau',red:'Rot',black:'Schwarz',lift:'Lift',piste:'Piste',noname:'Piste ohne Namen',part:'dieser Abschnitt',len:'Länge',pers:'Personen',sledp:'Schlittelweg',kitchen:'Küche',site:'Website',places:'Plätze',fee:'Tarif',paid:'Kostenpflichtig',free:'Gratis',parkp:'Parkplatz',zoom:'Hineinzoomen, um alle Punkte zu sehen',nogeo:'Standort ist auf diesem Gerät nicht verfügbar',perm:'Standortzugriff erlauben, um dich zu sehen',nofix:'Standort gerade nicht bestimmbar',out:'Du bist ausserhalb des Skigebiets',me:'Mein Standort',close:'Schliessen',
   d:{b:'leicht',r:'mittel',k:'schwer',f:'nicht präpariert'},dn:{b:'Blau',r:'Rot',k:'Schwarz',f:'Freeride'},lt:{gondola:'Gondelbahn',cable_car:'Luftseilbahn',chair_lift:'Sesselbahn',drag:'Skilift',rope_tow:'Seillift',magic_carpet:'Förderband'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Berghütte'}},
- fr:{more:'Description dans Firn',lifts:'Remontées',sled:'Luge',food:'Manger',park:'Parking',blue:'Bleue',red:'Rouge',black:'Noire',lift:'Remontée',piste:'Piste',noname:'Piste sans nom',part:'ce tronçon',len:'longueur',pers:'personnes',sledp:'Piste de luge',kitchen:'cuisine',site:'Site web',places:'places',fee:'tarif',paid:'Payant',free:'Gratuit',parkp:'Parking',zoom:'Zoomez pour voir tous les points',nogeo:'Position indisponible sur cet appareil',perm:'Autorisez la localisation pour vous voir',nofix:'Position introuvable pour le moment',out:'Vous êtes hors du domaine skiable',me:'Ma position',close:'Fermer',
+ fr:{hike:'Randonnée',hikep:'Sentier hivernal',more:'Description dans Firn',lifts:'Remontées',sled:'Luge',food:'Manger',park:'Parking',blue:'Bleue',red:'Rouge',black:'Noire',lift:'Remontée',piste:'Piste',noname:'Piste sans nom',part:'ce tronçon',len:'longueur',pers:'personnes',sledp:'Piste de luge',kitchen:'cuisine',site:'Site web',places:'places',fee:'tarif',paid:'Payant',free:'Gratuit',parkp:'Parking',zoom:'Zoomez pour voir tous les points',nogeo:'Position indisponible sur cet appareil',perm:'Autorisez la localisation pour vous voir',nofix:'Position introuvable pour le moment',out:'Vous êtes hors du domaine skiable',me:'Ma position',close:'Fermer',
   d:{b:'facile',r:'moyenne',k:'difficile',f:'non damée'},dn:{b:'Bleue',r:'Rouge',k:'Noire',f:'Freeride'},lt:{gondola:'Télécabine',cable_car:'Téléphérique',chair_lift:'Télésiège',drag:'Téléski',rope_tow:'Fil-neige',magic_carpet:'Tapis roulant'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Cabane'}}};
 let LG='nl';try{const q=new URLSearchParams(location.search).get('lang')||JSON.parse(localStorage.getItem('jf_lang')||'null')||(navigator.language||'nl').slice(0,2);if(TX[q])LG=q}catch(e){}
 const T=k=>TX[LG][k]||TX.nl[k]||k,ltn=t=>T('lt')[t]||T('lt')[/bar|platter|drag/.test(t)?'drag':'']||T('lift');
@@ -105,7 +110,7 @@ const map=L.map('map',{zoomControl:false,minZoom:11,maxZoom:17,maxBounds:BOUNDS.
 map.attributionControl.setPrefix(false).addAttribution('Kaartdata © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>');
 map.fitBounds(L.latLngBounds(D.pistes.flatMap(p=>[p.c[0],p.c[p.c.length-1]])).pad(.04));
 L.tileLayer('relief/{z}/{x}/{y}.jpg',{minNativeZoom:11,maxNativeZoom:14,bounds:BOUNDS,opacity:.45,className:'relief',attribution:'Reliëf © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a>'}).addTo(map);
-const G={};['base','areas','sled','pistes','lifts','labels','food','parking'].forEach(k=>G[k]=L.layerGroup());
+const G={};['base','areas','hike','sled','pistes','lifts','labels','food','parking'].forEach(k=>G[k]=L.layerGroup());
 // ondergrond
 (D.ice||[]).forEach(r=>L.polygon(r,{stroke:false,fillColor:'#DCEBF5',fillOpacity:.9,interactive:false}).addTo(G.base));
 (D.water||[]).forEach(r=>L.polygon(r,{stroke:false,fillColor:'#BBD7EE',fillOpacity:1,interactive:false}).addTo(G.base));
@@ -119,9 +124,9 @@ const favGet=()=>{try{return JSON.parse(localStorage.getItem('jf_fav2')||'[]')}c
 function heart(key){if(!key)return'';const on=favGet().includes(key);return `<button class="hrt" data-fk="${esc(key)}" aria-pressed="${on}" aria-label="♥">${on?'♥':'♡'}</button>`}
 const PL=[],LL=[],FL=[];let CUR={};
 function pick(layer,html){if(hl){hl.remove();hl=null}
-  if(layer){hl=L.polyline(layer.getLatLngs(),{color:'#E8540A',weight:9,opacity:.45,interactive:false}).addTo(map);}
+  if(layer){hl=L.polyline(layer.getLatLngs(),{color:'#E8540A',weight:13,opacity:.6,interactive:false}).addTo(map);}
   $('#sb').innerHTML=html;$('#sheet').classList.add('on')}
-function closeSheet(){$('#sheet').classList.remove('on');if(hl){hl.remove();hl=null}}
+function closeSheet(){$('#sheet').classList.remove('on');if(hl){hl.remove();hl=null}if(typeof RL!=='undefined'&&!$('#rbar').classList.contains('on'))RL.clearLayers()}
 $('#sx').onclick=closeSheet;
 $('#sb').addEventListener('click',e=>{const h=e.target.closest('[data-fk]');if(h){const k=h.dataset.fk,f=favGet(),i=f.indexOf(k);i<0?f.push(k):f.splice(i,1);try{localStorage.setItem('jf_fav2',JSON.stringify(f))}catch(x){}h.setAttribute('aria-pressed',i<0);h.textContent=i<0?'♥':'♡';return}
   const a=e.target.closest('[data-eat]');if(a){e.preventDefault();if(self!==top)parent.postMessage({firn:1,k:'eat',id:a.dataset.eat},location.origin)}});
@@ -131,6 +136,8 @@ D.pistes.forEach((p,i)=>{const l=L.polyline(p.c,{color:COL[p.d],weight:3.2,dashA
   PL[i]=()=>{pick(l,`${heart(pname(p)?'p:'+pname(p):'')}<span class="label"><i style="background:${COL[p.d]}"></i>${T('piste')}${p.ref?' '+esc(p.ref):''}</span><h2>${esc(p.n&&p.n!==p.ref?p.n:p.ref?T('piste')+' '+p.ref:T('noname'))}</h2><div class="facts"><div><b>${km(p.m)}</b>${T('part')}</div><div><b>${T('dn')[p.d]}</b>${T('d')[p.d]}</div></div>`);return l};l.on('click',e=>{L.DomEvent.stop(e);PL[i]()})});
 D.sled.forEach(s=>{const l=L.polyline(s.c,{color:'#7A4FD0',weight:2.6,dashArray:'2 6',lineCap:'round'}).addTo(G.sled);
   l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#7A4FD0"></i>${T('sledp')}</span><h2>${esc(s.n||T('sledp'))}</h2><div class="facts"><div><b>${km(s.m)}</b>${T('part')}</div></div>`)})});
+(D.hike||[]).forEach(s=>{const l=L.polyline(s.c,{color:'#1F8A6B',weight:2.6,dashArray:'1 6',lineCap:'round'}).addTo(G.hike);
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#1F8A6B"></i>${T('hikep')}</span><h2>${esc(s.n||T('hikep'))}</h2><div class="facts"><div><b>${km(s.m)}</b>${T('part')}</div></div>`)})});
 D.lifts.forEach((f,i)=>{const big=f.t==='gondola'||f.t==='cable_car',l=L.polyline(f.c,{color:'#0A1633',weight:big?2.6:1.8}).addTo(G.lifts);
   [f.c[0],f.c[f.c.length-1]].forEach(p=>L.circleMarker(p,{radius:big?4:3,color:'#0A1633',weight:1.5,fillColor:'#fff',fillOpacity:1,interactive:false}).addTo(G.lifts));
   LL[i]=()=>{pick(l,`${heart(f.n?'l:'+f.n:'')}<span class="label"><i style="background:#0A1633"></i>${ltn(f.t)}</span><h2>${esc(f.n||T('lift'))}</h2><div class="facts"><div><b>${km(f.m)}</b>${T('len')}</div>${f.cap?`<div><b>${esc(f.cap)}</b>${T('pers')}</div>`:''}</div>`);return l};l.on('click',e=>{L.DomEvent.stop(e);LL[i]()});
@@ -148,7 +155,7 @@ map.on('click',closeSheet);
 function zc(){const z=map.getZoom(),c=map.getContainer().classList;c.toggle('z-lo',z<12.75);c.toggle('z-mid',z>=12.75&&z<14)}
 map.on('zoomend',zc);zc();
 // chips
-const LAYERS=[['lifts','lifts',1],['sled','sled',0],['food','food',0],['parking','park',0]];
+const LAYERS=[['lifts','lifts',1],['food','food',0],['sled','sled',0],['hike','hike',0],['parking','park',0]];
 const GO=[['Wengen',[46.596,7.935],14],['Mürren',[46.560,7.880],14],['Grindelwald',[46.622,8.020],13.5],['First',[46.659,8.060],14]];
 const ON={lifts:1};
 function chrome(){$('#chips').innerHTML=LAYERS.map(l=>`<button class="chip" data-l="${l[0]}" aria-pressed="${!!ON[l[0]]}"><i></i>${T(l[1])}</button>`).join('')+GO.map((g,i)=>`<button class="chip go" data-g="${i}">${g[0]}</button>`).join('');
@@ -175,6 +182,8 @@ $('#loc').onclick=()=>{
 // berichten van de app: route tonen, naar een plek gaan, taal wisselen
 const RL=L.layerGroup().addTo(map);
 function clearRoute(){RL.clearLayers();$('#rbar').classList.remove('on')}
+function pin(p,n){RL.clearLayers();L.marker(p,{interactive:false,zIndexOffset:950,icon:L.divIcon({className:'',html:`<span class="pin">${n?`<b>${esc(n)}</b>`:''}</span>`})}).addTo(RL)}
+function focusOn(p,z){map.setView(p,z,{animate:false});const h=$('#sheet').classList.contains('on')?$('#sheet').offsetHeight:0;if(h)map.panBy([0,h/2],{animate:false})}
 $('#rbx').onclick=clearRoute;
 addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;const m=e.data;
   if(m.lang&&TX[m.lang]&&m.lang!==LG){LG=m.lang;chrome();closeSheet()}
@@ -182,12 +191,12 @@ addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.f
   if(m.k==='cur'&&m.m)CUR=m.m;
   if(m.k==='layer'&&G[m.l]){map.invalidateSize();ON[m.l]=!!m.on;m.on?G[m.l].addTo(map):G[m.l].remove();chrome();if(m.on&&map.getZoom()<13)toast(T('zoom'))}
   if(m.k==='pick'){map.invalidateSize();clearRoute();
-    if(m.kind==='food'&&FL[m.i]){if(!ON.food){ON.food=1;G.food.addTo(map);chrome()}map.setView(D.food[m.i].p,15,{animate:false});FL[m.i]()}
+    if(m.kind==='food'&&FL[m.i]){if(!ON.food){ON.food=1;G.food.addTo(map);chrome()}FL[m.i]();pin(D.food[m.i].p,D.food[m.i].n);focusOn(D.food[m.i].p,15)}
     const fn=m.kind==='piste'?PL[m.i]:m.kind==='lift'?LL[m.i]:null;if(fn){if(m.kind==='lift'&&!ON.lifts){ON.lifts=1;G.lifts.addTo(map);chrome()}const l=fn();map.fitBounds(l.getBounds().pad(.35),{maxZoom:15,paddingBottomRight:[0,170],animate:false})}}
   if(m.k==='route'&&m.pts&&m.pts.length){map.invalidateSize();closeSheet();RL.clearLayers();
     m.pts.forEach((s,i)=>L.marker(s.p,{interactive:false,zIndexOffset:900,icon:L.divIcon({className:'',html:`<span class="stop">${i+1}<span class="stopn">${esc(s.n)}</span></span>`})}).addTo(RL));
     $('#rbt').textContent=m.title||'';$('#rbar').classList.add('on');map.fitBounds(L.latLngBounds(m.pts.map(s=>s.p)).pad(.25),{maxZoom:15})}
-  if(m.k==='go'&&m.p){map.invalidateSize();clearRoute();L.marker(m.p,{interactive:false,zIndexOffset:900,icon:L.divIcon({className:'',html:`<span class="stop">•<span class="stopn">${esc(m.n||'')}</span></span>`})}).addTo(RL);map.setView(m.p,15)}});
+  if(m.k==='go'&&m.p){map.invalidateSize();clearRoute();closeSheet();pin(m.p,m.n);map.setView(m.p,m.z||15,{animate:false})}});
 window.FIRN={map,G,D};
 })();
 </script>
