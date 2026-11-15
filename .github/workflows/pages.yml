@@ -1,9 +1,11 @@
-name: App online zetten
+name: App online zetten (met actueel weer)
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '7 * * * *'
   push:
     branches: [main]
-    paths: ['app/**', '.github/workflows/pages.yml']
+    paths: ['app/**', 'tools/fetch_weather.py', '.github/workflows/pages.yml']
 permissions:
   contents: read
   pages: write
@@ -19,6 +21,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Weer ophalen (MeteoSwiss)
+        continue-on-error: true
+        run: python3 tools/fetch_weather.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
