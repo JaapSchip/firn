@@ -24,6 +24,8 @@ jobs:
       - name: Weer ophalen (MeteoSwiss)
         continue-on-error: true
         run: python3 tools/fetch_weather.py
+      - name: Versie invullen
+        run: sed -i "s/__V__/${GITHUB_SHA::7}/g" app/index.html app/kaart/index.html app/sw.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
