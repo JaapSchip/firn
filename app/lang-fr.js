@@ -188,3 +188,5 @@ Object.assign(LANG.fr.ui,{"eRec": "Nos adresses", "eRecOne": "conseil", "eBerg":
 Object.assign(LANG.fr.ui,{"liveA": "L'état officiel de chaque remontée et piste se trouve sur jungfrau.ch."});
 
 Object.assign(LANG.fr.ui,{"hmToday": "Aujourd'hui", "hmAt": "à", "hmTom": "Demain", "hmRoute": "Itinéraire du jour", "hmRouteSun": "Ciel dégagé : un itinéraire avec vue.", "hmRouteBad": "Peu de visibilité : cet itinéraire reste dans la forêt.", "hmAllR": "Tous les itinéraires", "hmLunch": "Idée déjeuner", "hmAllE": "Tous les restaurants", "hmDo": "À faire aussi", "hmAllD": "Toutes les activités", "plRev": "Avis et photos", "wc": {"sun": "Ensoleillé", "part": "Partiellement nuageux", "cloud": "Nuageux", "rain": "Pluie", "snow": "Neige"}});
+
+Object.assign(LANG.fr.ui,{"wxHours": "Par heure", "wxLeg": "température et précipitations, 7 jours", "rtLen": "longueur", "pNr": "numéro", "pLifts": "Remontées sur cette piste", "pEat": "Manger le long de cette piste"});

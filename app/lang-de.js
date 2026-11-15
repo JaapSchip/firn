@@ -188,3 +188,5 @@ Object.assign(LANG.de.ui,{"eRec": "Empfehlungen", "eRecOne": "Tipp", "eBerg": "A
 Object.assign(LANG.de.ui,{"liveA": "Den offiziellen Status aller Lifte und Pisten gibt es auf jungfrau.ch."});
 
 Object.assign(LANG.de.ui,{"hmToday": "Heute", "hmAt": "auf der", "hmTom": "Morgen", "hmRoute": "Route des Tages", "hmRouteSun": "Klare Sicht: eine Route mit Aussicht.", "hmRouteBad": "Wenig Sicht: Diese Route bleibt im Wald.", "hmAllR": "Alle Routen", "hmLunch": "Mittagstipp", "hmAllE": "Alle Restaurants", "hmDo": "Auch zu tun", "hmAllD": "Alle Aktivitäten", "plRev": "Bewertungen und Fotos", "wc": {"sun": "Sonnig", "part": "Teils bewölkt", "cloud": "Bewölkt", "rain": "Regen", "snow": "Schnee"}});
+
+Object.assign(LANG.de.ui,{"wxHours": "Stündlich", "wxLeg": "Temperatur und Niederschlag, 7 Tage", "rtLen": "Länge", "pNr": "Nummer", "pLifts": "Lifte an dieser Piste", "pEat": "Essen an dieser Piste"});

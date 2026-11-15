@@ -70,7 +70,8 @@ for key, name, alt in sorted(PTS.values(), key=lambda x: -x[2]):
         frac = sum(d['ds']) / (60 * len(d['ds'])) if d['ds'] else None  # deel van de daguren met zon
         ic = ('snow' if mt <= 1.0 else 'rain') if d['p'] >= 1 else 'cloud' if frac is None else 'sun' if frac >= 0.6 else 'part' if frac >= 0.2 else 'cloud'
         dl.append([k2, round(min(d['t'])), round(max(d['t'])), round(d['p'], 1), round(d['s'] / 60, 1), ic, round(max(d['g'])) if d['g'] else None])
-    out['pts'].append({'k': key, 'n': name, 'alt': alt, 'h': hours, 'd': dl})
+    cur = [[u.astimezone(TZ).strftime('%Y-%m-%dT%H'), None if t is None else round(t, 1), round(sum((x[2] or 0) for x in rows[max(0, i - 2):i + 1]), 1)] for i, (u, t, p, w, g, s_, cl, z) in enumerate(rows) if u.astimezone(TZ).hour % 3 == 0]
+    out['pts'].append({'k': key, 'n': name, 'alt': alt, 'h': hours, 'd': dl, 'c': cur})
 if len(out['pts']) < 5: sys.exit('te weinig punten: %d' % len(out['pts']))
 os.makedirs(os.path.join(ROOT, 'app', 'data'), exist_ok=True)
 json.dump(out, open(os.path.join(ROOT, 'app', 'data', 'weather.json'), 'w', encoding='utf8'), ensure_ascii=False, separators=(',', ':'))

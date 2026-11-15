@@ -189,3 +189,5 @@ Object.assign(LANG.en.ui,{"eRec": "Our picks", "eRecOne": "pick", "eBerg": "On t
 Object.assign(LANG.en.ui,{"liveA": "The official status of every lift and piste is on jungfrau.ch."});
 
 Object.assign(LANG.en.ui,{"hmToday": "Today", "hmAt": "at", "hmTom": "Tomorrow", "hmRoute": "Route of the day", "hmRouteSun": "Clear skies: pick a route with a view.", "hmRouteBad": "Poor visibility: this route stays among the trees.", "hmAllR": "All routes", "hmLunch": "Lunch tip", "hmAllE": "All restaurants", "hmDo": "More to do", "hmAllD": "All activities", "plRev": "Reviews and photos", "wc": {"sun": "Sunny", "part": "Partly cloudy", "cloud": "Cloudy", "rain": "Rain", "snow": "Snow"}});
+
+Object.assign(LANG.en.ui,{"wxHours": "Hourly", "wxLeg": "temperature and precipitation, 7 days", "rtLen": "length", "pNr": "number", "pLifts": "Lifts at this piste", "pEat": "Food along this piste"});

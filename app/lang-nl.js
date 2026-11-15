@@ -188,3 +188,5 @@ Object.assign(LANG.nl.ui,{"eRec": "Aanraders", "eRecOne": "aanrader", "eBerg": "
 Object.assign(LANG.nl.ui,{"liveA": "De officiële status van elke lift en piste staat op jungfrau.ch."});
 
 Object.assign(LANG.nl.ui,{"hmToday": "Vandaag", "hmAt": "op", "hmTom": "Morgen", "hmRoute": "Route van de dag", "hmRouteSun": "Helder weer: kies een route met uitzicht.", "hmRouteBad": "Weinig zicht: deze route blijft tussen de bomen.", "hmAllR": "Alle routes", "hmLunch": "Lunchtip", "hmAllE": "Alle restaurants", "hmDo": "Ook te doen", "hmAllD": "Alle activiteiten", "plRev": "Reviews en foto's", "wc": {"sun": "Zonnig", "part": "Half bewolkt", "cloud": "Bewolkt", "rain": "Regen", "snow": "Sneeuw"}});
+
+Object.assign(LANG.nl.ui,{"wxHours": "Per uur", "wxLeg": "temperatuur en neerslag, 7 dagen", "rtLen": "lengte", "pNr": "nummer", "pLifts": "Liften bij deze piste", "pEat": "Eten langs deze piste"});

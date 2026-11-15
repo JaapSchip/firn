@@ -7,7 +7,7 @@
 <meta name="description" content="Onafhankelijke skigids voor Wengen, Mürren en Grindelwald: kaart, liften, restaurants, skischolen en aanreis.">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Firn">
@@ -447,6 +447,12 @@ select,input[type=text]{background:var(--snow)}
 .hrow{display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 4px;scrollbar-width:none}.hrow::-webkit-scrollbar{display:none}
 .hmini{flex:none;width:62%;border:0;padding:0;background:none;text-align:left;color:var(--ink)}.hmini img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px}.hmini b{display:block;font-weight:400;font-size:1.1rem;margin:10px 0 2px}.hmini span{font-size:13px;color:var(--muted)}
 .nowb{margin-bottom:0}
+.wxc{background:var(--card);border-radius:var(--r);padding:18px 18px 6px;margin:0 0 12px}.wxt{display:flex;justify-content:space-between;align-items:center;gap:12px}.wxt .nm{display:flex;flex-direction:column;gap:2px;font-size:1.25rem}.wxt .nm small{font:400 11px "IBM Plex Mono",monospace;letter-spacing:.08em;color:var(--muted)}
+.wxt .now{display:flex;align-items:center;gap:10px;white-space:nowrap}.wxt .now b{font-weight:300;font-size:1.7rem;letter-spacing:-.02em}.wxt .wd{font-size:12px;color:var(--muted)}
+.wxw{display:grid;grid-template-columns:repeat(6,1fr);margin:16px 0 10px;text-align:center}.wxw div{display:flex;flex-direction:column;align-items:center;gap:5px}.wxw small{font-size:12px;color:var(--muted);text-transform:capitalize}.wxw span{font-size:12.5px;white-space:nowrap}.wxw .mn{color:var(--muted);margin-top:-3px}.rstats .bdg{color:#fff;font-size:11px}.wxc .wx>summary{list-style:none;display:flex;justify-content:space-between;font-weight:400}.wxc .wx>summary::-webkit-details-marker{display:none}
+.wxg{display:block;width:100%;height:84px}.wxgl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin:2px 0 4px}
+.wxc .wx{border-top:1px solid var(--line);margin-top:6px}.wxc .wx>summary{padding:12px 0;font-size:14px;color:var(--muted)}
+.pseg{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-top:1px solid var(--line);background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;color:var(--ink);font:400 16px "Hanken Grotesk",sans-serif}.pseg small{color:var(--muted)}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 </style>
 </head>
@@ -866,7 +872,7 @@ function mmap(pts,o){o=o||{};const M=window.FIRN_MAP;if(!M||!pts.length)return''
   let h=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(t('mapH'))}">`;
   M.lifts.filter(l=>inb(l.c)).forEach(l=>h+=`<path d="${path(l.c)}" fill="none" stroke="#0A1633" stroke-width="1.2" opacity=".55"/>`);
   M.pistes.filter(q=>inb(q.c)).forEach(q=>h+=`<path d="${path(q.c)}" fill="none" stroke="${CC[q.d]}" stroke-width="2.2" stroke-linejoin="round" opacity="${o.lines?.3:.8}"/>`);
-  (o.lines||[]).filter(inb).forEach(c=>h+=`<path d="${path(c)}" fill="none" stroke="${o.lc||'#7A4FD0'}" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 7"/>`);
+  (o.lines||[]).filter(inb).forEach(c=>h+=`<path d="${path(c)}" fill="none" stroke="${o.lc||'#7A4FD0'}" stroke-width="${o.solid?5:3}" stroke-linecap="round" stroke-linejoin="round" ${o.solid?'':'stroke-dasharray="2 7"'}/>`);
   if(!o.hide)pts.forEach((q,i)=>{const x=+X(q.p[1]),y=+Y(q.p[0]),left=x>W*.62;h+=`<circle cx="${x}" cy="${y}" r="13" fill="#E8540A" stroke="#fff" stroke-width="3"/>${o.num?`<text x="${x}" y="${y+4.5}" text-anchor="middle" style="fill:#fff;stroke:none;font-size:12px">${i+1}</text>`:''}<text x="${x+(left?-20:20)}" y="${y+5}" text-anchor="${left?'end':'start'}">${esc(q.n)}</text>`});
   return h+'</svg>'}
 function miniMap(r){if(typeof NLL==='undefined')return'';return mmap(r.path.filter((x,i,a)=>NLL[x]&&a.indexOf(x)===i).map(x=>({p:NLL[x],n:N[x].n})),{num:1})}
@@ -1157,6 +1163,7 @@ function doOnMap(id){const d=DO.find(x=>x.id===id);if(!d)return;show('kaart',tru
 const DOC={"jfj":{"a":"Roy Egloff","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:CH.BE.Grindelwald_2021-04-20_Jungfraujoch_Sphinx-Observatory.jpg"},"piz":{"a":"Ximonic (Simo Räsänen)","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Schilthorn_with_Bernese_Alps,_2012_August.jpg"},"cliff":{"a":"Paradise Chronicle","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Cliff_walk_auf_Grindelwald_First_im_Winter.jpg"},"hike":{"a":"Jpatokal","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Mannlichn_Royal_Walk_Winter.jpg"},"birg":{"a":"Imceac","l":"CC0","u":"https://commons.wikimedia.org/wiki/File:Schilthornbahn_Funifor_Sektion_Birg_Schilthorn.jpeg"}};
 const DOP={sled:'e-lauberhorn',hike:'c-hike',jfj:'c-jfj',piz:'c-piz',birg:'c-birg',cliff:'c-cliff',fly:'e-grindelwald',velo:'e-grindelwald',ice:'e-dawn',park:'e-sessel'};
 function drawDo(){$('#doCred').innerHTML=t('phBy')+': '+Object.keys(DOC).map(k=>`${esc(g('doen',k)[0])} – <a href="${esc(DOC[k].u)}" target="_blank" rel="noopener">${esc(DOC[k].a)}</a>, ${esc(DOC[k].l)}`).join(' · ')+' (Wikimedia Commons)';$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<button class="rcard" onclick="openPlace('d:${d.id}')"><img src="media/${DOP[d.id]}.jpg" alt="" loading="lazy"><span class="in"><span class="label">${esc(x[1])}</span><b>${esc(x[0])}</b></span></button>`}).join('')}
+const km=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+'<small> km</small>':m+'<small> m</small>';
 const dist=(a,b)=>{const x=(b[1]-a[1])*Math.cos((a[0]+b[0])/2*Math.PI/180),y=b[0]-a[0];return Math.hypot(x,y)*111195};
 function nearLift(p){let best=null;MD.lifts.forEach(l=>{if(!l.n||/carpet|rope/.test(l.t))return;[l.c[0],l.c[l.c.length-1]].forEach(q=>{const m=dist(p,q);if(!best||m<best.m)best={n:l.n,m}})});return best&&best.m<1500?best:null}
 let plCur=null;
@@ -1170,17 +1177,23 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
   else if(k==='d'){const d=DO.find(x=>x.id===id);if(!d)return;const x=g('doen',id),M=window.FIRN_MAP||{};
     o={ttl:'qaDo',n:x[0],sub:x[1],p:d.at?NLL[d.at]:null,photo:DOP[id],tags:[],text:x[2],stats:d.at?[[N[d.at].h+'<small> m</small>',t('plAlt')]]:[[(d.lay==='sled'?'50':'100')+'<small> km</small>',t('plNet')]],fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key}');drawPlace()`,map:`doOnMap('${id}')`,
       lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote'),cr:DOC[id]}}
+  else if(k==='p'){const M=window.FIRN_MAP,pn=q=>q.n&&q.n!==q.ref?q.n:(q.ref?t('kPisteOne')+' '+q.ref:''),segs=M.pistes.map((q,i)=>({q,i})).filter(x=>pn(x.q)===id);if(!segs.length)return;
+    const tot=segs.reduce((a,x)=>a+x.q.m,0),ord={b:0,r:1,k:2,f:3},dd=segs.map(x=>x.q.d).sort((a,b)=>ord[b]-ord[a])[0],ref=(segs.find(x=>x.q.ref)||{q:{}}).q.ref,ends=segs.flatMap(x=>[x.q.c[0],x.q.c[x.q.c.length-1]]),all=segs.flatMap(x=>x.q.c);
+    const lifts=[];M.lifts.forEach((l,li)=>{if(!l.n||/carpet|rope/.test(l.t)||lifts.some(z=>z.n===l.n))return;const m=Math.min(...[l.c[0],l.c[l.c.length-1]].flatMap(e=>ends.map(c=>dist(e,c))));if(m<160)lifts.push({n:l.n,m,li})});lifts.sort((a,b)=>a.m-b.m);
+    const eats=[];M.food.forEach((f,fi)=>{let m=1e9;for(let z=0;z<all.length;z+=2){const c=all[z];if(Math.abs(c[0]-f.p[0])<.003&&Math.abs(c[1]-f.p[1])<.004)m=Math.min(m,dist(f.p,c))}if(m<220)eats.push({n:f.n,m,key:FM[fi]!=null?'e:'+FM[fi]:'f:'+f.n})});eats.sort((a,b)=>a.m-b.m);
+    o={ttl:'kPiste',n:id,sub:'',p:null,tags:[],text:'',stats:[[km(tot),t('rtLen')],[`<span class="bdg" style="background:${{b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'}[dd]}">${t({b:'pB',r:'pR',k:'pK',f:'pF'}[dd])}</span>`,t('rtLevel')]].concat(ref&&ref!==id?[[esc(ref),t('pNr')]]:[]),fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key.replace(/'/g,"\\'")}');drawPlace()`,map:`mapPick('piste',${segs[0].i})`,
+      lines:segs.map(x=>x.q.c),lc:'#E8540A',solid:1,extra:(lifts.length?`<div class="sgh">${t('pLifts')}</div>`+lifts.slice(0,4).map(l=>`<button class="pseg" onclick="mapPick('lift',${l.li})"><span>${esc(l.n)}</span><small>›</small></button>`).join(''):'')+(eats.length?`<div class="sgh">${t('pEat')}</div>`+eats.slice(0,5).map(x=>`<button class="pseg" onclick="openPlace('${x.key.replace(/'/g,"\\'")}')"><span>${esc(x.n)}</span><small>${Math.round(x.m/10)*10} m ›</small></button>`).join(''):'')}}
   if(!o)return;TITLE.plek=o.ttl;$('#ttl').textContent=t(o.ttl);
   if(o.p&&k!=='d'){const nl=nearLift(o.p);if(nl)o.stats.push([`<span class="tx">${esc(nl.n)}</span>`,t('plLift')+' · '+(Math.round(nl.m/10)*10)+' m'])}
   if(o.sub&&k==='e')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
   const near=o.p&&MD.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-o.p[0])<.012&&Math.abs(c[1]-o.p[1])<.017));
-  const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,hide:1,pad:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
+  const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,solid:o.solid,hide:1,pad:o.solid?.006:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
   $('#plDetail').innerHTML=`<div class="rmedia ${o.photo&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div><img src="media/${o.photo}.jpg" alt=""></div>`:''}</div>
    <div class="rhead"><h1>${esc(o.n)}</h1><button class="heart" aria-label="♥" aria-pressed="${o.fav}" onclick="${o.favFn}">${o.fav?'♥':'♡'}</button></div>
    ${k!=='e'&&o.sub?`<p class="rsub">${esc(o.sub)}</p>`:''}
    ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,3)}" style="margin-top:14px">${o.stats.slice(0,3).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
    ${o.tags.length?`<div class="meta" style="margin:0 0 18px">${o.tags.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
-   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}, Wikimedia Commons</p>`:''}
+   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.extra||''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}, Wikimedia Commons</p>`:''}
    <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap">${o.ph?`<a class="btn sm alt" href="tel:${esc(o.ph.replace(/[^+\d]/g,''))}" style="text-decoration:none">${t('plCall')}</a>`:''}${/^https?:\/\//.test(o.web||'')?`<a class="btn sm ${o.ph?'ghost':'alt'}" href="${esc(o.web)}" target="_blank" rel="noopener" style="text-decoration:none">${t(k==='d'?'scSite':'plBook')} ↗</a>`:''}<button class="btn sm ghost" onclick="${o.map}">${t('onMap')}</button>${k!=='d'&&o.p?`<a class="btn sm ghost" style="text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.n+' '+o.p[0]+','+o.p[1])}">${t('plRev')} ↗</a>`:''}</div>${o.ph?`<p class="small muted">${esc(o.ph)}</p>`:''}`}
 /* ---------- zoeken en favorieten ---------- */
 const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
@@ -1191,11 +1204,11 @@ function eatOnMap(id){const e=EAT.find(x=>x.id===id);if(!e)return;if(EM[id]!=nul
 function openEat(id){openPlace('e:'+id)}
 let IDX=null;
 function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')},seen={},out=[];
-  const add=(o)=>{if(!o.n||seen[o.key])return;seen[o.key]=1;o.q=nrm(o.n+' '+(o.sub||''))+' '+String(o.n).toLowerCase();out.push(o)};
-  EAT.forEach(e=>add({key:'e:'+e.id,kind:'eat',n:e.n,sub:N[e.at].n+' · '+N[e.at].h+' m',go:()=>openEat(e.id)}));
-  MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',go:()=>openPlace('f:'+f.n)})});
+  const add=(o)=>{if(!o.n||seen[o.key])return;seen[o.key]=1;o.q=nrm(o.n+' '+(o.sub||''))+' '+String(o.n).toLowerCase();o.qx=(o.x||'').toLowerCase();out.push(o)};
+  EAT.forEach(e=>{const d=g('eat',e.id);add({key:'e:'+e.id,kind:'eat',n:e.n,sub:N[e.at].n+' · '+N[e.at].h+' m',x:d[0].join(' ')+' '+d[1],go:()=>openEat(e.id)})});
+  MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',x:(f.c||'').replace(/[;_]/g,' '),go:()=>openPlace('f:'+f.n)})});
   MD.lifts.forEach((l,i)=>add({key:'l:'+l.n,kind:'lift',n:l.n,sub:'',go:()=>mapPick('lift',i)}));
-  MD.pistes.forEach((p,i)=>{const nm=p.n&&p.n!==p.ref?p.n:(p.ref?t('kPisteOne')+' '+p.ref:'');if(!nm)return;add({key:'p:'+nm,kind:'piste',n:nm,sub:(p.n&&p.n!==p.ref&&p.ref?t('kPisteOne')+' '+p.ref+' · ':'')+t({b:'pB',r:'pR',k:'pK',f:'pF'}[p.d]),go:()=>mapPick('piste',i)})});
+  MD.pistes.forEach((p,i)=>{const nm=p.n&&p.n!==p.ref?p.n:(p.ref?t('kPisteOne')+' '+p.ref:'');if(!nm)return;add({key:'p:'+nm,kind:'piste',n:nm,sub:(p.n&&p.n!==p.ref&&p.ref?t('kPisteOne')+' '+p.ref+' · ':'')+t({b:'pB',r:'pR',k:'pK',f:'pF'}[p.d]),go:()=>openPlace('p:'+nm)})});
   ROUTES.forEach(r=>{const d=R(r.id);add({key:'r:'+r.id,kind:'route',n:d[0],sub:d[1]+' → '+d[2],go:()=>openRoute(r.id)})});
   DO.forEach(d=>{const x=g('doen',d.id);add({key:'d:'+d.id,kind:'do',n:x[0],sub:x[1],go:()=>openPlace('d:'+d.id)})});
   SCHOOLS.forEach(c=>add({key:'s:'+c.n,kind:'school',n:c.n,sub:c.v,go:()=>show('school',true)}));
@@ -1212,14 +1225,14 @@ var KIND=[['eat','kEat'],['route','qaRoutes'],['do','qaDo'],['lift','kLift'],['p
 function srow(o,fv){const f=fv.includes(o.key);return `<div class="sr"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}</span>${o.sub?`<small>${esc(o.sub)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}
 function drawSearch(){if(!IDX)buildIdx();const q=nrm($('#sq').value),raw=$('#sq').value.trim().toLowerCase(),fv=favs();$('#sq').placeholder=t('sPh');let h='';
   if(!raw){const fl=IDX.filter(o=>fv.includes(o.key));h=`<div class="sgh">${t('sFav')}</div>`+(fl.length?fl.map(o=>srow(o,fv)).join(''):`<p class="shint">${t('sNoFav')}</p>`)}
-  else{const hit=IDX.filter(o=>(q&&o.q.includes(q))||o.q.includes(raw)).sort((a,b)=>(a.q.startsWith(q)?0:1)-(b.q.startsWith(q)?0:1)||a.n.localeCompare(b.n));
+  else{const hit=IDX.filter(o=>(q&&o.q.includes(q))||o.q.includes(raw)||(raw.length>2&&o.qx&&o.qx.includes(raw))).sort((a,b)=>(a.q.startsWith(q)?0:1)-(b.q.startsWith(q)?0:1)||a.n.localeCompare(b.n));
     h=hit.length?KIND.map(([k,l])=>{const g=hit.filter(o=>o.kind===k).slice(0,12);return g.length?`<div class="sgh">${t(l)}</div>`+g.map(o=>srow(o,fv)).join(''):''}).join(''):`<p class="shint">${t('sNone')}</p>`}
   $('#sres').innerHTML=h}
 $('#sq').addEventListener('input',drawSearch);
 $('#sres').addEventListener('click',e=>{const f=e.target.closest('[data-f]');if(f){favTog(f.dataset.f);return}const b=e.target.closest('[data-k]');if(b){const o=IDX.find(x=>x.key===b.dataset.k);if(o)o.go()}});
 $('#srchBtn').onclick=()=>{show('zoek',true);drawSearch();setTimeout(()=>$('#sq').focus(),80)};
 $('#eatAll').onclick=()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'layer',l:'food',on:true}),150)};
-addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id)});
+addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id);if(e.data.k==='open'&&e.data.key)openPlace(e.data.key)});
 $('#realmap').addEventListener('load',()=>mapMsg({k:'cur',m:FM}));
 const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();drawTrips();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch();if(curView==='plek')drawPlace();EALL=null;drawEat();drawFav();drawNow();drawHome()};
 const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek';if(tb==='fav')drawFav();if(tb==='eten')drawEat()};
@@ -1233,6 +1246,9 @@ const WXI={sun:'<circle class="y" cx="12" cy="12" r="4.2"/><path class="y" d="M1
  snow:'<path d="M7 15h10a3.7 3.7 0 00.5-7.4 5.2 5.2 0 00-10-1A4.3 4.3 0 007 15z"/><path class="b" d="M8.5 18.5v.1M12 20v.1M15.5 18.5v.1M10.2 21.3v.1M13.8 21.3v.1" stroke-width="2.2"/>'};
 const wxIcon=(k,h)=>`<svg class="wxi" viewBox="0 0 24 24" aria-hidden="true">${WXI[(k==='sun'&&h!=null&&(h<8||h>16))?'moon':k]||WXI.cloud}</svg>`;
 const deg=v=>v==null?'–':(Math.round(v)+'°').replace('-','−');
+function wxChart(p){const c=(p.c||[]).filter(x=>x[1]!=null);if(c.length<8)return'';const W=600,H=120,ts=c.map(x=>x[1]),lo=Math.min(0,...ts)-1,hi=Math.max(0,...ts)+1,X=i=>(i/(c.length-1)*W).toFixed(1),Y=v=>(8+(hi-v)/(hi-lo)*(H-34)).toFixed(1),mp=Math.max(1,...c.map(x=>x[2]||0));
+  let days='';c.forEach((x,i)=>{if(i&&x[0].slice(11)==='00')days+=`<line x1="${X(i)}" x2="${X(i)}" y1="0" y2="${H}" stroke="#E3E7EF"/>`});
+  return `<svg class="wxg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${esc(p.n)}">${days}${c.map((x,i)=>x[2]>=0.1?`<rect x="${(+X(i)-3).toFixed(1)}" width="6" y="${(H-(x[2]/mp)*22).toFixed(1)}" height="${((x[2]/mp)*22).toFixed(1)}" fill="#8FB8E8"/>`:'').join('')}<line x1="0" x2="${W}" y1="${Y(0)}" y2="${Y(0)}" stroke="#9099AE" stroke-dasharray="3 4"/><path d="M${c.map((x,i)=>X(i)+' '+Y(x[1])).join('L')}" fill="none" stroke="#E8A20A" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><div class="wxgl"><span>┄ 0°</span><span>${t('wxLeg')}</span></div>`}
 function drawWx(){const el=$('#wx');if(!el)return;
   if(!WX||!WX.pts||!WX.pts.length){el.innerHTML=`<div class="wxh"><h1>${t('wxH')}</h1></div><p class="wxz">${t('wxNo')}</p>`;return}
   const made=new Date(WX.made),old=Date.now()-made>6*36e5,loc=cur==='en'?'en-GB':cur;
@@ -1240,9 +1256,11 @@ function drawWx(){const el=$('#wx');if(!el)return;
   const open=[...el.querySelectorAll('details[open]')].map(d=>d.dataset.k);
   el.innerHTML=`<div class="wxh"><h1>${t('wxH')}</h1></div><p class="wxz">${z?t('wxZero')+' '+z.toLocaleString(loc)+' m · ':''}${t('wxUpd')} ${made.toLocaleTimeString(loc,{hour:'2-digit',minute:'2-digit'})}${old?'<br>'+t('wxOld'):''}</p>`+
    WX.pts.map(p=>{const n=p.h[0];if(!n)return'';const hh=+n[0].slice(11);
-    return `<details class="lf wx" data-k="${p.k}"${open.includes(p.k)?' open':''}><summary><span class="nm">${esc(p.n)}<small>${p.alt.toLocaleString(loc)} M</small></span><span class="now">${wxIcon(n[5],hh)}<b>${deg(n[1])}</b><span class="wd">${n[4]==null?'':n[4]+' km/h'}</span></span></summary>
-     <div class="wxhr">${p.h.slice(0,24).map(h=>`<div><small>${h[0].slice(11)}:00</small>${wxIcon(h[5],+h[0].slice(11))}<span>${deg(h[1])}</span><span class="pp">${h[2]>=0.1?h[2].toLocaleString(loc,{maximumFractionDigits:1})+' mm':''}</span></div>`).join('')}</div>
-     <table class="wxd">${p.d.map((d,i)=>`<tr><td>${i===0?t('wxToday'):new Date(d[0]+'T12:00').toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short'})}</td><td>${wxIcon(d[5])}</td><td>${deg(d[1])} / ${deg(d[2])}</td><td class="mu">${d[3]>=0.1?d[3].toLocaleString(loc)+' mm':d[4].toLocaleString(loc)+' '+t('wxSun')}</td><td class="mu">${d[6]==null?'':d[6]+' km/h'}</td></tr>`).join('')}</table></details>`}).join('')+
+    return `<div class="wxc"><div class="wxt"><span class="nm">${esc(p.n)}<small>${p.alt.toLocaleString(loc)} M</small></span><span class="now">${wxIcon(n[5],hh)}<b>${deg(n[1])}</b><span class="wd">${n[4]==null?'':n[4]+' km/h'}</span></span></div>
+     <div class="wxw">${p.d.slice(0,6).map((d,i)=>`<div><small>${new Date(d[0]+'T12:00').toLocaleDateString(loc,{weekday:'short'})}</small>${wxIcon(d[5])}<span>${deg(d[2])}</span><span class="mn">${deg(d[1])}</span></div>`).join('')}</div>
+     ${wxChart(p)}
+     <details class="wx" data-k="${p.k}"${open.includes(p.k)?' open':''}><summary><span>${t('wxHours')}</span><span class="arr">›</span></summary>
+     <div class="wxhr">${p.h.slice(0,24).map(h=>`<div><small>${h[0].slice(11)}:00</small>${wxIcon(h[5],+h[0].slice(11))}<span>${deg(h[1])}</span><span class="pp">${h[2]>=0.1?h[2].toLocaleString(loc,{maximumFractionDigits:1})+' mm':''}</span></div>`).join('')}</div></details></div>`}).join('')+
    `<p class="wxsrc">${t("wxSrc")} · km/h = ${t("wxGust")}</p>`}
 function drawNow(){const el=$('#nowCard');if(!el)return;const loc=cur==='en'?'en-GB':cur,pt=k=>WX&&WX.pts&&WX.pts.find(p=>p.k===k),a=pt('ks'),b=pt('wen'),z=a&&a.h[0]&&a.h[0][6];
   const tile=(p)=>p&&p.h[0]?`<div>${wxIcon(p.h[0][5],+p.h[0][0].slice(11))}<b>${deg(p.h[0][1])}</b><span>${esc(p.n)} · ${p.alt.toLocaleString(loc)} m</span></div>`:'';
