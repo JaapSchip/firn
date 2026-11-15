@@ -37,6 +37,11 @@ html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif
 .facts div{font-size:13px;color:var(--muted)}.facts b{display:block;font-weight:300;font-size:1.5rem;color:var(--ink);letter-spacing:-.02em}
 .sheet a{display:inline-block;margin-top:16px;border:1px solid var(--ink);border-radius:99px;padding:9px 18px;color:var(--ink);text-decoration:none;font-size:14px}
 .x{position:absolute;right:16px;top:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:none;font-size:18px;color:var(--ink)}
+.emb .bar{display:none}.emb .top{padding-top:4px}.emb .toast{top:70px}.emb .side{bottom:74px}.emb .legend{bottom:14px}.emb .rbar{bottom:58px}
+.rbar{position:fixed;left:14px;right:76px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:1000;background:var(--ink);color:#fff;border-radius:14px;padding:11px 12px 11px 16px;display:none;align-items:center;gap:10px;font-size:14px}
+.rbar.on{display:flex}.rbar span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rbar button{background:none;border:0;color:#fff;font-size:20px;line-height:1;padding:0 4px}
+.stop{width:24px;height:24px;border-radius:50%;background:var(--hi);color:#fff;font:500 12px "IBM Plex Mono",monospace;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(10,22,51,.3);transform:translate(-50%,-50%);position:absolute}
+.stopn{position:absolute;left:28px;top:3px;white-space:nowrap;font:500 12px "Hanken Grotesk",sans-serif;color:var(--ink);text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
 .toast{position:fixed;left:50%;top:calc(120px + env(safe-area-inset-top));transform:translateX(-50%);z-index:1200;background:var(--ink);color:#fff;padding:11px 18px;border-radius:99px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
 .toast.on{opacity:1}
 .lbl{white-space:nowrap;transform:translate(-50%,-50%);position:absolute;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
@@ -69,7 +74,8 @@ html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif
   <button class="rb" id="zi" aria-label="Inzoomen">+</button>
   <button class="rb" id="zo" aria-label="Uitzoomen">−</button>
 </div>
-<div class="legend"><span><b style="background:var(--blue)"></b>Blauw</span><span><b style="background:var(--red)"></b>Rood</span><span><b style="background:var(--black)"></b>Zwart</span><span><b style="background:var(--ink);height:2px"></b>Lift</span></div>
+<div class="legend" id="lg"></div>
+<div class="rbar" id="rbar"><span id="rbt"></span><button id="rbx" aria-label="×">×</button></div>
 <div class="sheet" id="sheet" role="dialog" aria-live="polite"><button class="x" id="sx" aria-label="Sluiten">×</button><div id="sb"></div></div>
 <div class="toast" id="toast"></div>
 <script src="leaflet.js"></script>
@@ -77,8 +83,19 @@ html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif
 <script>
 (function(){
 const D=window.FIRN_MAP,$=s=>document.querySelector(s);
-const COL={b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'},DN={b:'Blauw · makkelijk',r:'Rood · gemiddeld',k:'Zwart · moeilijk',f:'Freeride · niet geprepareerd'};
-const LT={gondola:'Gondel',cable_car:'Kabelbaan',chair_lift:'Stoeltjeslift',mixed_lift:'Combilift','t-bar':'Sleeplift',platter:'Sleeplift',drag_lift:'Sleeplift',rope_tow:'Touwlift',magic_carpet:'Loopband'};
+const COL={b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'};
+const TX={
+ nl:{lifts:'Liften',sled:'Sleeën',food:'Eten',park:'Parkeren',blue:'Blauw',red:'Rood',black:'Zwart',lift:'Lift',piste:'Piste',noname:'Piste zonder naam',part:'dit deel',len:'lengte',pers:'personen',sledp:'Sleepiste',kitchen:'keuken',site:'Website',places:'plaatsen',fee:'tarief',paid:'Betaald',free:'Gratis',parkp:'Parkeerplaats',zoom:'Zoom in om alle punten te zien',nogeo:'Positie is op dit toestel niet beschikbaar',perm:'Geef toestemming voor je locatie om jezelf te zien',nofix:'Positie nu niet te bepalen',out:'Je bent nu buiten het skigebied',me:'Mijn positie',close:'Sluiten',
+  d:{b:'makkelijk',r:'gemiddeld',k:'moeilijk',f:'niet geprepareerd'},dn:{b:'Blauw',r:'Rood',k:'Zwart',f:'Freeride'},lt:{gondola:'Gondel',cable_car:'Kabelbaan',chair_lift:'Stoeltjeslift',drag:'Sleeplift',rope_tow:'Touwlift',magic_carpet:'Loopband'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Berghut'}},
+ en:{lifts:'Lifts',sled:'Sledging',food:'Food',park:'Parking',blue:'Blue',red:'Red',black:'Black',lift:'Lift',piste:'Piste',noname:'Unnamed piste',part:'this section',len:'length',pers:'people',sledp:'Sledging run',kitchen:'cuisine',site:'Website',places:'spaces',fee:'fee',paid:'Paid',free:'Free',parkp:'Car park',zoom:'Zoom in to see all points',nogeo:'Location is not available on this device',perm:'Allow location access to see yourself',nofix:'Cannot get your position right now',out:'You are outside the ski area',me:'My position',close:'Close',
+  d:{b:'easy',r:'intermediate',k:'difficult',f:'ungroomed'},dn:{b:'Blue',r:'Red',k:'Black',f:'Freeride'},lt:{gondola:'Gondola',cable_car:'Cable car',chair_lift:'Chairlift',drag:'Drag lift',rope_tow:'Rope tow',magic_carpet:'Magic carpet'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Mountain hut'}},
+ de:{lifts:'Lifte',sled:'Schlitteln',food:'Essen',park:'Parken',blue:'Blau',red:'Rot',black:'Schwarz',lift:'Lift',piste:'Piste',noname:'Piste ohne Namen',part:'dieser Abschnitt',len:'Länge',pers:'Personen',sledp:'Schlittelweg',kitchen:'Küche',site:'Website',places:'Plätze',fee:'Tarif',paid:'Kostenpflichtig',free:'Gratis',parkp:'Parkplatz',zoom:'Hineinzoomen, um alle Punkte zu sehen',nogeo:'Standort ist auf diesem Gerät nicht verfügbar',perm:'Standortzugriff erlauben, um dich zu sehen',nofix:'Standort gerade nicht bestimmbar',out:'Du bist ausserhalb des Skigebiets',me:'Mein Standort',close:'Schliessen',
+  d:{b:'leicht',r:'mittel',k:'schwer',f:'nicht präpariert'},dn:{b:'Blau',r:'Rot',k:'Schwarz',f:'Freeride'},lt:{gondola:'Gondelbahn',cable_car:'Luftseilbahn',chair_lift:'Sesselbahn',drag:'Skilift',rope_tow:'Seillift',magic_carpet:'Förderband'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Berghütte'}},
+ fr:{lifts:'Remontées',sled:'Luge',food:'Manger',park:'Parking',blue:'Bleue',red:'Rouge',black:'Noire',lift:'Remontée',piste:'Piste',noname:'Piste sans nom',part:'ce tronçon',len:'longueur',pers:'personnes',sledp:'Piste de luge',kitchen:'cuisine',site:'Site web',places:'places',fee:'tarif',paid:'Payant',free:'Gratuit',parkp:'Parking',zoom:'Zoomez pour voir tous les points',nogeo:'Position indisponible sur cet appareil',perm:'Autorisez la localisation pour vous voir',nofix:'Position introuvable pour le moment',out:'Vous êtes hors du domaine skiable',me:'Ma position',close:'Fermer',
+  d:{b:'facile',r:'moyenne',k:'difficile',f:'non damée'},dn:{b:'Bleue',r:'Rouge',k:'Noire',f:'Freeride'},lt:{gondola:'Télécabine',cable_car:'Téléphérique',chair_lift:'Télésiège',drag:'Téléski',rope_tow:'Fil-neige',magic_carpet:'Tapis roulant'},ft:{restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Cabane'}}};
+let LG='nl';try{const q=new URLSearchParams(location.search).get('lang')||JSON.parse(localStorage.getItem('jf_lang')||'null')||(navigator.language||'nl').slice(0,2);if(TX[q])LG=q}catch(e){}
+const T=k=>TX[LG][k]||TX.nl[k]||k,ltn=t=>T('lt')[t]||T('lt')[/bar|platter|drag/.test(t)?'drag':'']||T('lift');
+if(self!==top)document.body.classList.add('emb');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const km=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+' km':m+' m';
 const BOUNDS=L.latLngBounds([46.52,7.80],[46.70,8.13]);
@@ -103,12 +120,12 @@ function closeSheet(){$('#sheet').classList.remove('on');if(hl){hl.remove();hl=n
 $('#sx').onclick=closeSheet;
 D.pistes.forEach(p=>L.polyline(p.c,{color:'#fff',weight:5.5,interactive:false}).addTo(G.pistes));
 D.pistes.forEach(p=>{const l=L.polyline(p.c,{color:COL[p.d],weight:3.2,dashArray:p.d==='f'?'6 6':null}).addTo(G.pistes);
-  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:${COL[p.d]}"></i>Piste${p.ref?' '+esc(p.ref):''}</span><h2>${esc(p.n&&p.n!==p.ref?p.n:p.ref?'Piste '+p.ref:'Piste zonder naam')}</h2><div class="facts"><div><b>${km(p.m)}</b>dit deel</div><div><b>${DN[p.d].split(' · ')[0]}</b>${DN[p.d].split(' · ')[1]}</div></div>`)})});
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:${COL[p.d]}"></i>${T('piste')}${p.ref?' '+esc(p.ref):''}</span><h2>${esc(p.n&&p.n!==p.ref?p.n:p.ref?T('piste')+' '+p.ref:T('noname'))}</h2><div class="facts"><div><b>${km(p.m)}</b>${T('part')}</div><div><b>${T('dn')[p.d]}</b>${T('d')[p.d]}</div></div>`)})});
 D.sled.forEach(s=>{const l=L.polyline(s.c,{color:'#7A4FD0',weight:2.6,dashArray:'2 6',lineCap:'round'}).addTo(G.sled);
-  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#7A4FD0"></i>Sleepiste</span><h2>${esc(s.n||'Sleepiste')}</h2><div class="facts"><div><b>${km(s.m)}</b>dit deel</div></div>`)})});
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#7A4FD0"></i>${T('sledp')}</span><h2>${esc(s.n||T('sledp'))}</h2><div class="facts"><div><b>${km(s.m)}</b>${T('part')}</div></div>`)})});
 D.lifts.forEach(f=>{const big=f.t==='gondola'||f.t==='cable_car',l=L.polyline(f.c,{color:'#0A1633',weight:big?2.6:1.8}).addTo(G.lifts);
   [f.c[0],f.c[f.c.length-1]].forEach(p=>L.circleMarker(p,{radius:big?4:3,color:'#0A1633',weight:1.5,fillColor:'#fff',fillOpacity:1,interactive:false}).addTo(G.lifts));
-  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#0A1633"></i>${LT[f.t]||'Lift'}</span><h2>${esc(f.n||'Lift')}</h2><div class="facts"><div><b>${km(f.m)}</b>lengte</div>${f.cap?`<div><b>${esc(f.cap)}</b>personen</div>`:''}</div>`)});
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#0A1633"></i>${ltn(f.t)}</span><h2>${esc(f.n||T('lift'))}</h2><div class="facts"><div><b>${km(f.m)}</b>${T('len')}</div>${f.cap?`<div><b>${esc(f.cap)}</b>${T('pers')}</div>`:''}</div>`)});
   if(f.n&&f.m>350){const m=f.c[Math.floor(f.c.length/2)];L.marker(m,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl lf">${esc(f.n)}</span>`})}).addTo(G.labels)}});
 // labels
 const seen={};
@@ -116,35 +133,48 @@ D.places.forEach(p=>L.marker(p.p,{interactive:false,icon:L.divIcon({className:''
 D.peaks.forEach((p,i)=>L.marker(p.p,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl pk ${p.k?'pkm':''}">${esc(p.n)}<br>${p.e}</span>`})}).addTo(G.labels));
 D.stations.forEach(s=>{if(D.places.some(p=>p.n===s.n))return;L.marker(s.p,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl st">${esc(s.n)}</span>`})}).addTo(G.labels)});
 // eten en parkeren
-const FT={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Berghut'};
-D.food.forEach(f=>L.marker(f.p,{icon:L.divIcon({className:'',html:'<span class="dot food"></span>',iconSize:[24,24]})}).addTo(G.food).on('click',()=>pick(null,`<span class="label"><i style="background:#E8540A"></i>${FT[f.t]||'Eten'}</span><h2>${esc(f.n)}</h2>${f.c?`<div class="facts"><div><b style="font-size:1.1rem">${esc(f.c.replace(/[;_]/g,' · '))}</b>keuken</div></div>`:''}${/^https?:\/\//.test(f.w)?`<a href="${esc(f.w)}" target="_blank" rel="noopener">Website ↗</a>`:''}`)));
-D.parking.forEach(k=>L.marker(k.p,{icon:L.divIcon({className:'',html:'<span class="dot park"></span>',iconSize:[24,24]})}).addTo(G.parking).on('click',()=>pick(null,`<span class="label"><i style="background:#0A1633;border-radius:2px"></i>Parkeren</span><h2>${esc(k.n||'Parkeerplaats')}</h2><div class="facts">${k.cap?`<div><b>${k.cap}</b>plaatsen</div>`:''}${k.fee?`<div><b>${k.fee==='yes'?'Betaald':k.fee==='no'?'Gratis':esc(k.fee)}</b>tarief</div>`:''}</div>`)));
+D.food.forEach(f=>L.marker(f.p,{icon:L.divIcon({className:'',html:'<span class="dot food"></span>',iconSize:[24,24]})}).addTo(G.food).on('click',()=>pick(null,`<span class="label"><i style="background:#E8540A"></i>${T('ft')[f.t]||T('food')}</span><h2>${esc(f.n)}</h2>${f.c?`<div class="facts"><div><b style="font-size:1.1rem">${esc(f.c.replace(/[;_]/g,' · '))}</b>${T('kitchen')}</div></div>`:''}${/^https?:\/\//.test(f.w)?`<a href="${esc(f.w)}" target="_blank" rel="noopener">${T('site')} ↗</a>`:''}`)));
+D.parking.forEach(k=>L.marker(k.p,{icon:L.divIcon({className:'',html:'<span class="dot park"></span>',iconSize:[24,24]})}).addTo(G.parking).on('click',()=>pick(null,`<span class="label"><i style="background:#0A1633;border-radius:2px"></i>${T('park')}</span><h2>${esc(k.n||T('parkp'))}</h2><div class="facts">${k.cap?`<div><b>${k.cap}</b>${T('places')}</div>`:''}${k.fee?`<div><b>${k.fee==='yes'?T('paid'):k.fee==='no'?T('free'):esc(k.fee)}</b>${T('fee')}</div>`:''}</div>`)));
 ['base','areas','pistes','lifts','labels'].forEach(k=>G[k].addTo(map));
 map.on('click',closeSheet);
 function zc(){const z=map.getZoom(),c=map.getContainer().classList;c.toggle('z-lo',z<12.75);c.toggle('z-mid',z>=12.75&&z<14)}
 map.on('zoomend',zc);zc();
 // chips
-const LAYERS=[['lifts','Liften',1],['sled','Sleeën',0],['food','Eten',0],['parking','Parkeren',0]];
+const LAYERS=[['lifts','lifts',1],['sled','sled',0],['food','food',0],['parking','park',0]];
 const GO=[['Wengen',[46.596,7.935],14],['Mürren',[46.560,7.880],14],['Grindelwald',[46.622,8.020],13.5],['First',[46.659,8.060],14]];
-$('#chips').innerHTML=LAYERS.map(l=>`<button class="chip" data-l="${l[0]}" aria-pressed="${!!l[2]}"><i></i>${l[1]}</button>`).join('')+GO.map((g,i)=>`<button class="chip go" data-g="${i}">${g[0]}</button>`).join('');
+const ON={lifts:1};
+function chrome(){$('#chips').innerHTML=LAYERS.map(l=>`<button class="chip" data-l="${l[0]}" aria-pressed="${!!ON[l[0]]}"><i></i>${T(l[1])}</button>`).join('')+GO.map((g,i)=>`<button class="chip go" data-g="${i}">${g[0]}</button>`).join('');
+  $('#lg').innerHTML=`<span><b style="background:var(--blue)"></b>${T('blue')}</span><span><b style="background:var(--red)"></b>${T('red')}</span><span><b style="background:var(--black)"></b>${T('black')}</span><span><b style="background:var(--ink);height:2px"></b>${T('lift')}</span>`;$('#loc').setAttribute('aria-label',T('me'));$('#sx').setAttribute('aria-label',T('close'));document.documentElement.lang=LG}
+chrome();
 $('#chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;
   if(b.dataset.g){const g=GO[b.dataset.g];map.flyTo(g[1],g[2],{duration:.8});return}
-  const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);const k=b.dataset.l;on?G[k].addTo(map):G[k].remove();
-  if(on&&(k==='food'||k==='parking')&&map.getZoom()<13)toast('Zoom in om alle punten te zien')};
+  const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);const k=b.dataset.l;ON[k]=on;on?G[k].addTo(map):G[k].remove();
+  if(on&&(k==='food'||k==='parking')&&map.getZoom()<13)toast(T('zoom'))};
 $('#zi').onclick=()=>map.zoomIn(1);$('#zo').onclick=()=>map.zoomOut(1);
 let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
 // eigen positie
 let me=null,acc=null,watch=null,follow=false;
 $('#loc').onclick=()=>{
-  if(!navigator.geolocation){toast('Positie is op dit toestel niet beschikbaar');return}
+  if(!navigator.geolocation){toast(T('nogeo'));return}
   if(watch!==null&&me){map.flyTo(me.getLatLng(),Math.max(map.getZoom(),15),{duration:.6});return}
   follow=true;$('#loc').classList.add('on');
   try{watch=navigator.geolocation.watchPosition(p=>{const ll=[p.coords.latitude,p.coords.longitude];
     if(!me){me=L.marker(ll,{interactive:false,zIndexOffset:1000,icon:L.divIcon({className:'',html:'<span class="me"></span>'})}).addTo(map);acc=L.circle(ll,{radius:p.coords.accuracy,stroke:false,fillColor:'#1C6DD0',fillOpacity:.12,interactive:false}).addTo(map)}
     else{me.setLatLng(ll);acc.setLatLng(ll).setRadius(p.coords.accuracy)}
-    if(follow){follow=false;if(BOUNDS.contains(ll))map.flyTo(ll,15,{duration:.8});else toast('Je bent nu buiten het skigebied')}},
-   err=>{$('#loc').classList.remove('on');watch=null;toast(err.code===1?'Geef toestemming voor je locatie om jezelf te zien':'Positie nu niet te bepalen')},
-   {enableHighAccuracy:true,maximumAge:5000,timeout:15000})}catch(e){$('#loc').classList.remove('on');toast('Positie is hier niet beschikbaar')}};
+    if(follow){follow=false;if(BOUNDS.contains(ll))map.flyTo(ll,15,{duration:.8});else toast(T('out'))}},
+   err=>{$('#loc').classList.remove('on');watch=null;toast(err.code===1?T('perm'):T('nofix'))},
+   {enableHighAccuracy:true,maximumAge:5000,timeout:15000})}catch(e){$('#loc').classList.remove('on');toast(T('nogeo'))}};
+// berichten van de app: route tonen, naar een plek gaan, taal wisselen
+const RL=L.layerGroup().addTo(map);
+function clearRoute(){RL.clearLayers();$('#rbar').classList.remove('on')}
+$('#rbx').onclick=clearRoute;
+addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;const m=e.data;
+  if(m.lang&&TX[m.lang]&&m.lang!==LG){LG=m.lang;chrome();closeSheet()}
+  if(m.k==='size')map.invalidateSize();
+  if(m.k==='route'&&m.pts&&m.pts.length){map.invalidateSize();closeSheet();RL.clearLayers();
+    m.pts.forEach((s,i)=>L.marker(s.p,{interactive:false,zIndexOffset:900,icon:L.divIcon({className:'',html:`<span class="stop">${i+1}<span class="stopn">${esc(s.n)}</span></span>`})}).addTo(RL));
+    $('#rbt').textContent=m.title||'';$('#rbar').classList.add('on');map.fitBounds(L.latLngBounds(m.pts.map(s=>s.p)).pad(.25),{maxZoom:15})}
+  if(m.k==='go'&&m.p){map.invalidateSize();clearRoute();L.marker(m.p,{interactive:false,zIndexOffset:900,icon:L.divIcon({className:'',html:`<span class="stop">•<span class="stopn">${esc(m.n||'')}</span></span>`})}).addTo(RL);map.setView(m.p,15)}});
 window.FIRN={map,G,D};
 })();
 </script>
