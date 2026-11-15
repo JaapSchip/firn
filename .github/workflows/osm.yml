@@ -12,11 +12,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Overpass
         run: |
-          for host in overpass-api.de overpass.kumi.systems; do
-            if curl -sS --fail -m 300 -A "firn-app (github.com/JaapSchip/firn)" --data-urlencode "data@data/osm-query.txt" "https://$host/api/interpreter" -o data/osm.json && grep -q '"elements"' data/osm.json; then break; fi
-            sleep 20
+          ok=0
+          for try in 1 2 3; do
+            for host in overpass-api.de overpass.private.coffee overpass.kumi.systems; do
+              if curl -sS --fail -m 300 -A "firn-app (github.com/JaapSchip/firn)" --data-urlencode "data@data/osm-query.txt" "https://$host/api/interpreter" -o /tmp/osm.json && grep -q '"elements"' /tmp/osm.json; then ok=1; break 2; fi
+              sleep 30
+            done
           done
-          grep -q '"elements"' data/osm.json
+          test "$ok" = 1
+          mv /tmp/osm.json data/osm.json
           ls -la data
       - name: Commit
         run: |
