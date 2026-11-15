@@ -1459,7 +1459,7 @@ function drawWelc(){const el=$('#welc'),n=wSteps(),k=n[wStep],ios=/iphone|ipad|i
     foot=(wInst?`<button class="btn alt" onclick="welcInst()">${t('wInstB')}</button><button class="wskip" onclick="welcDone()">${t('wLater')}</button>`:`<button class="btn alt" onclick="welcDone()">${t('wStart')}</button>`)}
   el.innerHTML=`${k===0?`<div class="wimg"><img src="${jbUrl('hero')}" onerror="this.parentNode.remove()" alt=""><small>${JBC.a}</small></div>`:''}<div class="wlogo">Firn</div><div class="wbody">${body}</div><div class="wfoot">${dots}${foot}</div>`}
 if(!S.get('seen',0)&&!/[?&]nowelcome/.test(location.search)){$('#welc').classList.add('on');drawWelc()}
-if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator&&location.protocol==='https:'){const had=!!navigator.serviceWorker.controller,t0=Date.now();let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl&&Date.now()-t0<20000){rl=true;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>r.update&&r.update()).catch(()=>{})}
 </script>
 </body>
 </html>
