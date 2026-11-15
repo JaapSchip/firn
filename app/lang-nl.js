@@ -164,3 +164,7 @@ LANG.nl.ui.realH="Het gebied";
 Object.assign(LANG.nl.ui,{"qaSchool": "Skischolen", "fSchoolS": "Zes scholen in drie dorpen. Les voor beginners, kinderen en gevorderden.", "scOff": "Officiële Zwitserse skischool", "scInd": "Onafhankelijke school", "scGroup": "Groepsles", "scPriv": "Privéles", "scKids": "Kinderles", "scBoard": "Snowboard", "scOffp": "Off-piste met gids", "scMur": "Kantoor midden in het dorp, achter Hotel Jungfrau.", "scSite": "Website", "scTipH": "Goed om te weten", "scTipT": "Boek in de kerstvakantie en in februari ruim van tevoren. Prijzen en tijden wisselen per school; kijk op hun eigen site. Firn is onafhankelijk en verdient niets aan deze lijst."});
 
 Object.assign(LANG.nl.ui,{"wxH": "Weer per hoogte", "wxZero": "Nulgradengrens", "wxUpd": "Bijgewerkt", "wxSrc": "Bron: MeteoSwiss", "wxNo": "Het weer is nu niet beschikbaar.", "wxGust": "vlagen", "wxSun": "u zon", "wxOld": "Let op: deze verwachting is ouder dan 6 uur.", "wxToday": "Vandaag"});
+
+Object.assign(LANG.nl.ui,{"sH": "Zoeken", "sPh": "Zoek restaurant, lift, piste of plaats", "sFav": "Favorieten", "sNoFav": "Tik op ♡ bij een restaurant, lift of piste om hem hier te bewaren.", "sNone": "Niets gevonden.", "kEat": "Restaurants", "kLift": "Liften", "kPiste": "Pistes", "kSchool": "Skischolen", "kPlace": "Plaatsen en toppen", "kHut": "Berghut", "kPisteOne": "Piste", "eatAll": "Alle {n} adressen op de kaart"});
+
+Object.assign(LANG.nl.ui,{"pB": "blauw", "pR": "rood", "pK": "zwart", "pF": "freeride"});

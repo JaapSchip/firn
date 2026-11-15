@@ -164,3 +164,7 @@ LANG.de.ui.realH="Das Gebiet";
 Object.assign(LANG.de.ui,{"qaSchool": "Skischulen", "fSchoolS": "Sechs Schulen in drei Dörfern. Unterricht für Anfänger, Kinder und Könner.", "scOff": "Offizielle Schweizer Skischule", "scInd": "Unabhängige Schule", "scGroup": "Gruppenunterricht", "scPriv": "Privatunterricht", "scKids": "Kinderkurse", "scBoard": "Snowboard", "scOffp": "Off-Piste mit Guide", "scMur": "Büro mitten im Dorf, hinter dem Hotel Jungfrau.", "scSite": "Website", "scTipH": "Gut zu wissen", "scTipT": "Über Weihnachten und im Februar früh buchen. Preise und Zeiten sind je Schule verschieden; siehe deren eigene Website. Firn ist unabhängig und verdient nichts an dieser Liste."});
 
 Object.assign(LANG.de.ui,{"wxH": "Wetter nach Höhe", "wxZero": "Nullgradgrenze", "wxUpd": "Aktualisiert", "wxSrc": "Quelle: MeteoSchweiz", "wxNo": "Das Wetter ist gerade nicht verfügbar.", "wxGust": "Böen", "wxSun": "Std. Sonne", "wxOld": "Achtung: Diese Prognose ist älter als 6 Stunden.", "wxToday": "Heute"});
+
+Object.assign(LANG.de.ui,{"sH": "Suchen", "sPh": "Restaurant, Lift, Piste oder Ort suchen", "sFav": "Favoriten", "sNoFav": "Tippe auf ♡ bei einem Restaurant, Lift oder einer Piste, um es hier zu speichern.", "sNone": "Nichts gefunden.", "kEat": "Restaurants", "kLift": "Lifte", "kPiste": "Pisten", "kSchool": "Skischulen", "kPlace": "Orte und Gipfel", "kHut": "Berghütte", "kPisteOne": "Piste", "eatAll": "Alle {n} Adressen auf der Karte"});
+
+Object.assign(LANG.de.ui,{"pB": "blau", "pR": "rot", "pK": "schwarz", "pF": "Freeride"});

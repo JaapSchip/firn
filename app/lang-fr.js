@@ -164,3 +164,7 @@ LANG.fr.ui.realH="Le domaine";
 Object.assign(LANG.fr.ui,{"qaSchool": "Écoles de ski", "fSchoolS": "Six écoles dans trois villages. Cours pour débutants, enfants et experts.", "scOff": "École suisse de ski officielle", "scInd": "École indépendante", "scGroup": "Cours collectifs", "scPriv": "Cours privés", "scKids": "Cours enfants", "scBoard": "Snowboard", "scOffp": "Hors-piste avec guide", "scMur": "Bureau au centre du village, derrière l'Hôtel Jungfrau.", "scSite": "Site web", "scTipH": "Bon à savoir", "scTipT": "Réservez tôt pour Noël et février. Les prix et horaires varient selon l'école ; consultez leur site. Firn est indépendant et ne gagne rien sur cette liste."});
 
 Object.assign(LANG.fr.ui,{"wxH": "Météo par altitude", "wxZero": "Isotherme 0 °C", "wxUpd": "Mis à jour", "wxSrc": "Source : MétéoSuisse", "wxNo": "La météo n'est pas disponible pour le moment.", "wxGust": "rafales", "wxSun": "h de soleil", "wxOld": "Attention : cette prévision date de plus de 6 heures.", "wxToday": "Aujourd'hui"});
+
+Object.assign(LANG.fr.ui,{"sH": "Rechercher", "sPh": "Restaurant, remontée, piste ou lieu", "sFav": "Favoris", "sNoFav": "Touchez ♡ sur un restaurant, une remontée ou une piste pour le garder ici.", "sNone": "Aucun résultat.", "kEat": "Restaurants", "kLift": "Remontées", "kPiste": "Pistes", "kSchool": "Écoles de ski", "kPlace": "Lieux et sommets", "kHut": "Cabane", "kPisteOne": "Piste", "eatAll": "Les {n} adresses sur la carte"});
+
+Object.assign(LANG.fr.ui,{"pB": "bleue", "pR": "rouge", "pK": "noire", "pF": "freeride"});

@@ -401,6 +401,14 @@ select,input[type=text]{background:var(--snow)}
 .wxhr div{flex:none;width:52px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:13px}.wxhr small{font:400 10.5px "IBM Plex Mono",monospace;color:var(--muted)}.wxhr .pp{font-size:10.5px;color:#1C6DD0;min-height:13px}
 .wxd{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14px}.wxd td{padding:9px 0;border-top:1px solid var(--line);vertical-align:middle}.wxd td:nth-child(n+3){text-align:right;white-space:nowrap}.wxd .mu{color:var(--muted);font-size:12.5px}
 .wxsrc{font-size:12px;color:var(--muted);margin:10px 0 0}
+#sq{width:100%;margin:20px 0 6px;padding:15px 18px;border:1px solid var(--ink);border-radius:999px;font:400 17px "Hanken Grotesk",sans-serif;color:var(--ink);background:var(--snow);outline:0;-webkit-appearance:none}
+#sq:focus{box-shadow:0 0 0 3px rgba(10,22,51,.12)}
+.sgh{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:26px 0 4px}
+.sr{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line)}
+.sr>button.go{flex:1;min-width:0;text-align:left;background:none;border:0;padding:14px 0;color:var(--ink);font:400 17px "Hanken Grotesk",sans-serif;display:flex;flex-direction:column;gap:2px}
+.sr small{font-size:12.5px;color:var(--muted)}
+.shint{color:var(--muted);margin:18px 0}
+.topbar .right{display:flex;gap:8px}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 </style>
 </head>
@@ -409,7 +417,7 @@ select,input[type=text]{background:var(--snow)}
 <div class="topbar">
   <div class="left"><button class="sosb" id="sosBtn">SOS</button><button class="ib back" id="backBtn" hidden data-ia="back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <div class="ttl" id="ttl"></div>
-  <div class="right"><button class="ib" id="guideBtn" data-ia="gName"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></button><button class="ib" id="langBtn" data-ia="lgH"><span id="langCode">EN</span></button></div>
+  <div class="right"><button class="ib" id="guideBtn" data-ia="gName"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></button><button class="ib" id="srchBtn" aria-label="Zoeken"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button><button class="ib" id="langBtn" data-ia="lgH"><span id="langCode">EN</span></button></div>
 </div>
 <main id="main">
 
@@ -484,6 +492,7 @@ select,input[type=text]{background:var(--snow)}
   </div>
   <div class="row" style="margin:12px 0"><button class="btn" id="eatPick" data-i="pick"></button></div>
   <div id="eatList" style="border-bottom:1px solid var(--line)"></div>
+  <button class="btn ghost" id="eatAll" style="margin-top:18px"></button>
   <p class="small muted" style="margin-top:14px" data-i="eatNote"></p>
 </section>
 
@@ -491,6 +500,11 @@ select,input[type=text]{background:var(--snow)}
   <div class="banner" id="banTravel"></div>
   <p class="lead" data-i="fTravelS"></p>
   <div id="travelList"></div>
+</section>
+
+<section class="view" id="v-zoek">
+  <input id="sq" type="search" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <div id="sres"></div>
 </section>
 
 <section class="view" id="v-school">
@@ -560,6 +574,7 @@ select,input[type=text]{background:var(--snow)}
 </div>
 
 <script src="lang-en.js"></script><script src="lang-nl.js"></script><script src="lang-de.js"></script><script src="lang-fr.js"></script><script src="images.js"></script>
+<script src="kaart/map-data.js"></script>
 <script>
 "use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -631,8 +646,8 @@ const PHR=['Grüessech','Merci vilmal','Ä Guete!','Uf Widerluege','Es Rivella, 
 const R=id=>g('routes',id);
 
 /* ---------- NAV ---------- */
-const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school'],SUB={routes:1,eten:1,reis:1,school:1};
-const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool'};
+const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1};
+const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH'};
 let curView='start';
 function show(tb,push){
   if(!VIEWS.includes(tb))tb='start';curView=tb;
@@ -817,7 +832,7 @@ function eatFilter(){const fav=st('fav',[]);return EAT.filter(e=>eatA==='all'||(
 const openE={};
 function drawEat(){
   const fav=st('fav',[]),list=eatFilter();
-  $('#eatList').innerHTML=list.length?list.map(e=>{const d=g('eat',e.id),f=fav.includes(e.id);return `<details class="lf eatr ${eatP===e.id?'pick':''}" id="c-${e.id}" ${openE[e.id]||eatP===e.id?'open':''} ontoggle="openE['${e.id}']=this.open"><summary><span class="nm">${esc(e.n)}<span class="sub">${N[e.at].n} · ${N[e.at].h} m</span></span><button class="heart" aria-label="♥" aria-pressed="${f}" onclick="event.preventDefault();event.stopPropagation();toggleFav('${e.id}')">${f?'♥':'♡'}</button></summary><div class="lfb"><p style="margin:0 0 10px">${d[1]}</p><div class="meta">${d[0].map(x=>`<span class="pill">${x}</span>`).join('')}</div><button class="btn sm ghost" onclick="nodeOnMap('${e.at}')">${t('onMap')}</button></div></details>`}).join(''):`<p class="muted">${t('noFav')}</p>`;
+  $('#eatList').innerHTML=list.length?list.map(e=>{const d=g('eat',e.id),f=fav.includes(e.id);return `<details class="lf eatr ${eatP===e.id?'pick':''}" id="c-${e.id}" ${openE[e.id]||eatP===e.id?'open':''} ontoggle="openE['${e.id}']=this.open"><summary><span class="nm">${esc(e.n)}<span class="sub">${N[e.at].n} · ${N[e.at].h} m</span></span><button class="heart" aria-label="♥" aria-pressed="${f}" onclick="event.preventDefault();event.stopPropagation();toggleFav('${e.id}')">${f?'♥':'♡'}</button></summary><div class="lfb"><p style="margin:0 0 10px">${d[1]}</p><div class="meta">${d[0].map(x=>`<span class="pill">${x}</span>`).join('')}</div><button class="btn sm ghost" onclick="eatOnMap('${e.id}')">${t('onMap')}</button></div></details>`}).join(''):`<p class="muted">${t('noFav')}</p>`;
 }
 function toggleFav(id){const f=st('fav',[]).slice(),i=f.indexOf(id);i<0?f.push(id):f.splice(i,1);put('fav',f);drawEat()}
 $$('#eatChips .chip').forEach(c=>c.onclick=()=>{$$('#eatChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));eatA=c.dataset.a;eatP=null;drawEat()});
@@ -1018,6 +1033,42 @@ routeOnMap=function(id){const r=ROUTES.find(x=>x.id===id);if(!r)return;$$('.moda
 nodeOnMap=function(id){if(!NLL[id])return;$$('.modal').forEach(m=>m.classList.remove('on'));show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:NLL[id],n:N[id].n}),120)};
 const _setLang=setLang;setLang=function(c){_setLang(c);mapMsg({k:'lang',lang:cur})};
 $('#realmap').addEventListener('load',()=>mapMsg({k:'lang',lang:cur}));
+/* ---------- zoeken en favorieten ---------- */
+const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
+const nrm=x=>String(x).toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]/g,'').replace(/\b(berg)?(restaurant|haus|gasthaus|hotel)\b/g,'').replace(/\s+/g,' ').trim();
+const EM={},FM={};   // samengestelde lijst <-> kaartpunt
+EAT.forEach(e=>{const k=nrm(e.n);if(!k)return;let i=MD.food.findIndex(f=>nrm(f.n)===k);if(i<0&&k.length>5)i=MD.food.findIndex(f=>{const q=nrm(f.n);return q.length>5&&(q.includes(k)||k.includes(q))});if(i>=0&&FM[i]==null){EM[e.id]=i;FM[i]=e.id}});
+function eatOnMap(id){const e=EAT.find(x=>x.id===id);if(!e)return;if(EM[id]!=null){show('kaart',true);setTimeout(()=>mapMsg({k:'pick',kind:'food',i:EM[id]}),150)}else nodeOnMap(e.at)}
+function openEat(id){eatA='all';eatP=id;$$('#eatChips .chip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.a==='all'));show('eten',true);drawEat();const el=$('#c-'+id);if(el)el.scrollIntoView({block:'center'})}
+let IDX=null;
+function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')},seen={},out=[];
+  const add=(o)=>{if(!o.n||seen[o.key])return;seen[o.key]=1;o.q=nrm(o.n+' '+(o.sub||''))+' '+String(o.n).toLowerCase();out.push(o)};
+  EAT.forEach(e=>add({key:'e:'+e.id,kind:'eat',n:e.n,sub:N[e.at].n+' · '+N[e.at].h+' m',go:()=>openEat(e.id)}));
+  MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',go:()=>mapPick('food',i)})});
+  MD.lifts.forEach((l,i)=>add({key:'l:'+l.n,kind:'lift',n:l.n,sub:'',go:()=>mapPick('lift',i)}));
+  MD.pistes.forEach((p,i)=>{const nm=p.n&&p.n!==p.ref?p.n:(p.ref?t('kPisteOne')+' '+p.ref:'');if(!nm)return;add({key:'p:'+nm,kind:'piste',n:nm,sub:(p.n&&p.n!==p.ref&&p.ref?t('kPisteOne')+' '+p.ref+' · ':'')+t({b:'pB',r:'pR',k:'pK',f:'pF'}[p.d]),go:()=>mapPick('piste',i)})});
+  SCHOOLS.forEach(c=>add({key:'s:'+c.n,kind:'school',n:c.n,sub:c.v,go:()=>show('school',true)}));
+  MD.places.concat(MD.stations).forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:'',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
+  MD.peaks.forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:x.e+' m',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
+  IDX=out}
+function mapPick(kind,i){show('kaart',true);setTimeout(()=>mapMsg({k:'pick',kind,i}),150)}
+const favs=()=>S.get('fav2',[]).concat(st('fav',[]).map(x=>'e:'+x));
+function favTog(key){if(key.startsWith('e:')){toggleFav(key.slice(2))}else{const f=S.get('fav2',[]),i=f.indexOf(key);i<0?f.push(key):f.splice(i,1);S.set('fav2',f)}drawSearch()}
+const KIND=[['eat','kEat'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
+function srow(o,fv){const f=fv.includes(o.key);return `<div class="sr"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}</span>${o.sub?`<small>${esc(o.sub)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}
+function drawSearch(){if(!IDX)buildIdx();const q=nrm($('#sq').value),raw=$('#sq').value.trim().toLowerCase(),fv=favs();$('#sq').placeholder=t('sPh');let h='';
+  if(!raw){const fl=IDX.filter(o=>fv.includes(o.key));h=`<div class="sgh">${t('sFav')}</div>`+(fl.length?fl.map(o=>srow(o,fv)).join(''):`<p class="shint">${t('sNoFav')}</p>`)}
+  else{const hit=IDX.filter(o=>(q&&o.q.includes(q))||o.q.includes(raw)).sort((a,b)=>(a.q.startsWith(q)?0:1)-(b.q.startsWith(q)?0:1)||a.n.localeCompare(b.n));
+    h=hit.length?KIND.map(([k,l])=>{const g=hit.filter(o=>o.kind===k).slice(0,12);return g.length?`<div class="sgh">${t(l)}</div>`+g.map(o=>srow(o,fv)).join(''):''}).join(''):`<p class="shint">${t('sNone')}</p>`}
+  $('#sres').innerHTML=h}
+$('#sq').addEventListener('input',drawSearch);
+$('#sres').addEventListener('click',e=>{const f=e.target.closest('[data-f]');if(f){favTog(f.dataset.f);return}const b=e.target.closest('[data-k]');if(b){const o=IDX.find(x=>x.key===b.dataset.k);if(o)o.go()}});
+$('#srchBtn').onclick=()=>{show('zoek',true);drawSearch();setTimeout(()=>$('#sq').focus(),80)};
+$('#eatAll').onclick=()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'layer',l:'food',on:true}),150)};
+addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id)});
+$('#realmap').addEventListener('load',()=>mapMsg({k:'cur',m:FM}));
+const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch()};
+const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek'};
 /* ---------- weer per hoogte (MeteoSwiss) ---------- */
 let WX=null,wxAt=0;
 const WXI={sun:'<circle class="y" cx="12" cy="12" r="4.2"/><path class="y" d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M5.3 18.7L7 17M17 7l1.7-1.7"/>',
