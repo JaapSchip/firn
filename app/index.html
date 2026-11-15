@@ -417,6 +417,20 @@ select,input[type=text]{background:var(--snow)}
 #v-start .hero{margin:0 0 8px;height:auto;min-height:0;aspect-ratio:4/5;max-height:440px;border-radius:var(--r)}
 #v-start .hero h1{font-size:3rem;margin-top:6px}#v-start .hero-in{padding:0 18px 20px}#v-start .hero-foot p{font-size:15px}
 #wx .wxh h1{font-size:1.9rem}
+.ibar{position:sticky;top:0;z-index:6;margin:0 -20px;background:var(--ink);display:flex;justify-content:space-around;padding:0 6px;height:0;overflow:hidden;transition:height .18s ease}
+.ibar.on{height:54px}.ibar button{flex:1;background:none;border:0;height:54px;display:grid;place-items:center}.ibar svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.rcard{display:block;width:100%;border:0;padding:0;margin:0 0 14px;background:var(--card);border-radius:var(--r);overflow:hidden;text-align:left;color:var(--ink)}
+.rcard img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.rcard .in{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}.rcard b{font-weight:400;font-size:1.45rem;letter-spacing:-.02em}.rcard .tm{color:var(--muted);font-size:14px}
+.bdg{display:inline-block;color:#fff;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:5px;vertical-align:middle}
+.rmedia{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:0 0 4px;scrollbar-width:none}.rmedia::-webkit-scrollbar{display:none}
+.rmedia>*{flex:none;width:78%;height:300px;scroll-snap-align:start;border:0;padding:0;background:#EEF1F6;overflow:hidden}.rmedia img{width:100%;height:100%;object-fit:cover;display:block}.rmedia svg{width:100%;height:100%;display:block}
+.rmedia text{font:500 13px "Hanken Grotesk",sans-serif;fill:#0A1633;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.rhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin:24px 0 8px}.rhead h1{font-size:2rem;font-weight:400;letter-spacing:-.02em;line-height:1.1}
+.rsub{color:var(--muted);margin:0 0 8px}.rlev{margin:0 0 20px}
+.rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 26px}.rstats div{background:var(--card);border-radius:12px;padding:14px 6px 12px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+.rstats b{font-weight:500;font-size:1.15rem;letter-spacing:-.02em;white-space:nowrap}.rstats b small{font-weight:400;font-size:.7em}.rstats span{font-size:11px;color:var(--muted)}
+.rdesc h3{font-size:1.15rem;font-weight:500;margin:0 0 8px}.rdesc ol{padding-left:20px;margin:10px 0 0}.rdesc li{margin:0 0 8px}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 </style>
 </head>
@@ -430,6 +444,7 @@ select,input[type=text]{background:var(--snow)}
 <main id="main">
 
 <section class="view" id="v-start">
+  <div class="ibar" id="ibar"></div>
   <div class="xh"><h1 data-i="tStart"></h1></div>
   <div class="qa" id="qa"></div>
   <div class="hero" id="heroArt"><img src="media/e-wengen2.jpg" alt="Wengen, Lauterbrunnental">
@@ -491,10 +506,13 @@ select,input[type=text]{background:var(--snow)}
 
 <section class="view" id="v-routes">
   <p class="lead" data-i="routesSub"></p>
+  <div class="chips" id="rtChips"></div>
   <div class="rprog"><div class="row" style="justify-content:space-between"><span id="rpT"></span><span class="small muted" id="rpR"></span></div><div class="prog" style="margin-top:10px"><i id="rpB"></i></div></div>
   <div id="routeList"></div>
   <div class="trow" style="margin-top:34px"><h3 data-i="sledH"></h3><p data-i="sledD"></p></div>
 </section>
+
+<section class="view" id="v-route"><div id="rtDetail"></div></section>
 
 <section class="view" id="v-eten">
   <p class="lead" data-i="eatSub"></p>
@@ -663,8 +681,8 @@ const PHR=['Grüessech','Merci vilmal','Ä Guete!','Uf Widerluege','Es Rivella, 
 const R=id=>g('routes',id);
 
 /* ---------- NAV ---------- */
-const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1};
-const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH',doen:'qaDo'};
+const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1};
+const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH'};
 let curView='start';
 function show(tb,push){
   if(!VIEWS.includes(tb))tb='start';curView=tb;
@@ -725,9 +743,9 @@ function drawStart(){
   sky();
   $('#qa').innerHTML=[['eten','qaEat',IC.eat],['reis','qaTr',IC.car],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['doen','qaDo',IC.pin],['zoek','sFav',IC.heart]].map(q=>`<button class="qab" onclick="show('${q[0]}',true);${q[0]==='zoek'?"$('#sq').value='';drawSearch()":''}">${q[2]}<span>${t(q[1])}</span></button>`).join('');
   $('#qaLive').innerHTML=[['wx','lvWx',IC.sun],['liftList','kLift',IC.lift],['seasonCard','lvHours',IC.cal]].map(q=>`<button class="qab" onclick="document.getElementById('${q[0]}').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<a class="qab" href="https://www.jungfrau.ch/en-gb/live/slope-data/" target="_blank" rel="noopener">${IC.msg}<span>${t('lvOff')} ↗</span></a>`;
-  $('#qa').innerHTML+=''+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
+  $('#ibar').innerHTML=[['eten',IC.eat,'qaEat'],['reis',IC.car,'qaTr'],['school',IC.school,'qaSchool'],['routes',IC.route,'qaRoutes'],['doen',IC.pin,'qaDo'],['zoek',IC.heart,'sFav']].map(q=>`<button aria-label="${esc(t(q[2]))}" onclick="show('${q[0]}',true);${q[0]==='zoek'?"$('#sq').value='';drawSearch()":''}">${q[1]}</button>`).join('')+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
   const G={blue:'#1C6DD0',red:'#D42A3A',black:'#2B2B31'},lv=t('lv');
-  $('#tiles').innerHTML=ROUTES.map(r=>{const d=R(r.id);return `<button class="tile" onclick="routeOnMap(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="label">${t('route')} ${r.id} · ${lv[r.lv]}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></button>`}).join('');
+  $('#tiles').innerHTML=ROUTES.map(r=>{const d=R(r.id);return `<button class="tile" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="label">${t('route')} ${r.id} · ${lv[r.lv]}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></button>`}).join('');
   $('#heroSun').textContent=zt(sunTimes(Date.now())[1]);
     $('#banTravel').innerHTML=pic('village');
   $('#imgNote').hidden=!IMG.ai;
@@ -798,14 +816,35 @@ function nodeOnMap(id){if(!N[id])return;$$('.modal').forEach(m=>m.classList.remo
 
 /* ---------- ROUTES ---------- */
 const openR={};
+let rtF='all',rtCur=null;
+const HARD={black:2,red:1,blue:0},PC={blue:'#1C6DD0',red:'#D42A3A',black:'#16181D'};
+const rcol=r=>PC[r.c.slice().sort((a,b)=>HARD[b]-HARD[a])[0]];
 function drawRoutes(){
   const done=st('done',[]),lv=t('lv');
-  $('#routeList').innerHTML=ROUTES.map(r=>{const e=EAT.find(x=>x.id===r.eat),ok=done.includes(r.id),d=R(r.id);return `<details class="rt" ${openR[r.id]?'open':''} ontoggle="openR[${r.id}]=this.open"><summary><div class="rtc"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="label">${t('route')} ${r.id} · ${lv[r.lv]}${ok?' · ✓':''}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></div></summary>
-   <div class="rtb"><p>${d[5]}</p><div class="meta"><span class="pill">${dots(r.c)} ${lv[r.lv]}</span><span class="pill">${d[3]}</span></div>
-   <ol>${d[6].map(x=>`<li>${x}</li>`).join('')}</ol><p class="small muted" style="margin-top:12px">${t('eatTip')}: ${e.n}</p>
-   <div class="row" style="margin-top:14px"><button class="btn sm alt" onclick="routeOnMap(${r.id})">${t('showMap')}</button><button class="btn sm ghost" aria-pressed="${ok}" onclick="toggleDone(${r.id})">${t(ok?'ticked':'tick')}</button></div></div></details>`}).join('');
+  $('#rtChips').innerHTML=[['all',t('cAll')]].concat(lv.map((x,i)=>[String(i),x])).map(c=>`<button class="chip" aria-pressed="${rtF===c[0]}" onclick="rtF='${c[0]}';drawRoutes()">${c[1]}</button>`).join('');
+  $('#routeList').innerHTML=ROUTES.filter(r=>rtF==='all'||String(r.lv)===rtF).map(r=>{const ok=done.includes(r.id),d=R(r.id);return `<button class="rcard" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="in"><span><span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span>${ok?' <span class="small muted">✓</span>':''}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></span></button>`}).join('');
   const k=done.length;$('#rpT').textContent=t('ofDone',{k,n:ROUTES.length});$('#rpB').style.width=(k/ROUTES.length*100)+'%';$('#rpR').textContent=t('ranks')[k]||'';
+  if(rtCur&&curView==='route')drawRoute();
 }
+function miniMap(r){const M=window.FIRN_MAP;if(!M||typeof NLL==='undefined')return'';const pts=r.path.filter((x,i,a)=>NLL[x]&&a.indexOf(x)===i).map(x=>({p:NLL[x],n:N[x].n}));if(!pts.length)return'';
+  let la0=Math.min(...pts.map(q=>q.p[0])),la1=Math.max(...pts.map(q=>q.p[0])),lo0=Math.min(...pts.map(q=>q.p[1])),lo1=Math.max(...pts.map(q=>q.p[1]));
+  const W=600,H=460,kx=Math.cos((la0+la1)/2*Math.PI/180),pad=.012;la0-=pad;la1+=pad;lo0-=pad/kx;lo1+=pad/kx;
+  const sc=Math.min(W/((lo1-lo0)*kx),H/(la1-la0)),ox=(W-(lo1-lo0)*kx*sc)/2,oy=(H-(la1-la0)*sc)/2,X=lo=>(ox+(lo-lo0)*kx*sc).toFixed(1),Y=la=>(oy+(la1-la)*sc).toFixed(1);
+  const inb=c=>c.some(q=>q[0]>la0-.01&&q[0]<la1+.01&&q[1]>lo0-.02&&q[1]<lo1+.02),path=c=>'M'+c.map(q=>X(q[1])+' '+Y(q[0])).join('L'),CC={b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'};
+  let h=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(t('mapH'))}">`;
+  M.lifts.filter(l=>inb(l.c)).forEach(l=>h+=`<path d="${path(l.c)}" fill="none" stroke="#0A1633" stroke-width="1.2" opacity=".55"/>`);
+  M.pistes.filter(q=>inb(q.c)).forEach(q=>h+=`<path d="${path(q.c)}" fill="none" stroke="${CC[q.d]}" stroke-width="2.2" stroke-linejoin="round" opacity=".8"/>`);
+  pts.forEach((q,i)=>{const x=+X(q.p[1]),y=+Y(q.p[0]),left=x>W*.62;h+=`<circle cx="${x}" cy="${y}" r="13" fill="#E8540A" stroke="#fff" stroke-width="3"/><text x="${x}" y="${y+4.5}" text-anchor="middle" style="fill:#fff;stroke:none;font-size:12px">${i+1}</text><text x="${x+(left?-20:20)}" y="${y+5}" text-anchor="${left?'end':'start'}">${esc(q.n)}</text>`});
+  return h+'</svg>'}
+function openRoute(id){rtCur=id;show('route',true);drawRoute();$('#main').scrollTop=0}
+function drawRoute(){const r=ROUTES.find(x=>x.id===rtCur);if(!r)return;const d=R(r.id),lv=t('lv'),done=st('done',[]),ok=done.includes(r.id),e=EAT.find(x=>x.id===r.eat),hs=r.path.map(x=>N[x].h),fv=typeof favs==='function'&&favs().includes('r:'+r.id),dn=(String(d[3]).match(/\d[\d.,']*/)||[''])[0];
+  $('#rtDetail').innerHTML=`<div class="rmedia"><button onclick="routeOnMap(${r.id})" aria-label="${esc(t('showMap'))}">${miniMap(r)}</button><div><img src="media/${TP[r.id]}.jpg" alt=""></div></div>
+   <div class="rhead"><h1>${esc(d[0])}</h1><button class="heart" aria-label="♥" aria-pressed="${fv}" onclick="favTog('r:${r.id}');drawRoute()">${fv?'♥':'♡'}</button></div>
+   <p class="rsub">${t('qaRoutes')} · ${esc(d[1])} → ${esc(d[2])}</p><p class="rlev">${t('rtLevel')}: <span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span></p>
+   <div class="rstats"><div><b>${esc(d[4])}</b><span>${t('rtTime')}</span></div><div><b>${dn||'–'}<small> m</small></b><span>↘ ${t('rtDown')}</span></div><div><b>${Math.max(...hs)}<small> m</small></b><span>▲ ${t('rtTop')}</span></div><div><b>${Math.min(...hs)}<small> m</small></b><span>▼ ${t('rtLow')}</span></div></div>
+   <div class="rdesc"><h3>${t('rtDesc')}</h3><p>${d[5]}</p><ol>${d[6].map(x=>`<li>${x}</li>`).join('')}</ol>
+   <p class="small muted" style="margin-top:14px">${t('eatTip')}: <a href="#" onclick="event.preventDefault();openEat('${e.id}')">${esc(e.n)}</a></p></div>
+   <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap"><button class="btn sm alt" onclick="routeOnMap(${r.id})">${t('showMap')}</button><button class="btn sm ghost" aria-pressed="${ok}" onclick="toggleDone(${r.id})">${t(ok?'ticked':'tick')}</button></div>`}
 function toggleDone(id){const d=st('done',[]).slice(),i=d.indexOf(id);i<0?d.push(id):d.splice(i,1);put('done',d);drawRoutes()}
 
 /* ---------- PISTE RADAR (gedeeld via db, anders lokaal) ---------- */
@@ -1070,6 +1109,7 @@ function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut
   MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',go:()=>mapPick('food',i)})});
   MD.lifts.forEach((l,i)=>add({key:'l:'+l.n,kind:'lift',n:l.n,sub:'',go:()=>mapPick('lift',i)}));
   MD.pistes.forEach((p,i)=>{const nm=p.n&&p.n!==p.ref?p.n:(p.ref?t('kPisteOne')+' '+p.ref:'');if(!nm)return;add({key:'p:'+nm,kind:'piste',n:nm,sub:(p.n&&p.n!==p.ref&&p.ref?t('kPisteOne')+' '+p.ref+' · ':'')+t({b:'pB',r:'pR',k:'pK',f:'pF'}[p.d]),go:()=>mapPick('piste',i)})});
+  ROUTES.forEach(r=>{const d=R(r.id);add({key:'r:'+r.id,kind:'route',n:d[0],sub:d[1]+' → '+d[2],go:()=>openRoute(r.id)})});
   DO.forEach(d=>{const x=g('doen',d.id);add({key:'d:'+d.id,kind:'do',n:x[0],sub:x[1],go:()=>show('doen',true)})});
   SCHOOLS.forEach(c=>add({key:'s:'+c.n,kind:'school',n:c.n,sub:c.v,go:()=>show('school',true)}));
   MD.places.concat(MD.stations).forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:'',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
@@ -1078,7 +1118,7 @@ function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut
 function mapPick(kind,i){show('kaart',true);setTimeout(()=>mapMsg({k:'pick',kind,i}),150)}
 const favs=()=>S.get('fav2',[]).concat(st('fav',[]).map(x=>'e:'+x));
 function favTog(key){if(key.startsWith('e:')){toggleFav(key.slice(2))}else{const f=S.get('fav2',[]),i=f.indexOf(key);i<0?f.push(key):f.splice(i,1);S.set('fav2',f)}drawSearch()}
-const KIND=[['eat','kEat'],['do','qaDo'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
+const KIND=[['eat','kEat'],['route','qaRoutes'],['do','qaDo'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
 function srow(o,fv){const f=fv.includes(o.key);return `<div class="sr"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}</span>${o.sub?`<small>${esc(o.sub)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}
 function drawSearch(){if(!IDX)buildIdx();const q=nrm($('#sq').value),raw=$('#sq').value.trim().toLowerCase(),fv=favs();$('#sq').placeholder=t('sPh');let h='';
   if(!raw){const fl=IDX.filter(o=>fv.includes(o.key));h=`<div class="sgh">${t('sFav')}</div>`+(fl.length?fl.map(o=>srow(o,fv)).join(''):`<p class="shint">${t('sNoFav')}</p>`)}
@@ -1121,6 +1161,7 @@ const _ra=renderAll;renderAll=function(){_ra();drawWx()};
 const _show2=show;show=function(tb,push){_show2(tb,push);if(curView==='liften')loadWx()};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView==='liften')loadWx()});
 drawWx();loadWx(true);
+$('#main').addEventListener('scroll',()=>{if(curView!=='start')return;const q=$('#qa').getBoundingClientRect(),m=$('#main').getBoundingClientRect();$('#ibar').classList.toggle('on',q.bottom<m.top+4)},{passive:true});
 renderAll();
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
