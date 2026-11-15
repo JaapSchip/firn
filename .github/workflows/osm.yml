@@ -1,0 +1,27 @@
+name: Kaartdata ophalen (OpenStreetMap)
+on:
+  workflow_dispatch:
+  push:
+    paths: ['data/osm-query.txt', '.github/workflows/osm.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Overpass
+        run: |
+          for host in overpass-api.de overpass.kumi.systems; do
+            if curl -sS --fail -m 300 --data-urlencode "data@data/osm-query.txt" "https://$host/api/interpreter" -o data/osm.json && grep -q '"elements"' data/osm.json; then break; fi
+            sleep 20
+          done
+          grep -q '"elements"' data/osm.json
+          ls -la data
+      - name: Commit
+        run: |
+          git config user.name "firn-bot"
+          git config user.email "firn-bot@users.noreply.github.com"
+          git add data/osm.json
+          git diff --cached --quiet || git commit -m "Kaartdata bijgewerkt (© OpenStreetMap, ODbL)"
+          git push
