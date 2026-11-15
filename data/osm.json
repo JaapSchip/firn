@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-11-15T14:14:07Z",
+    "timestamp_osm_base": "2026-11-15T17:31:36Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -103,6 +103,20 @@
     "place": "village",
     "population": "2514",
     "wikidata": "Q65502"
+  }
+},
+{
+  "type": "node",
+  "id": 213210378,
+  "lat": 46.6849192,
+  "lon": 7.8540524,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "check_date": "2023-04-29",
+    "fee": "no",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
   }
 },
 {
@@ -478,6 +492,28 @@
 },
 {
   "type": "node",
+  "id": 298944257,
+  "lat": 46.6242899,
+  "lon": 8.0463544,
+  "tags": {
+    "amenity": "toilets",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 298945323,
+  "lat": 46.6241204,
+  "lon": 8.0431383,
+  "tags": {
+    "amenity": "toilets",
+    "check_date": "2023-08-09",
+    "fee": "no",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
   "id": 299136479,
   "lat": 46.6111804,
   "lon": 7.9428660,
@@ -523,6 +559,16 @@
     "uic_name": "Männlichen (Sesselbahn)",
     "uic_ref": "8531147",
     "usage": "tourism"
+  }
+},
+{
+  "type": "node",
+  "id": 299311886,
+  "lat": 46.6246424,
+  "lon": 8.0332116,
+  "tags": {
+    "amenity": "toilets",
+    "source": "survey"
   }
 },
 {
@@ -601,6 +647,15 @@
     "public_transport": "station",
     "uic_name": "Kleine Scheidegg (Lauberhorn)",
     "uic_ref": "8530680"
+  }
+},
+{
+  "type": "node",
+  "id": 302374300,
+  "lat": 46.6677518,
+  "lon": 8.0231160,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -933,6 +988,28 @@
 },
 {
   "type": "node",
+  "id": 410147194,
+  "lat": 46.6189390,
+  "lon": 7.8689054,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 410147195,
+  "lat": 46.6204031,
+  "lon": 7.8953016,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
   "id": 413907884,
   "lat": 46.5832664,
   "lon": 8.1282070,
@@ -989,6 +1066,17 @@
 },
 {
   "type": "node",
+  "id": 454373034,
+  "lat": 46.5756963,
+  "lon": 7.9388697,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "toilets:wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 454394985,
   "lat": 46.5451558,
   "lon": 7.8383217,
@@ -1026,6 +1114,16 @@
     "self_service": "yes",
     "tourism": "alpine_hut",
     "website": "http://www.spielbodenalp.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 474774706,
+  "lat": 46.6524666,
+  "lon": 7.9112872,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no"
   }
 },
 {
@@ -1357,6 +1455,17 @@
 },
 {
   "type": "node",
+  "id": 708911047,
+  "lat": 46.5456045,
+  "lon": 7.9022949,
+  "tags": {
+    "amenity": "toilets",
+    "check_date": "2022-05-18",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 768597365,
   "lat": 46.5488497,
   "lon": 7.8916784,
@@ -1680,6 +1789,31 @@
 },
 {
   "type": "node",
+  "id": 1432761605,
+  "lat": 46.5636636,
+  "lon": 7.8971792,
+  "tags": {
+    "amenity": "toilets",
+    "check_date": "2026-07-10",
+    "check_date:wheelchair": "2026-07-10",
+    "fee": "no",
+    "operator": "BLM",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1432762455,
+  "lat": 46.5578126,
+  "lon": 7.8911384,
+  "tags": {
+    "amenity": "toilets",
+    "check_date": "2026-01-29",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
   "id": 1435708318,
   "lat": 46.5367739,
   "lon": 7.9625907,
@@ -1870,6 +2004,15 @@
     "aerialway": "station",
     "ele": "2194",
     "name": "Kandahar"
+  }
+},
+{
+  "type": "node",
+  "id": 1631844465,
+  "lat": 46.5709935,
+  "lon": 7.8648429,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -2335,6 +2478,31 @@
 },
 {
   "type": "node",
+  "id": 2261213526,
+  "lat": 46.6803324,
+  "lon": 7.8664432,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 2268310522,
+  "lat": 46.6943097,
+  "lon": 7.8793181,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "changing_table": "no",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 2349289306,
   "lat": 46.5941253,
   "lon": 7.9314586,
@@ -2408,6 +2576,24 @@
     "addr:street": "Obere Bönigstrasse",
     "amenity": "restaurant",
     "name": "Jungfrau Park"
+  }
+},
+{
+  "type": "node",
+  "id": 2459015227,
+  "lat": 46.6821726,
+  "lon": 7.8790815,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 2459015229,
+  "lat": 46.6821911,
+  "lon": 7.8776123,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -2499,6 +2685,26 @@
     "natural": "peak",
     "wikidata": "Q82662",
     "wikipedia": "de:Silberhorn (Berner Alpen)"
+  }
+},
+{
+  "type": "node",
+  "id": 2754616756,
+  "lat": 46.6829373,
+  "lon": 7.8515496,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "yes",
+    "level": "-1",
+    "operator": "BLS",
+    "payment:coins": "yes",
+    "payment:contactless": "no",
+    "payment:credit_cards": "no",
+    "payment:debit_cards": "no",
+    "price": "1 CHF",
+    "source": "survey",
+    "wheelchair": "yes"
   }
 },
 {
@@ -2715,6 +2921,23 @@
 },
 {
   "type": "node",
+  "id": 3087536722,
+  "lat": 46.5475861,
+  "lon": 7.9820858,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "female": "yes",
+    "layer": "-1",
+    "male": "yes",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 3114762827,
   "lat": 46.6904478,
   "lon": 7.8689965,
@@ -2756,6 +2979,33 @@
     "opening_hours": "09:00-19:00",
     "phone": "+41 33 855 15 15",
     "website": "https://www.airtime.ch/cafe/cafe.html"
+  }
+},
+{
+  "type": "node",
+  "id": 3122236180,
+  "lat": 46.5985870,
+  "lon": 7.9083146,
+  "tags": {
+    "amenity": "toilets",
+    "drinking_water": "yes",
+    "fee": "no",
+    "level": "-1"
+  }
+},
+{
+  "type": "node",
+  "id": 3122449364,
+  "lat": 46.6050983,
+  "lon": 7.9210587,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "drinking_water": "yes",
+    "fee": "no",
+    "toilets:disposal": "flush",
+    "toilets:position": "seated;urinal",
+    "wheelchair": "no"
   }
 },
 {
@@ -2812,6 +3062,18 @@
   "tags": {
     "name": "Geiss",
     "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 3212848982,
+  "lat": 46.6658850,
+  "lon": 7.8693481,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "unisex": "yes",
+    "wheelchair": "yes"
   }
 },
 {
@@ -2995,6 +3257,19 @@
 },
 {
   "type": "node",
+  "id": 3547265847,
+  "lat": 46.6003996,
+  "lon": 8.0039589,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "charge": "1 CHF",
+    "drinking_water": "yes",
+    "fee": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 3547329759,
   "lat": 46.6222592,
   "lon": 8.0237589,
@@ -3020,6 +3295,16 @@
   "lon": 7.8508298,
   "tags": {
     "amenity": "parking"
+  }
+},
+{
+  "type": "node",
+  "id": 3557707574,
+  "lat": 46.6250400,
+  "lon": 8.0463263,
+  "tags": {
+    "amenity": "toilets",
+    "wheelchair": "no"
   }
 },
 {
@@ -3068,6 +3353,15 @@
 },
 {
   "type": "node",
+  "id": 3672337181,
+  "lat": 46.6747371,
+  "lon": 7.9994059,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 3695925420,
   "lat": 46.5470505,
   "lon": 7.9760923,
@@ -3076,6 +3370,19 @@
     "name": "Mathildespitze",
     "natural": "peak",
     "wikidata": "Q22450843"
+  }
+},
+{
+  "type": "node",
+  "id": 3719048601,
+  "lat": 46.5746182,
+  "lon": 7.9752458,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
   }
 },
 {
@@ -3419,12 +3726,48 @@
 },
 {
   "type": "node",
+  "id": 4329468711,
+  "lat": 46.6111035,
+  "lon": 7.9426162,
+  "tags": {
+    "amenity": "toilets",
+    "check_date": "2026-10-06",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4329468712,
+  "lat": 46.5989021,
+  "lon": 7.9604230,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "changing_table": "no",
+    "toilets:disposal": "chemical",
+    "unisex": "yes",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
   "id": 4329505894,
   "lat": 46.6903819,
   "lon": 7.8125103,
   "tags": {
     "name": "Hohlen",
     "place": "hamlet"
+  }
+},
+{
+  "type": "node",
+  "id": 4353783293,
+  "lat": 46.6174864,
+  "lon": 8.0565208,
+  "tags": {
+    "amenity": "toilets",
+    "female": "yes",
+    "male": "yes"
   }
 },
 {
@@ -3738,6 +4081,21 @@
 },
 {
   "type": "node",
+  "id": 4493893589,
+  "lat": 46.5871225,
+  "lon": 7.9105148,
+  "tags": {
+    "addr:city": "Lauterbrunnen",
+    "addr:postcode": "3822",
+    "addr:street": "Luterbach",
+    "amenity": "toilets",
+    "name": "Shower and toilet block",
+    "toilets:wheelchair": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 4500305887,
   "lat": 46.5471118,
   "lon": 7.9825005,
@@ -3859,6 +4217,23 @@
 },
 {
   "type": "node",
+  "id": 4552376160,
+  "lat": 46.5472270,
+  "lon": 7.9826137,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes",
+    "note": "Level -2",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 4552496169,
   "lat": 46.6224593,
   "lon": 8.0235736,
@@ -3901,6 +4276,19 @@
     "uic_name": "Lütschental",
     "uic_ref": "8507383",
     "wikidata": "Q6711578"
+  }
+},
+{
+  "type": "node",
+  "id": 4705483201,
+  "lat": 46.6494341,
+  "lon": 7.9911906,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "operator": "Bergrestaurant Bussalp",
+    "toilets:disposal": "flush",
+    "unisex": "yes"
   }
 },
 {
@@ -4159,6 +4547,15 @@
     "mobile": "+41768246685",
     "name": "Barracuda",
     "website": "https://www.barracudacafe.ch"
+  }
+},
+{
+  "type": "node",
+  "id": 5429656793,
+  "lat": 46.6534341,
+  "lon": 7.9530275,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -4595,6 +4992,42 @@
 },
 {
   "type": "node",
+  "id": 5702707863,
+  "lat": 46.5487329,
+  "lon": 7.8737811,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "check_date": "2025-06-27",
+    "fee": "yes",
+    "opening_hours": "24/7",
+    "toilets:disposal": "pitlatrine",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5705761952,
+  "lat": 46.5964011,
+  "lon": 7.8909422,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5705870744,
+  "lat": 46.5818858,
+  "lon": 7.8960791,
+  "tags": {
+    "amenity": "toilets",
+    "wheelchair": "designated"
+  }
+},
+{
+  "type": "node",
   "id": 5707946273,
   "lat": 46.5985834,
   "lon": 7.9074345,
@@ -4649,6 +5082,26 @@
     "smoking": "outside",
     "takeaway": "no",
     "website": "https://www.burgseeli.ch/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5795847181,
+  "lat": 46.6596713,
+  "lon": 7.8148810,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 5966550076,
+  "lat": 46.6974310,
+  "lon": 7.8518293,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
     "wheelchair": "yes"
   }
 },
@@ -4848,6 +5301,46 @@
 },
 {
   "type": "node",
+  "id": 6342467485,
+  "lat": 46.6234096,
+  "lon": 8.0466572,
+  "tags": {
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6483833216,
+  "lat": 46.6790024,
+  "lon": 7.8134611,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 6483833217,
+  "lat": 46.6770732,
+  "lon": 7.8178586,
+  "tags": {
+    "amenity": "toilets",
+    "check_date": "2026-10-24",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 6525417890,
   "lat": 46.6857080,
   "lon": 7.8487276,
@@ -4956,6 +5449,29 @@
     "toilets:wheelchair": "yes",
     "uic_ref": "8505226",
     "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7134076488,
+  "lat": 46.6236731,
+  "lon": 8.0354070,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "check_date": "2025-12-28",
+    "fee": "no",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7134076494,
+  "lat": 46.6585447,
+  "lon": 8.0653366,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -5097,6 +5613,49 @@
 },
 {
   "type": "node",
+  "id": 7546118367,
+  "lat": 46.6879713,
+  "lon": 7.8496724,
+  "tags": {
+    "amenity": "toilets",
+    "description": "Eingang rechts des Friedhofsgebäudes",
+    "unisex": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7604832756,
+  "lat": 46.6904538,
+  "lon": 7.8952908,
+  "tags": {
+    "access": "permissive",
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 7608134700,
+  "lat": 46.6934997,
+  "lon": 7.8366951,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 7628351483,
+  "lat": 46.5983037,
+  "lon": 7.9076204,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
   "id": 7629413339,
   "lat": 46.6865964,
   "lon": 7.8491192,
@@ -5104,6 +5663,61 @@
     "amenity": "cafe",
     "name": "Cafe Treff",
     "opening_hours": "Mo-Fr 06:00-14:30; Sa 06:00-12:00"
+  }
+},
+{
+  "type": "node",
+  "id": 7629697513,
+  "lat": 46.6925188,
+  "lon": 7.8686341,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "changing_table": "no",
+    "male": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7629697514,
+  "lat": 46.6925954,
+  "lon": 7.8685868,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "female": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7629697518,
+  "lat": 46.6927706,
+  "lon": 7.8697492,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "male": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 7629697519,
+  "lat": 46.6927595,
+  "lon": 7.8697194,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "female": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "no"
   }
 },
 {
@@ -5116,6 +5730,30 @@
     "cuisine": "international;schweizz",
     "name": "Drehrestaurant Piz Gloria",
     "website": "https://schilthorn.ch/en/Info/Piz_Gloria_2970_m_._9744_ft"
+  }
+},
+{
+  "type": "node",
+  "id": 7629945525,
+  "lat": 46.5573410,
+  "lon": 7.8352094,
+  "tags": {
+    "amenity": "toilets",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7631898958,
+  "lat": 46.6511862,
+  "lon": 7.9097883,
+  "tags": {
+    "amenity": "toilets",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "limited"
   }
 },
 {
@@ -5153,6 +5791,16 @@
 },
 {
   "type": "node",
+  "id": 7803939312,
+  "lat": 46.6173890,
+  "lon": 7.9665287,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 7817784242,
   "lat": 46.6846545,
   "lon": 7.8558242,
@@ -5167,6 +5815,81 @@
     "name": "Velo Cafe",
     "opening_hours": "08:00-16:00",
     "website": "https://velo-cafe.ch/"
+  }
+},
+{
+  "type": "node",
+  "id": 7817797849,
+  "lat": 46.6791545,
+  "lon": 7.8165477,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "toilets:disposal": "flush"
+  }
+},
+{
+  "type": "node",
+  "id": 7835973878,
+  "lat": 46.5551495,
+  "lon": 7.9018316,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 7837293185,
+  "lat": 46.6232746,
+  "lon": 8.0354355,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "check_date": "2025-12-28",
+    "operator": "Sportzentrum",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7840850388,
+  "lat": 46.5552891,
+  "lon": 7.9017331,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "check_date": "2026-07-05",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7840850389,
+  "lat": 46.5455654,
+  "lon": 7.9023234,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "check_date": "2025-09-11",
+    "description": "Schiebetür nach links.\nEtwas eng.\nSehr niedrige Sitzhöhe",
+    "description:en": "Sliding door to the left. A bit cramped. Very low seat height.",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7840897686,
+  "lat": 46.6251592,
+  "lon": 8.0184739,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "yes"
   }
 },
 {
@@ -5287,6 +6010,31 @@
 },
 {
   "type": "node",
+  "id": 8467445014,
+  "lat": 46.6904607,
+  "lon": 7.8700229,
+  "tags": {
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes",
+    "wheelchair": "designated"
+  }
+},
+{
+  "type": "node",
+  "id": 8467726618,
+  "lat": 46.6931215,
+  "lon": 7.8822063,
+  "tags": {
+    "access": "permissive",
+    "amenity": "toilets",
+    "unisex": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 8662416317,
   "lat": 46.6233068,
   "lon": 8.0374049,
@@ -5309,6 +6057,15 @@
 },
 {
   "type": "node",
+  "id": 8717020435,
+  "lat": 46.6871416,
+  "lon": 7.8310738,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 8771543040,
   "lat": 46.6052346,
   "lon": 7.9213319,
@@ -5320,6 +6077,15 @@
     "opening_hours:signed": "no",
     "outdoor_seating": "no",
     "website": "https://www.restaurant-eiger.ch/"
+  }
+},
+{
+  "type": "node",
+  "id": 8805372550,
+  "lat": 46.6323204,
+  "lon": 8.0705396,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -5386,6 +6152,26 @@
 },
 {
   "type": "node",
+  "id": 8962164010,
+  "lat": 46.6975093,
+  "lon": 7.8519869,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 8971620545,
+  "lat": 46.6460574,
+  "lon": 7.8783409,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 9001756017,
   "lat": 46.6812400,
   "lon": 7.8635240,
@@ -5422,6 +6208,29 @@
     "brand:wikipedia": "de:Migros",
     "cuisine": "international",
     "name": "Migros Restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 9121850965,
+  "lat": 46.6299133,
+  "lon": 8.0034938,
+  "tags": {
+    "amenity": "toilets",
+    "female": "yes",
+    "male": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9122533599,
+  "lat": 46.6174541,
+  "lon": 8.0565353,
+  "tags": {
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "unisex": "yes",
+    "wheelchair": "yes"
   }
 },
 {
@@ -5482,6 +6291,44 @@
 },
 {
   "type": "node",
+  "id": 9701330004,
+  "lat": 46.5639574,
+  "lon": 7.9055878,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "operator": "Toi Toi",
+    "toilets:disposal": "chemical"
+  }
+},
+{
+  "type": "node",
+  "id": 9701330005,
+  "lat": 46.5733156,
+  "lon": 7.9066876,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "operator": "Toi Toi",
+    "toilets:disposal": "chemical"
+  }
+},
+{
+  "type": "node",
+  "id": 9701330015,
+  "lat": 46.5824752,
+  "lon": 7.9105694,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "operator": "Toi Toi",
+    "toilets:disposal": "chemical",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
   "id": 9705775871,
   "lat": 46.5965187,
   "lon": 7.9074212,
@@ -5511,6 +6358,64 @@
     "amenity": "cafe",
     "check_date": "2024-07-02",
     "name": "Base Cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 9715917422,
+  "lat": 46.6898627,
+  "lon": 7.8653694,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "unisex": "yes",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9734472824,
+  "lat": 46.6327001,
+  "lon": 7.8997005,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "toilets:disposal": "flush"
+  }
+},
+{
+  "type": "node",
+  "id": 9734478039,
+  "lat": 46.6684805,
+  "lon": 7.8698486,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9778886266,
+  "lat": 46.5739256,
+  "lon": 7.9114712,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "name": "Toi Toi",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9778951681,
+  "lat": 46.5721005,
+  "lon": 7.9123233,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "yes",
+    "wheelchair": "yes"
   }
 },
 {
@@ -5572,6 +6477,15 @@
 },
 {
   "type": "node",
+  "id": 9907659577,
+  "lat": 46.6212096,
+  "lon": 7.9791510,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 9907830465,
   "lat": 46.6842165,
   "lon": 7.8558328,
@@ -5603,6 +6517,15 @@
   "tags": {
     "amenity": "restaurant",
     "name": "Renaissance"
+  }
+},
+{
+  "type": "node",
+  "id": 9910096678,
+  "lat": 46.6107111,
+  "lon": 7.9960406,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -5667,6 +6590,34 @@
 },
 {
   "type": "node",
+  "id": 9919711609,
+  "lat": 46.6467234,
+  "lon": 8.0516093,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9921355417,
+  "lat": 46.6132704,
+  "lon": 8.0464246,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 9922831618,
+  "lat": 46.6734007,
+  "lon": 7.8540908,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 9924463917,
   "lat": 46.6877263,
   "lon": 7.8610343,
@@ -5685,6 +6636,28 @@
     "amenity": "parking",
     "layer": "-1",
     "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 9957075980,
+  "lat": 46.5722575,
+  "lon": 8.0103099,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 9957717830,
+  "lat": 46.6815125,
+  "lon": 7.9003073,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "toilets:disposal": "chemical",
+    "unisex": "yes",
+    "wheelchair": "no"
   }
 },
 {
@@ -5710,6 +6683,15 @@
     "name": "Kleines Fiescherhorn Ochs",
     "natural": "peak",
     "wikidata": "Q2664803"
+  }
+},
+{
+  "type": "node",
+  "id": 9983876864,
+  "lat": 46.6233520,
+  "lon": 7.8880295,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -5855,6 +6837,15 @@
 },
 {
   "type": "node",
+  "id": 10990367968,
+  "lat": 46.6211007,
+  "lon": 8.0447021,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 11044727009,
   "lat": 46.6609735,
   "lon": 7.8665017,
@@ -5862,6 +6853,22 @@
     "access": "customers",
     "amenity": "parking",
     "survey:date": "2023-07-13"
+  }
+},
+{
+  "type": "node",
+  "id": 11065335383,
+  "lat": 46.5886358,
+  "lon": 7.9087396,
+  "tags": {
+    "amenity": "toilets",
+    "charge": "1 CHF / 1 EUR",
+    "fee": "yes",
+    "fee:conditional": "no @ customers",
+    "opening_hours": "24/7",
+    "shower": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
   }
 },
 {
@@ -6102,6 +7109,59 @@
     "name": "Schwarzbirg",
     "natural": "peak",
     "wikidata": "Q22547703"
+  }
+},
+{
+  "type": "node",
+  "id": 11660430679,
+  "lat": 46.6741902,
+  "lon": 7.8731861,
+  "tags": {
+    "amenity": "toilets",
+    "female": "yes",
+    "male": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11879298233,
+  "lat": 46.6611184,
+  "lon": 7.8123462,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 11901086951,
+  "lat": 46.5581807,
+  "lon": 7.8912031,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 11901086957,
+  "lat": 46.5595109,
+  "lon": 7.9019883,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "operator": "Toi Toi"
+  }
+},
+{
+  "type": "node",
+  "id": 11907313715,
+  "lat": 46.5626146,
+  "lon": 7.8957298,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "level": "-1"
   }
 },
 {
@@ -6745,6 +7805,24 @@
 },
 {
   "type": "node",
+  "id": 12103977101,
+  "lat": 46.5473075,
+  "lon": 7.9820919,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 12198745560,
+  "lat": 46.5850002,
+  "lon": 7.9605746,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 12229535427,
   "lat": 46.6054878,
   "lon": 7.9212253,
@@ -6854,6 +7932,18 @@
     "uic_name": "Grindelwald Hinder der Egg",
     "uic_ref": "8530322",
     "usage": "tourism"
+  }
+},
+{
+  "type": "node",
+  "id": 12348676178,
+  "lat": 46.6689781,
+  "lon": 7.9688965,
+  "tags": {
+    "access": "private",
+    "amenity": "toilets",
+    "charge": "2 CHF",
+    "fee": "yes"
   }
 },
 {
@@ -7155,6 +8245,29 @@
 },
 {
   "type": "node",
+  "id": 12880357732,
+  "lat": 46.6803437,
+  "lon": 7.8176146,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "fee": "no",
+    "level": "0",
+    "opening_hours": "24/7",
+    "toilets:disposal": "flush"
+  }
+},
+{
+  "type": "node",
+  "id": 12944462001,
+  "lat": 46.6242512,
+  "lon": 8.0194551,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 12966403492,
   "lat": 46.6841117,
   "lon": 8.0410262,
@@ -7220,6 +8333,37 @@
   "tags": {
     "amenity": "parking",
     "parking": "street_side"
+  }
+},
+{
+  "type": "node",
+  "id": 13033480901,
+  "lat": 46.5907911,
+  "lon": 7.9073823,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no",
+    "opening_hours": "24/7",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13068329911,
+  "lat": 46.6912227,
+  "lon": 7.9237045,
+  "tags": {
+    "amenity": "toilets",
+    "drinking_water": "yes",
+    "fee": "no",
+    "female": "yes",
+    "male": "yes",
+    "opening_hours": "24/7",
+    "toilets:disposal": "flush",
+    "toilets:handwashing": "yes",
+    "toilets:paper_supplied": "yes",
+    "toilets:position": "seated"
   }
 },
 {
@@ -7297,6 +8441,17 @@
 },
 {
   "type": "node",
+  "id": 13075620776,
+  "lat": 46.6885948,
+  "lon": 7.9073959,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
   "id": 13135048911,
   "lat": 46.6739645,
   "lon": 7.8726278,
@@ -7305,6 +8460,28 @@
     "public_transport": "stop_position",
     "railway": "halt",
     "train": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13157948832,
+  "lat": 46.6881790,
+  "lon": 7.9114134,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13353413901,
+  "lat": 46.6897818,
+  "lon": 7.8690155,
+  "tags": {
+    "addr:housenumber": "10",
+    "addr:street": "Untere Bönigstrasse",
+    "amenity": "toilets"
   }
 },
 {
@@ -7338,6 +8515,18 @@
     "opening_hours": "09:00-17:00",
     "shop": "coffee",
     "website": "https://www.eigerbean.ch"
+  }
+},
+{
+  "type": "node",
+  "id": 13740308269,
+  "lat": 46.5766510,
+  "lon": 7.9085910,
+  "tags": {
+    "access": "yes",
+    "amenity": "toilets",
+    "portable": "yes",
+    "unisex": "yes"
   }
 },
 {
@@ -7401,6 +8590,15 @@
 },
 {
   "type": "node",
+  "id": 14072479863,
+  "lat": 46.5413846,
+  "lon": 7.8821785,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
   "id": 14098685348,
   "lat": 46.6915576,
   "lon": 7.8238582,
@@ -7411,6 +8609,29 @@
     "lit": "no",
     "parking": "layby",
     "surface": "asphalt"
+  }
+},
+{
+  "type": "node",
+  "id": 14105199252,
+  "lat": 46.6125262,
+  "lon": 8.0447980,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "toilets:disposal": "pitlatrine",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 14105299545,
+  "lat": 46.6128239,
+  "lon": 8.0455533,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no",
+    "wheelchair": "limited"
   }
 },
 {
@@ -7448,6 +8669,15 @@
     "name": "Café de Paris",
     "toilets:wheelchair": "yes",
     "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 14140088701,
+  "lat": 46.5470444,
+  "lon": 7.8935727,
+  "tags": {
+    "amenity": "toilets"
   }
 },
 {
@@ -36933,6 +38163,48 @@
 },
 {
   "type": "way",
+  "id": 171051855,
+  "bounds": {
+    "minlat": 46.6800259,
+    "minlon": 7.8636173,
+    "maxlat": 46.6801834,
+    "maxlon": 7.8638462
+  },
+  "nodes": [
+    1821526205,
+    1821526193,
+    1821526195,
+    1821526197,
+    1821526198,
+    1821526200,
+    1821526205
+  ],
+  "geometry": [
+    { "lat": 46.6801834, "lon": 7.8637626 },
+    { "lat": 46.6800576, "lon": 7.8638462 },
+    { "lat": 46.6800259, "lon": 7.8637431 },
+    { "lat": 46.6800741, "lon": 7.8637116 },
+    { "lat": 46.6800604, "lon": 7.8636675 },
+    { "lat": 46.6801380, "lon": 7.8636173 },
+    { "lat": 46.6801834, "lon": 7.8637626 }
+  ],
+  "tags": {
+    "addr:city": "Matten bei Interlaken",
+    "addr:country": "CH",
+    "addr:housenumber": "34a",
+    "addr:postcode": "3800",
+    "addr:street": "Hauptstrasse",
+    "amenity": "toilets",
+    "building": "barn",
+    "check_date:wheelchair": "2026-04-18",
+    "ele": "573",
+    "fee": "no",
+    "unisex": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
   "id": 171062056,
   "bounds": {
     "minlat": 46.6807137,
@@ -37852,6 +39124,46 @@
     "capacity": "6",
     "fee": "yes",
     "parking": "surface"
+  }
+},
+{
+  "type": "way",
+  "id": 173810576,
+  "bounds": {
+    "minlat": 46.6226247,
+    "minlon": 8.0231239,
+    "maxlat": 46.6227700,
+    "maxlon": 8.0233035
+  },
+  "nodes": [
+    1845709234,
+    1845709241,
+    1845709244,
+    1845709238,
+    1845709234
+  ],
+  "geometry": [
+    { "lat": 46.6226247, "lon": 8.0232455 },
+    { "lat": 46.6227413, "lon": 8.0231239 },
+    { "lat": 46.6227700, "lon": 8.0231818 },
+    { "lat": 46.6226534, "lon": 8.0233035 },
+    { "lat": 46.6226247, "lon": 8.0232455 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Grindelwald",
+    "addr:country": "CH",
+    "addr:housenumber": "61a",
+    "addr:postcode": "3818",
+    "addr:street": "Grundstrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "ele": "943",
+    "fee": "no",
+    "source": "survey",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "designated"
   }
 },
 {
@@ -40709,6 +42021,75 @@
 },
 {
   "type": "way",
+  "id": 176835538,
+  "bounds": {
+    "minlat": 46.6811907,
+    "minlon": 7.8155340,
+    "maxlat": 46.6812419,
+    "maxlon": 7.8156177
+  },
+  "nodes": [
+    1873190814,
+    1873190835,
+    1873190841,
+    1873190837,
+    1873190814
+  ],
+  "geometry": [
+    { "lat": 46.6811907, "lon": 7.8155548 },
+    { "lat": 46.6812098, "lon": 7.8156177 },
+    { "lat": 46.6812419, "lon": 7.8155969 },
+    { "lat": 46.6812227, "lon": 7.8155340 },
+    { "lat": 46.6811907, "lon": 7.8155548 }
+  ],
+  "tags": {
+    "addr:city": "Unterseen",
+    "addr:country": "CH",
+    "addr:housenumber": "150",
+    "addr:postcode": "3800",
+    "addr:street": "Seestrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "source": "survey"
+  }
+},
+{
+  "type": "way",
+  "id": 176835539,
+  "bounds": {
+    "minlat": 46.6822869,
+    "minlon": 7.8167347,
+    "maxlat": 46.6823785,
+    "maxlon": 7.8169341
+  },
+  "nodes": [
+    1873190864,
+    1873190861,
+    1873190855,
+    1873190858,
+    1873190864
+  ],
+  "geometry": [
+    { "lat": 46.6823785, "lon": 7.8169130 },
+    { "lat": 46.6823507, "lon": 7.8167347 },
+    { "lat": 46.6822869, "lon": 7.8167558 },
+    { "lat": 46.6823147, "lon": 7.8169341 },
+    { "lat": 46.6823785, "lon": 7.8169130 }
+  ],
+  "tags": {
+    "addr:city": "Unterseen",
+    "addr:country": "CH",
+    "addr:housenumber": "156",
+    "addr:postcode": "3800",
+    "addr:street": "Seestrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "fee": "no",
+    "source": "survey"
+  }
+},
+{
+  "type": "way",
   "id": 178843547,
   "bounds": {
     "minlat": 46.5825374,
@@ -41478,6 +42859,41 @@
     "amenity": "restaurant",
     "building": "yes",
     "name": "Stadtkeller"
+  }
+},
+{
+  "type": "way",
+  "id": 184564805,
+  "bounds": {
+    "minlat": 46.6914048,
+    "minlon": 7.8335723,
+    "maxlat": 46.6914515,
+    "maxlon": 7.8336511
+  },
+  "nodes": [
+    1950607817,
+    1950607815,
+    1950607811,
+    1950607814,
+    1950607817
+  ],
+  "geometry": [
+    { "lat": 46.6914515, "lon": 7.8335896 },
+    { "lat": 46.6914347, "lon": 7.8336511 },
+    { "lat": 46.6914048, "lon": 7.8336337 },
+    { "lat": 46.6914216, "lon": 7.8335723 },
+    { "lat": 46.6914515, "lon": 7.8335896 }
+  ],
+  "tags": {
+    "addr:city": "Unterseen",
+    "addr:country": "CH",
+    "addr:housenumber": "48",
+    "addr:postcode": "3800",
+    "addr:street": "Mühleholzstrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "fee": "no",
+    "wheelchair": "yes"
   }
 },
 {
@@ -42414,6 +43830,89 @@
 },
 {
   "type": "way",
+  "id": 188495948,
+  "bounds": {
+    "minlat": 46.6816540,
+    "minlon": 7.8137336,
+    "maxlat": 46.6817836,
+    "maxlon": 7.8138866
+  },
+  "nodes": [
+    1991219212,
+    1991219237,
+    1991219227,
+    1991219220,
+    1991219215,
+    1991219210,
+    1991219212
+  ],
+  "geometry": [
+    { "lat": 46.6816891, "lon": 7.8137336 },
+    { "lat": 46.6817836, "lon": 7.8138132 },
+    { "lat": 46.6817545, "lon": 7.8138866 },
+    { "lat": 46.6817257, "lon": 7.8138624 },
+    { "lat": 46.6817197, "lon": 7.8138776 },
+    { "lat": 46.6816540, "lon": 7.8138223 },
+    { "lat": 46.6816891, "lon": 7.8137336 }
+  ],
+  "tags": {
+    "addr:city": "Unterseen",
+    "addr:country": "CH",
+    "addr:housenumber": "209",
+    "addr:postcode": "3800",
+    "addr:street": "Seestrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "source": "survey"
+  }
+},
+{
+  "type": "way",
+  "id": 188495955,
+  "bounds": {
+    "minlat": 46.6813779,
+    "minlon": 7.8162341,
+    "maxlat": 46.6815352,
+    "maxlon": 7.8165598
+  },
+  "nodes": [
+    1991219014,
+    1991219012,
+    1991219029,
+    1991219016,
+    1991219032,
+    1991219050,
+    1991219049,
+    1991219057,
+    1991219026,
+    1991219014
+  ],
+  "geometry": [
+    { "lat": 46.6814329, "lon": 7.8165598 },
+    { "lat": 46.6813779, "lon": 7.8164598 },
+    { "lat": 46.6814268, "lon": 7.8164027 },
+    { "lat": 46.6813792, "lon": 7.8163162 },
+    { "lat": 46.6814495, "lon": 7.8162341 },
+    { "lat": 46.6814936, "lon": 7.8163143 },
+    { "lat": 46.6814879, "lon": 7.8163209 },
+    { "lat": 46.6815227, "lon": 7.8163842 },
+    { "lat": 46.6815352, "lon": 7.8164403 },
+    { "lat": 46.6814329, "lon": 7.8165598 }
+  ],
+  "tags": {
+    "addr:city": "Unterseen",
+    "addr:country": "CH",
+    "addr:housenumber": "148",
+    "addr:postcode": "3800",
+    "addr:street": "Seestrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "fee": "no",
+    "source": "survey"
+  }
+},
+{
+  "type": "way",
   "id": 188665781,
   "bounds": {
     "minlat": 46.6811293,
@@ -42599,6 +44098,41 @@
   ],
   "tags": {
     "amenity": "parking"
+  }
+},
+{
+  "type": "way",
+  "id": 188801061,
+  "bounds": {
+    "minlat": 46.6806925,
+    "minlon": 7.8456005,
+    "maxlat": 46.6807741,
+    "maxlon": 7.8457046
+  },
+  "nodes": [
+    1994234780,
+    1994234776,
+    1994234775,
+    1994234778,
+    1994234780
+  ],
+  "geometry": [
+    { "lat": 46.6807741, "lon": 7.8456386 },
+    { "lat": 46.6807113, "lon": 7.8456005 },
+    { "lat": 46.6806925, "lon": 7.8456665 },
+    { "lat": 46.6807552, "lon": 7.8457046 },
+    { "lat": 46.6807741, "lon": 7.8456386 }
+  ],
+  "tags": {
+    "addr:city": "Unterseen",
+    "addr:country": "CH",
+    "addr:housenumber": "17a",
+    "addr:postcode": "3800",
+    "addr:street": "Gurbenstrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "fee": "no",
+    "wheelchair": "no"
   }
 },
 {
@@ -45567,6 +47101,53 @@
 },
 {
   "type": "way",
+  "id": 193842960,
+  "bounds": {
+    "minlat": 46.6875619,
+    "minlon": 7.8594574,
+    "maxlat": 46.6876946,
+    "maxlon": 7.8596047
+  },
+  "nodes": [
+    2043515071,
+    6709445608,
+    6709445617,
+    2043515222,
+    6761953377,
+    500319049,
+    2043515071
+  ],
+  "geometry": [
+    { "lat": 46.6875848, "lon": 7.8596047 },
+    { "lat": 46.6875799, "lon": 7.8595872 },
+    { "lat": 46.6875619, "lon": 7.8595227 },
+    { "lat": 46.6876716, "lon": 7.8594574 },
+    { "lat": 46.6876918, "lon": 7.8595295 },
+    { "lat": 46.6876946, "lon": 7.8595394 },
+    { "lat": 46.6875848, "lon": 7.8596047 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Interlaken",
+    "addr:country": "CH",
+    "addr:housenumber": "56",
+    "addr:postcode": "3800",
+    "addr:street": "Strandbadstrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "building:colour": "white",
+    "building:levels": "1",
+    "charge": "1 CHF",
+    "fee": "yes",
+    "payment:cash": "no",
+    "payment:coins": "only",
+    "roof:colour": "brown",
+    "roof:shape": "gabled",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
   "id": 193842977,
   "bounds": {
     "minlat": 46.6879418,
@@ -45755,6 +47336,38 @@
     "access": "private",
     "amenity": "parking",
     "parking": "surface"
+  }
+},
+{
+  "type": "way",
+  "id": 193856847,
+  "bounds": {
+    "minlat": 46.6850054,
+    "minlon": 7.8612823,
+    "maxlat": 46.6850333,
+    "maxlon": 7.8613687
+  },
+  "nodes": [
+    2043642043,
+    2043642027,
+    2043642023,
+    2043642026,
+    2043642043
+  ],
+  "geometry": [
+    { "lat": 46.6850333, "lon": 7.8613637 },
+    { "lat": 46.6850217, "lon": 7.8612823 },
+    { "lat": 46.6850054, "lon": 7.8612873 },
+    { "lat": 46.6850170, "lon": 7.8613687 },
+    { "lat": 46.6850333, "lon": 7.8613637 }
+  ],
+  "tags": {
+    "amenity": "toilets",
+    "building": "civic",
+    "building:levels": "1",
+    "building:material": "wood",
+    "height": "1.0",
+    "roof:shape": "skillion"
   }
 },
 {
@@ -51281,6 +52894,44 @@
 },
 {
   "type": "way",
+  "id": 214173894,
+  "bounds": {
+    "minlat": 46.6875219,
+    "minlon": 7.8648308,
+    "maxlat": 46.6875669,
+    "maxlon": 7.8649392
+  },
+  "nodes": [
+    2237687684,
+    9124980316,
+    2237687680,
+    2237687682,
+    2237687687,
+    2237687684
+  ],
+  "geometry": [
+    { "lat": 46.6875568, "lon": 7.8649392 },
+    { "lat": 46.6875488, "lon": 7.8649375 },
+    { "lat": 46.6875219, "lon": 7.8649318 },
+    { "lat": 46.6875319, "lon": 7.8648308 },
+    { "lat": 46.6875669, "lon": 7.8648379 },
+    { "lat": 46.6875568, "lon": 7.8649392 }
+  ],
+  "tags": {
+    "addr:city": "Interlaken",
+    "addr:country": "CH",
+    "addr:housenumber": "15",
+    "addr:postcode": "3800",
+    "addr:street": "Schloss",
+    "amenity": "toilets",
+    "building": "yes",
+    "fee": "no",
+    "toilets": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
   "id": 214275988,
   "bounds": {
     "minlat": 46.6873851,
@@ -53529,6 +55180,43 @@
 },
 {
   "type": "way",
+  "id": 226981846,
+  "bounds": {
+    "minlat": 46.5452329,
+    "minlon": 7.8384066,
+    "maxlat": 46.5453089,
+    "maxlon": 7.8385183
+  },
+  "nodes": [
+    2357167419,
+    2357167415,
+    2357167418,
+    2357167421,
+    2357167419
+  ],
+  "geometry": [
+    { "lat": 46.5452614, "lon": 7.8385183 },
+    { "lat": 46.5452329, "lon": 7.8384459 },
+    { "lat": 46.5452804, "lon": 7.8384066 },
+    { "lat": 46.5453089, "lon": 7.8384789 },
+    { "lat": 46.5452614, "lon": 7.8385183 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Gimmelwald",
+    "addr:country": "CH",
+    "addr:housenumber": "648b",
+    "addr:place": "Poganggen",
+    "addr:postcode": "3826",
+    "amenity": "toilets",
+    "building": "yes",
+    "toilets:disposal": "flush",
+    "toilets:position": "seated",
+    "unisex": "yes"
+  }
+},
+{
+  "type": "way",
   "id": 226983056,
   "bounds": {
     "minlat": 46.5635534,
@@ -55128,6 +56816,35 @@
     "tracks": "1",
     "usage": "branch",
     "voltage": "1500"
+  }
+},
+{
+  "type": "way",
+  "id": 230422204,
+  "bounds": {
+    "minlat": 46.6596115,
+    "minlon": 7.8953122,
+    "maxlat": 46.6596541,
+    "maxlon": 7.8953732
+  },
+  "nodes": [
+    2389277129,
+    2389277124,
+    2389277123,
+    2389277126,
+    2389277129
+  ],
+  "geometry": [
+    { "lat": 46.6596541, "lon": 7.8953511 },
+    { "lat": 46.6596257, "lon": 7.8953732 },
+    { "lat": 46.6596115, "lon": 7.8953343 },
+    { "lat": 46.6596399, "lon": 7.8953122 },
+    { "lat": 46.6596541, "lon": 7.8953511 }
+  ],
+  "tags": {
+    "amenity": "toilets",
+    "building": "yes",
+    "source": "bing"
   }
 },
 {
@@ -58798,6 +60515,51 @@
     "layer": "-2",
     "railway": "funicular",
     "tunnel": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 235841682,
+  "bounds": {
+    "minlat": 46.6886973,
+    "minlon": 7.8967705,
+    "maxlat": 46.6887752,
+    "maxlon": 7.8968710
+  },
+  "nodes": [
+    5304728879,
+    5304728878,
+    2439166357,
+    2439166356,
+    2439166361,
+    2439166364,
+    5304728879
+  ],
+  "geometry": [
+    { "lat": 46.6887598, "lon": 7.8968121 },
+    { "lat": 46.6887645, "lon": 7.8968223 },
+    { "lat": 46.6887144, "lon": 7.8968710 },
+    { "lat": 46.6886973, "lon": 7.8968340 },
+    { "lat": 46.6887629, "lon": 7.8967705 },
+    { "lat": 46.6887752, "lon": 7.8967972 },
+    { "lat": 46.6887598, "lon": 7.8968121 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Bönigen bei Interlaken",
+    "addr:country": "CH",
+    "addr:housenumber": "6",
+    "addr:postcode": "3806",
+    "addr:street": "Parkstrasse",
+    "amenity": "toilets",
+    "building": "yes",
+    "changing_table": "no",
+    "ele": "566",
+    "fee": "no",
+    "source": "bing",
+    "toilets:disposal": "flush",
+    "unisex": "yes",
+    "wheelchair": "yes"
   }
 },
 {
@@ -85823,6 +87585,125 @@
 },
 {
   "type": "way",
+  "id": 548560480,
+  "bounds": {
+    "minlat": 46.5922729,
+    "minlon": 7.9075285,
+    "maxlat": 46.5923344,
+    "maxlon": 7.9076030
+  },
+  "nodes": [
+    5299415776,
+    5299415775,
+    5299415774,
+    5299415773,
+    5299415772,
+    5299415771,
+    5299415776
+  ],
+  "geometry": [
+    { "lat": 46.5922879, "lon": 7.9075425 },
+    { "lat": 46.5923324, "lon": 7.9075285 },
+    { "lat": 46.5923344, "lon": 7.9076030 },
+    { "lat": 46.5922729, "lon": 7.9076017 },
+    { "lat": 46.5922734, "lon": 7.9075723 },
+    { "lat": 46.5922869, "lon": 7.9075720 },
+    { "lat": 46.5922879, "lon": 7.9075425 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Lauterbrunnen",
+    "addr:country": "CH",
+    "addr:housenumber": "423",
+    "addr:postcode": "3822",
+    "addr:street": "Pfrundmatte",
+    "amenity": "toilets",
+    "building": "yes",
+    "drinking_water": "yes",
+    "ele": "804",
+    "female": "yes",
+    "male": "yes",
+    "toilets:disposal": "flush"
+  }
+},
+{
+  "type": "way",
+  "id": 548560744,
+  "bounds": {
+    "minlat": 46.5989151,
+    "minlon": 7.9083763,
+    "maxlat": 46.5990094,
+    "maxlon": 7.9085025
+  },
+  "nodes": [
+    708860203,
+    8882462546,
+    5299417628,
+    5299417627,
+    8882462547,
+    5299417626,
+    708860203
+  ],
+  "geometry": [
+    { "lat": 46.5989810, "lon": 7.9083763 },
+    { "lat": 46.5990007, "lon": 7.9084150 },
+    { "lat": 46.5990094, "lon": 7.9084321 },
+    { "lat": 46.5989434, "lon": 7.9085025 },
+    { "lat": 46.5989323, "lon": 7.9084806 },
+    { "lat": 46.5989151, "lon": 7.9084467 },
+    { "lat": 46.5989810, "lon": 7.9083763 }
+  ],
+  "tags": {
+    "addr:city": "Lauterbrunnen",
+    "addr:country": "CH",
+    "addr:housenumber": "481a",
+    "addr:place": "Station",
+    "addr:postcode": "3822",
+    "amenity": "toilets",
+    "building": "yes",
+    "ele": "789",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 552190814,
+  "bounds": {
+    "minlat": 46.6586114,
+    "minlon": 7.8159732,
+    "maxlat": 46.6586646,
+    "maxlon": 7.8160839
+  },
+  "nodes": [
+    1423249508,
+    5331709254,
+    5331709253,
+    5331709252,
+    1423249508
+  ],
+  "geometry": [
+    { "lat": 46.6586114, "lon": 7.8159866 },
+    { "lat": 46.6586475, "lon": 7.8159732 },
+    { "lat": 46.6586646, "lon": 7.8160705 },
+    { "lat": 46.6586285, "lon": 7.8160839 },
+    { "lat": 46.6586114, "lon": 7.8159866 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Därligen",
+    "addr:country": "CH",
+    "addr:housenumber": "4c",
+    "addr:place": "Lee",
+    "addr:postcode": "3707",
+    "amenity": "toilets",
+    "building": "yes",
+    "ele": "590",
+    "unisex": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
   "id": 552863597,
   "bounds": {
     "minlat": 46.6322645,
@@ -100872,6 +102753,92 @@
     "railway": "narrow_gauge",
     "service": "yard",
     "tracks": "1"
+  }
+},
+{
+  "type": "way",
+  "id": 842573856,
+  "bounds": {
+    "minlat": 46.5847267,
+    "minlon": 7.9599696,
+    "maxlat": 46.5848306,
+    "maxlon": 7.9601497
+  },
+  "nodes": [
+    7860333824,
+    7860333825,
+    599492910,
+    7859317277,
+    7860236417,
+    599492909,
+    7860333824
+  ],
+  "geometry": [
+    { "lat": 46.5848306, "lon": 7.9601039 },
+    { "lat": 46.5847736, "lon": 7.9601497 },
+    { "lat": 46.5847267, "lon": 7.9600111 },
+    { "lat": 46.5847483, "lon": 7.9599923 },
+    { "lat": 46.5847502, "lon": 7.9599906 },
+    { "lat": 46.5847744, "lon": 7.9599696 },
+    { "lat": 46.5848306, "lon": 7.9601039 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Kleine Scheidegg",
+    "addr:country": "CH",
+    "addr:housenumber": "1110d",
+    "addr:place": "Kleine Scheidegg",
+    "addr:postcode": "3823",
+    "amenity": "toilets",
+    "building": "yes",
+    "changing_table": "yes",
+    "ele": "2061",
+    "fee": "no",
+    "female": "yes",
+    "source": "survey",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 842573857,
+  "bounds": {
+    "minlat": 46.5847796,
+    "minlon": 7.9601200,
+    "maxlat": 46.5848805,
+    "maxlon": 7.9602786
+  },
+  "nodes": [
+    7860236415,
+    599492908,
+    7860333827,
+    7860333828,
+    7860236415
+  ],
+  "geometry": [
+    { "lat": 46.5848805, "lon": 7.9602231 },
+    { "lat": 46.5848172, "lon": 7.9602786 },
+    { "lat": 46.5847796, "lon": 7.9601675 },
+    { "lat": 46.5848373, "lon": 7.9601200 },
+    { "lat": 46.5848805, "lon": 7.9602231 }
+  ],
+  "tags": {
+    "access": "yes",
+    "addr:city": "Kleine Scheidegg",
+    "addr:country": "CH",
+    "addr:housenumber": "1110d",
+    "addr:place": "Kleine Scheidegg",
+    "addr:postcode": "3823",
+    "amenity": "toilets",
+    "building": "yes",
+    "changing_table": "yes",
+    "ele": "2061",
+    "fee": "no",
+    "male": "yes",
+    "source": "survey",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
   }
 },
 {
@@ -121919,6 +123886,41 @@
     "railway:track_ref": "20",
     "service": "yard",
     "tracks": "1"
+  }
+},
+{
+  "type": "way",
+  "id": 1391518708,
+  "bounds": {
+    "minlat": 46.6799680,
+    "minlon": 7.8199728,
+    "maxlat": 46.6800236,
+    "maxlon": 7.8200531
+  },
+  "nodes": [
+    12880357738,
+    12880357721,
+    12880357720,
+    12880357719,
+    12880357738
+  ],
+  "geometry": [
+    { "lat": 46.6800040, "lon": 7.8199728 },
+    { "lat": 46.6800236, "lon": 7.8200237 },
+    { "lat": 46.6799876, "lon": 7.8200531 },
+    { "lat": 46.6799680, "lon": 7.8200022 },
+    { "lat": 46.6800040, "lon": 7.8199728 }
+  ],
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "building": "yes",
+    "changing_table": "no",
+    "fee": "no",
+    "level": "0",
+    "opening_hours": "24/7",
+    "toilets:disposal": "flush",
+    "wheelchair": "no"
   }
 },
 {
