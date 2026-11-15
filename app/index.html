@@ -409,6 +409,23 @@ select,input[type=text]{background:var(--snow)}
 .sr>button.go{flex:1;min-width:0;text-align:left;background:none;border:0;padding:14px 0;color:var(--ink);font:400 17px "Hanken Grotesk",sans-serif;display:flex;flex-direction:column;gap:2px}
 .sr small{font-size:12.5px;color:var(--muted)}
 .shint{color:var(--muted);margin:18px 0}
+#welc{position:absolute;inset:0;z-index:30;background:var(--snow);display:none;flex-direction:column;padding:calc(env(safe-area-inset-top) + 28px) 26px calc(env(safe-area-inset-bottom) + 22px);overflow-y:auto}
+#welc.on{display:flex}
+#welc .wlogo{font:500 13px "IBM Plex Mono",monospace;letter-spacing:.5em;text-transform:uppercase;color:var(--muted)}
+#welc .wbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0}
+#welc h1{font-size:40px;line-height:1.05;margin:0 0 14px;font-weight:400;letter-spacing:-.02em}
+#welc p{color:var(--muted);font-size:17px;line-height:1.45;margin:0 0 18px}
+#welc .wl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+#welc .wl button{padding:16px;border-radius:14px;border:1.5px solid var(--line);background:none;color:inherit;font:inherit;font-size:17px}
+#welc .wl button[aria-pressed=true]{border-color:var(--ink);background:var(--solid);color:#fff}
+#welc ul{list-style:none;padding:0;margin:0 0 8px}#welc li{padding:14px 0;border-bottom:1px solid var(--line);font-size:17px}
+#welc li b{display:block}#welc li span{color:var(--muted);font-size:15px}
+#welc .wfoot{display:flex;flex-direction:column;gap:10px}
+#welc .wfoot .btn{width:100%;justify-content:center;text-align:center}
+#welc .wskip{background:none;border:0;color:var(--muted);font:inherit;padding:10px;text-decoration:underline}
+#welc .wdots{display:flex;gap:6px;justify-content:center;margin-bottom:14px}#welc .wdots i{width:7px;height:7px;border-radius:50%;background:var(--line)}#welc .wdots i.on{background:var(--ink)}
+#welc .wok{color:var(--ink);font-weight:600}
+
 .dayh{display:flex;align-items:baseline;justify-content:space-between;margin:6px 0 2px}.dayh h1{margin:0}
 .dayh button{background:none;border:0;color:var(--muted);font:inherit;font-size:14px;text-decoration:underline;padding:6px 0}
 .dayi{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -473,6 +490,8 @@ select,input[type=text]{background:var(--snow)}
 @media (prefers-reduced-motion:reduce){.qab,.rcard,.hcard,.btn,.chip{transition:none}}
 .near h3{font-size:1.05rem;font-weight:500;margin:26px 0 2px}.nloc{background:var(--card);border-radius:var(--r);padding:18px;margin:16px 0}.nloc p{margin:0 0 12px;color:var(--muted)}
 .qab.wide{grid-column:1/-1;background:transparent;color:var(--ink);border:1px solid var(--ink)}.qab.wide svg{stroke:var(--ink)}
+.qab.wide.half{grid-column:auto}
+.shopk{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 
 /* ---------- donkere modus: volgt de instelling van het toestel ---------- */
@@ -624,6 +643,12 @@ a{color:var(--ink)}
   <div id="sres"></div>
 </section>
 
+<section class="view" id="v-huur">
+  <p class="lead" style="margin-top:20px" data-i="rnS"></p>
+  <div class="chips" id="rnChips"></div>
+  <div id="rnList"></div>
+</section>
+
 <section class="view" id="v-school">
   <p class="lead" style="margin-top:20px" data-i="fSchoolS"></p>
   <div id="schoolList"></div>
@@ -673,6 +698,7 @@ a{color:var(--ink)}
 </nav>
 
 <div class="lbox" id="lbox" role="dialog" aria-modal="true"><button data-ia="close">×</button></div>
+<div id="welc"></div>
 <div class="modal" id="sosM"><div class="mbox"><div class="mhead"><h2 data-i="sosH"></h2><button class="x" data-close data-ia="close">×</button></div>
   <div class="card"><p data-i="sos" style="margin:0"></p></div>
   <div class="card"><h3 data-i="rulesH"></h3><ol id="rulesL"></ol></div>
@@ -763,8 +789,8 @@ const PHR=['Grüessech','Merci vilmal','Ä Guete!','Uf Widerluege','Es Rivella, 
 const R=id=>g('routes',id);
 
 /* ---------- NAV ---------- */
-const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route','plek','fav','buurt'],SUB={buurt:1,routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1,plek:1,spelen:1};
-const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'qaEat',reis:'qaTr',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH',plek:'qaEat',fav:'sFav',buurt:'nrH'};
+const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route','plek','fav','buurt','huur'],SUB={huur:1,buurt:1,routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1,plek:1,spelen:1};
+const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'qaEat',reis:'qaTr',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH',plek:'qaEat',fav:'sFav',buurt:'nrH',huur:'qaRent'};
 let curView='start';
 function show(tb,push){
   if(!VIEWS.includes(tb))tb='start';curView=tb;
@@ -823,7 +849,7 @@ function season(){const now=new Date(),open=new Date(2026,10,21),close=new Date(
 
 function drawStart(){
   sky();
-  $('#qa').innerHTML=[['eten','qaEat',IC.eat],['reis','qaTr',IC.car],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['doen','qaDo',IC.pin],['spelen','tPlay',IC.play]].map(q=>`<button class="qab" onclick="show('${q[0]}',true)">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<button class="qab wide" onclick="show('buurt',true);nearStart()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span>${t('nrH')}</span></button>`;
+  $('#qa').innerHTML=[['eten','qaEat',IC.eat],['reis','qaTr',IC.car],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['doen','qaDo',IC.pin],['spelen','tPlay',IC.play]].map(q=>`<button class="qab" onclick="show('${q[0]}',true)">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<button class="qab wide${hasShops()?' half':''}" onclick="show('buurt',true);nearStart()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span>${t('nrH')}</span></button>`+(hasShops()?`<button class="qab wide half" onclick="show('huur',true)"><svg viewBox="0 0 24 24"><path d="M5 3l11 16a2 2 0 0 0 3 1M19 3L8 19a2 2 0 0 1-3 1"/></svg><span>${t('qaRent')}</span></button>`:'');
   $('#qaLive').innerHTML=[['wx','lvWx',IC.sun],['seasonCard','lvHours',IC.cal]].map(q=>`<button class="qab" onclick="document.getElementById('${q[0]}').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<a class="qab" style="grid-column:1/-1" href="https://www.jungfrau.ch/en-gb/live/slope-data/" target="_blank" rel="noopener">${IC.msg}<span>${t('lvOff')} ↗</span></a>`;
   $('#ibar').innerHTML=[['eten',IC.eat,'qaEat'],['reis',IC.car,'qaTr'],['school',IC.school,'qaSchool'],['routes',IC.route,'qaRoutes'],['doen',IC.pin,'qaDo'],['spelen',IC.play,'tPlay']].map(q=>`<button aria-label="${esc(t(q[2]))}" onclick="show('${q[0]}',true)">${q[1]}</button>`).join('')+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
   const G={blue:'#1C6DD0',red:'#D42A3A',black:'#2B2B31'},lv=t('lv');
@@ -1390,6 +1416,39 @@ function dayRefresh(){if(curView==='route')dayBtn($('#rtDetail'),'r:'+rtCur);if(
  const c=drawFav;drawFav=function(){c();try{drawDay()}catch(e){}};
  const h=drawHome;drawHome=function(){h();try{dayHome()}catch(e){}}}
 renderAll();
+
+/* ---------- VERHUUR EN WINKELS ---------- */
+function hasShops(){try{return !!(MD.shops&&MD.shops.length)}catch(e){return false}}
+let rnA='all';
+const RNV=[['wen','Wengen',46.605,7.921],['mur','Mürren',46.559,7.892],['gri','Grindelwald',46.624,8.036],['lau','Lauterbrunnen',46.593,7.908]];
+function rnVil(p){let b=null,bd=1e9;RNV.forEach(v=>{const d=Math.hypot((p[0]-v[2])*111,(p[1]-v[3])*76);if(d<bd){bd=d;b=v}});return bd<2.5?b:null}
+function drawRent(){const el=$('#rnList');if(!el||!MD||!MD.shops)return;const L=MD.shops.filter(x=>!/mammut|montbell|fashion|victorinox/i.test(x.n)&&!(x.p[0]>46.655&&x.p[1]<7.95)).map(x=>({...x,v:rnVil(x.p)||['berg',t('rnMt')]})).sort((a,b)=>a.v[1].localeCompare(b.v[1])||a.n.localeCompare(b.n));
+  const vs=RNV.concat([['berg',t('rnMt')]]).filter(v=>L.some(x=>x.v[0]===v[0]));
+  $('#rnChips').innerHTML=[['all',t('rnAll')]].concat(vs.map(v=>[v[0],v[1]])).map(c=>`<button class="chip" aria-pressed="${rnA===c[0]}" data-c="${c[0]}">${esc(c[1])}</button>`).join('');
+  $('#rnChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{rnA=b.dataset.c;drawRent()});
+  const F=L.filter(x=>rnA==='all'||(x.v&&x.v[0]===rnA));
+  el.innerHTML=F.map((x,i)=>`<div class="trow sc"><span class="shopk">${esc(x.v[1])}</span><h3>${esc(x.n)}</h3><div class="row">${x.ph?`<a class="pill" href="tel:${esc(x.ph.replace(/\s/g,''))}">${t('plCall')}</a>`:''}${x.w?`<a class="pill" href="${esc(/^https?:/.test(x.w)?x.w:'https://'+x.w)}" target="_blank" rel="noopener">${t('scSite')} ↗</a>`:''}<a class="pill" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.n)}%20${x.p[0]},${x.p[1]}" target="_blank" rel="noopener">${t('rnMap')} ↗</a></div></div>`).join('')||`<p class="shint">${t('sNone')}</p>`}
+{const a=show;show=function(tb,push){a(tb,push);if(tb==='huur')drawRent()}}
+
+/* ---------- WELKOM ---------- */
+let wStep=0,wLoc='',wInst=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();wInst=e;if($('#welc').classList.contains('on'))drawWelc()});
+function wStandalone(){return matchMedia('(display-mode:standalone)').matches||navigator.standalone===true}
+function wSteps(){return wStandalone()?[0,1]:[0,1,2]}
+function welcDone(){S.set('seen',1);$('#welc').classList.remove('on')}
+function welcNext(){const n=wSteps();if(wStep>=n.length-1){welcDone();return}wStep++;drawWelc()}
+function welcLoc(){if(!navigator.geolocation){wLoc='no';drawWelc();return}wLoc='wait';drawWelc();navigator.geolocation.getCurrentPosition(()=>{wLoc='ok';drawWelc()},()=>{wLoc='no';drawWelc()},{timeout:15000})}
+function welcInst(){if(!wInst)return;wInst.prompt();wInst.userChoice.then(()=>{wInst=null;welcDone()}).catch(()=>{})}
+function drawWelc(){const el=$('#welc'),n=wSteps(),k=n[wStep],ios=/iphone|ipad|ipod/i.test(navigator.userAgent),dots=`<div class="wdots">${n.map((x,i)=>`<i class="${i===wStep?'on':''}"></i>`).join('')}</div>`;
+  let body='',foot='';
+  if(k===0){body=`<h1>${t('wH')}</h1><p>${t('wSub')}</p><div class="wl">${['nl','en','de','fr'].map(c=>`<button aria-pressed="${c===cur}" onclick="setLang('${c}');drawWelc()">${esc(LANG[c].name)}</button>`).join('')}</div>`;
+    foot=`<button class="btn alt" onclick="welcNext()">${t('wNext')}</button>`}
+  if(k===1){body=`<h1>${t('wH2')}</h1><ul>${t('wPts').map(x=>`<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join('')}</ul>${wLoc==='ok'?`<p class="wok">✓ ${t('wLocOk')}</p>`:wLoc==='no'?`<p>${t('wLocNo')}</p>`:wLoc==='wait'?`<p>${t('nrWait')}</p>`:''}`;
+    foot=(wLoc==='ok'||wLoc==='no'?`<button class="btn alt" onclick="welcNext()">${n.length>2?t('wNext'):t('wStart')}</button>`:`<button class="btn alt" onclick="welcLoc()">${t('wLoc')}</button><button class="wskip" onclick="welcNext()">${t('wLater')}</button>`)}
+  if(k===2){body=`<h1>${t('wH3')}</h1><p>${t('wInstP')}</p><ul>${t(wInst?'wInstA':ios?'wInstI':'wInstO').map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    foot=(wInst?`<button class="btn alt" onclick="welcInst()">${t('wInstB')}</button><button class="wskip" onclick="welcDone()">${t('wLater')}</button>`:`<button class="btn alt" onclick="welcDone()">${t('wStart')}</button>`)}
+  el.innerHTML=`<div class="wlogo">Firn</div><div class="wbody">${body}</div><div class="wfoot">${dots}${foot}</div>`}
+if(!S.get('seen',0)&&!/[?&]nowelcome/.test(location.search)){$('#welc').classList.add('on');drawWelc()}
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
