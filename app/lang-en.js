@@ -176,3 +176,5 @@ LANG.en.doen={"sled": ["Sledging", "Whole region", "About 50 km of sledging runs
 Object.assign(LANG.en.ui,{"qaTr": "Transport", "lvWx": "Weather", "lvHours": "Operating hours", "lvOff": "Official status"});
 
 Object.assign(LANG.en.ui,{"rtLevel": "Level of difficulty", "rtTime": "duration", "rtDown": "descent", "rtTop": "highest point", "rtLow": "lowest point", "rtDesc": "Description"});
+
+Object.assign(LANG.en.ui,{"plAlt": "altitude", "plLift": "nearest lift", "plWhere": "location", "plNet": "in the region"});

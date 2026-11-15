@@ -431,6 +431,8 @@ select,input[type=text]{background:var(--snow)}
 .rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 26px}.rstats div{background:var(--card);border-radius:12px;padding:14px 6px 12px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
 .rstats b{font-weight:500;font-size:1.15rem;letter-spacing:-.02em;white-space:nowrap}.rstats b small{font-weight:400;font-size:.7em}.rstats span{font-size:11px;color:var(--muted)}
 .rdesc h3{font-size:1.15rem;font-weight:500;margin:0 0 8px}.rdesc ol{padding-left:20px;margin:10px 0 0}.rdesc li{margin:0 0 8px}
+.erow .go span{font-size:1.15rem}.rstats.n3{grid-template-columns:repeat(3,1fr)}.rstats.n2{grid-template-columns:repeat(2,1fr)}.rstats b.tx{font-size:.95rem;white-space:normal;line-height:1.2}
+.rmedia.one>*{width:100%}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 </style>
 </head>
@@ -513,6 +515,8 @@ select,input[type=text]{background:var(--snow)}
 </section>
 
 <section class="view" id="v-route"><div id="rtDetail"></div></section>
+
+<section class="view" id="v-plek"><div id="plDetail"></div></section>
 
 <section class="view" id="v-eten">
   <p class="lead" data-i="eatSub"></p>
@@ -681,8 +685,8 @@ const PHR=['Grüessech','Merci vilmal','Ä Guete!','Uf Widerluege','Es Rivella, 
 const R=id=>g('routes',id);
 
 /* ---------- NAV ---------- */
-const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1};
-const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH'};
+const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route','plek'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1,plek:1};
+const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'eatH',reis:'qaTravel',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH',plek:'qaEat'};
 let curView='start';
 function show(tb,push){
   if(!VIEWS.includes(tb))tb='start';curView=tb;
@@ -826,16 +830,18 @@ function drawRoutes(){
   const k=done.length;$('#rpT').textContent=t('ofDone',{k,n:ROUTES.length});$('#rpB').style.width=(k/ROUTES.length*100)+'%';$('#rpR').textContent=t('ranks')[k]||'';
   if(rtCur&&curView==='route')drawRoute();
 }
-function miniMap(r){const M=window.FIRN_MAP;if(!M||typeof NLL==='undefined')return'';const pts=r.path.filter((x,i,a)=>NLL[x]&&a.indexOf(x)===i).map(x=>({p:NLL[x],n:N[x].n}));if(!pts.length)return'';
+function mmap(pts,o){o=o||{};const M=window.FIRN_MAP;if(!M||!pts.length)return'';
   let la0=Math.min(...pts.map(q=>q.p[0])),la1=Math.max(...pts.map(q=>q.p[0])),lo0=Math.min(...pts.map(q=>q.p[1])),lo1=Math.max(...pts.map(q=>q.p[1]));
-  const W=600,H=460,kx=Math.cos((la0+la1)/2*Math.PI/180),pad=.012;la0-=pad;la1+=pad;lo0-=pad/kx;lo1+=pad/kx;
+  const W=600,H=460,kx=Math.cos((la0+la1)/2*Math.PI/180),pad=o.pad||.012;la0-=pad;la1+=pad;lo0-=pad/kx;lo1+=pad/kx;
   const sc=Math.min(W/((lo1-lo0)*kx),H/(la1-la0)),ox=(W-(lo1-lo0)*kx*sc)/2,oy=(H-(la1-la0)*sc)/2,X=lo=>(ox+(lo-lo0)*kx*sc).toFixed(1),Y=la=>(oy+(la1-la)*sc).toFixed(1);
   const inb=c=>c.some(q=>q[0]>la0-.01&&q[0]<la1+.01&&q[1]>lo0-.02&&q[1]<lo1+.02),path=c=>'M'+c.map(q=>X(q[1])+' '+Y(q[0])).join('L'),CC={b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'};
   let h=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(t('mapH'))}">`;
   M.lifts.filter(l=>inb(l.c)).forEach(l=>h+=`<path d="${path(l.c)}" fill="none" stroke="#0A1633" stroke-width="1.2" opacity=".55"/>`);
-  M.pistes.filter(q=>inb(q.c)).forEach(q=>h+=`<path d="${path(q.c)}" fill="none" stroke="${CC[q.d]}" stroke-width="2.2" stroke-linejoin="round" opacity=".8"/>`);
-  pts.forEach((q,i)=>{const x=+X(q.p[1]),y=+Y(q.p[0]),left=x>W*.62;h+=`<circle cx="${x}" cy="${y}" r="13" fill="#E8540A" stroke="#fff" stroke-width="3"/><text x="${x}" y="${y+4.5}" text-anchor="middle" style="fill:#fff;stroke:none;font-size:12px">${i+1}</text><text x="${x+(left?-20:20)}" y="${y+5}" text-anchor="${left?'end':'start'}">${esc(q.n)}</text>`});
+  M.pistes.filter(q=>inb(q.c)).forEach(q=>h+=`<path d="${path(q.c)}" fill="none" stroke="${CC[q.d]}" stroke-width="2.2" stroke-linejoin="round" opacity="${o.lines?.3:.8}"/>`);
+  (o.lines||[]).filter(inb).forEach(c=>h+=`<path d="${path(c)}" fill="none" stroke="${o.lc||'#7A4FD0'}" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 7"/>`);
+  if(!o.hide)pts.forEach((q,i)=>{const x=+X(q.p[1]),y=+Y(q.p[0]),left=x>W*.62;h+=`<circle cx="${x}" cy="${y}" r="13" fill="#E8540A" stroke="#fff" stroke-width="3"/>${o.num?`<text x="${x}" y="${y+4.5}" text-anchor="middle" style="fill:#fff;stroke:none;font-size:12px">${i+1}</text>`:''}<text x="${x+(left?-20:20)}" y="${y+5}" text-anchor="${left?'end':'start'}">${esc(q.n)}</text>`});
   return h+'</svg>'}
+function miniMap(r){if(typeof NLL==='undefined')return'';return mmap(r.path.filter((x,i,a)=>NLL[x]&&a.indexOf(x)===i).map(x=>({p:NLL[x],n:N[x].n})),{num:1})}
 function openRoute(id){rtCur=id;show('route',true);drawRoute();$('#main').scrollTop=0}
 function drawRoute(){const r=ROUTES.find(x=>x.id===rtCur);if(!r)return;const d=R(r.id),lv=t('lv'),done=st('done',[]),ok=done.includes(r.id),e=EAT.find(x=>x.id===r.eat),hs=r.path.map(x=>N[x].h),fv=typeof favs==='function'&&favs().includes('r:'+r.id),dn=(String(d[3]).match(/\d[\d.,']*/)||[''])[0];
   $('#rtDetail').innerHTML=`<div class="rmedia"><button onclick="routeOnMap(${r.id})" aria-label="${esc(t('showMap'))}">${miniMap(r)}</button><div><img src="media/${TP[r.id]}.jpg" alt=""></div></div>
@@ -890,11 +896,11 @@ function eatFilter(){const fav=st('fav',[]);return EAT.filter(e=>eatA==='all'||(
 const openE={};
 function drawEat(){
   const fav=st('fav',[]),list=eatFilter();
-  $('#eatList').innerHTML=list.length?list.map(e=>{const d=g('eat',e.id),f=fav.includes(e.id);return `<details class="lf eatr ${eatP===e.id?'pick':''}" id="c-${e.id}" ${openE[e.id]||eatP===e.id?'open':''} ontoggle="openE['${e.id}']=this.open"><summary><span class="nm">${esc(e.n)}<span class="sub">${N[e.at].n} · ${N[e.at].h} m</span></span><button class="heart" aria-label="♥" aria-pressed="${f}" onclick="event.preventDefault();event.stopPropagation();toggleFav('${e.id}')">${f?'♥':'♡'}</button></summary><div class="lfb"><p style="margin:0 0 10px">${d[1]}</p><div class="meta">${d[0].map(x=>`<span class="pill">${x}</span>`).join('')}</div><button class="btn sm ghost" onclick="eatOnMap('${e.id}')">${t('onMap')}</button></div></details>`}).join(''):`<p class="muted">${t('noFav')}</p>`;
+  $('#eatList').innerHTML=list.length?list.map(e=>{const d=g('eat',e.id),f=fav.includes(e.id);return `<div class="sr erow"><button class="go" onclick="openPlace('e:${e.id}')"><span>${esc(e.n)}</span><small>${N[e.at].n} · ${N[e.at].h} m · ${d[0].join(' · ')}</small></button><button class="heart" aria-label="♥" aria-pressed="${f}" onclick="toggleFav('${e.id}')">${f?'♥':'♡'}</button></div>`}).join(''):`<p class="shint">${t('sNoFav')}</p>`;
 }
 function toggleFav(id){const f=st('fav',[]).slice(),i=f.indexOf(id);i<0?f.push(id):f.splice(i,1);put('fav',f);drawEat()}
 $$('#eatChips .chip').forEach(c=>c.onclick=()=>{$$('#eatChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));eatA=c.dataset.a;eatP=null;drawEat()});
-$('#eatPick').onclick=()=>{const list=eatFilter();if(!list.length)return;eatP=list[Math.floor(Math.random()*list.length)].id;drawEat();const el=$('#c-'+eatP);if(el)el.scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'})};
+$('#eatPick').onclick=()=>{const list=eatFilter();if(!list.length)return;openPlace('e:'+list[Math.floor(Math.random()*list.length)].id)};
 
 /* ---------- SPELEN ---------- */
 let curGame='menu';
@@ -1094,23 +1100,48 @@ $('#realmap').addEventListener('load',()=>mapMsg({k:'lang',lang:cur}));
 /* ---------- activiteiten naast het skiën ---------- */
 const DO=[{id:'sled',lay:'sled',z:[46.6,7.99]},{id:'hike',lay:'hike',z:[46.6,7.99]},{id:'jfj',at:'jfj'},{id:'piz',at:'sch'},{id:'birg',at:'bir'},{id:'cliff',at:'fir'},{id:'fly',at:'fir'},{id:'velo',at:'gw'},{id:'ice',at:'wen'},{id:'park',at:'fir'}];
 function doOnMap(id){const d=DO.find(x=>x.id===id);if(!d)return;show('kaart',true);setTimeout(()=>{if(d.lay)mapMsg({k:'layer',l:d.lay,on:true});else mapMsg({k:'go',p:NLL[d.at],n:g('doen',id)[0]})},150)}
-function drawDo(){$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<div class="trow sc"><span class="label">${esc(x[1])}</span><h3>${esc(x[0])}</h3><p>${esc(x[2])}</p><button class="btn sm ghost" style="margin-top:12px" onclick="doOnMap('${d.id}')">${t('onMap')}</button></div>`}).join('')}
+const DOP={sled:'e-lauberhorn',hike:'e-wengen2',jfj:'e-monch2',piz:'e-murrenpano',birg:'e-murrenpano',cliff:'e-grindelwald',fly:'e-grindelwald',velo:'e-grindelwald',ice:'e-dawn',park:'e-sessel'};
+function drawDo(){$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<button class="rcard" onclick="openPlace('d:${d.id}')"><img src="media/${DOP[d.id]}.jpg" alt="" loading="lazy"><span class="in"><span class="label">${esc(x[1])}</span><b>${esc(x[0])}</b></span></button>`}).join('')}
+const dist=(a,b)=>{const x=(b[1]-a[1])*Math.cos((a[0]+b[0])/2*Math.PI/180),y=b[0]-a[0];return Math.hypot(x,y)*111195};
+function nearLift(p){let best=null;MD.lifts.forEach(l=>{if(!l.n)return;[l.c[0],l.c[l.c.length-1]].forEach(q=>{const m=dist(p,q);if(!best||m<best.m)best={n:l.n,m}})});return best&&best.m<1500?best:null}
+let plCur=null;
+function openPlace(key){plCur=key;show('plek',true);drawPlace();$('#main').scrollTop=0}
+function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(2),ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')};
+  let o=null;
+  if(k==='e'){const e=EAT.find(x=>x.id===id);if(!e)return;const d=g('eat',id),fi=EM[id],f=fi!=null?MD.food[fi]:null,p=f?f.p:NLL[e.at];
+    o={ttl:'qaEat',n:e.n,sub:N[e.at].n,p,tags:d[0],text:d[1],stats:[[N[e.at].h+'<small> m</small>',t('plAlt')]],web:f&&f.w,fav:st('fav',[]).includes(id),favFn:`toggleFav('${id}');drawPlace()`,map:`eatOnMap('${id}')`}}
+  else if(k==='f'){const fi=MD.food.findIndex(x=>x.n===id);if(fi<0)return;const f=MD.food[fi];
+    o={ttl:'qaEat',n:f.n,sub:ft[f.t]||'',p:f.p,tags:f.c?f.c.split(/[;_]/).map(x=>x.trim()).filter(Boolean):[],text:'',stats:[],web:f.w,fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key.replace(/'/g,"\\'")}');drawPlace()`,map:`mapPick('food',${fi})`}}
+  else if(k==='d'){const d=DO.find(x=>x.id===id);if(!d)return;const x=g('doen',id),M=window.FIRN_MAP||{};
+    o={ttl:'qaDo',n:x[0],sub:x[1],p:d.at?NLL[d.at]:null,photo:DOP[id],tags:[],text:x[2],stats:d.at?[[N[d.at].h+'<small> m</small>',t('plAlt')]]:[[(d.lay==='sled'?'50':'100')+'<small> km</small>',t('plNet')]],fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key}');drawPlace()`,map:`doOnMap('${id}')`,
+      lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote')}}
+  if(!o)return;TITLE.plek=o.ttl;$('#ttl').textContent=t(o.ttl);
+  if(o.p){const nl=nearLift(o.p);if(nl)o.stats.push([`<span class="tx">${esc(nl.n)}</span>`,t('plLift')+' · '+(Math.round(nl.m/10)*10)+' m'])}
+  if(o.sub&&k!=='d')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
+  const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,hide:1,pad:.004}):o.p?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
+  $('#plDetail').innerHTML=`<div class="rmedia ${o.photo?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div><img src="media/${o.photo}.jpg" alt=""></div>`:''}</div>
+   <div class="rhead"><h1>${esc(o.n)}</h1><button class="heart" aria-label="♥" aria-pressed="${o.fav}" onclick="${o.favFn}">${o.fav?'♥':'♡'}</button></div>
+   ${k==='d'?`<p class="rsub">${esc(o.sub)}</p>`:''}
+   ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,3)}" style="margin-top:14px">${o.stats.slice(0,3).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
+   ${o.tags.length?`<div class="meta" style="margin:0 0 18px">${o.tags.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
+   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}
+   <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap"><button class="btn sm alt" onclick="${o.map}">${t('onMap')}</button>${/^https?:\/\//.test(o.web||'')?`<a class="btn sm ghost" href="${esc(o.web)}" target="_blank" rel="noopener" style="text-decoration:none">${t('scSite')} ↗</a>`:''}</div>`}
 /* ---------- zoeken en favorieten ---------- */
 const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
 const nrm=x=>String(x).toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]/g,'').replace(/\b(berg)?(restaurant|haus|gasthaus|hotel)\b/g,'').replace(/\s+/g,' ').trim();
 const EM={},FM={};   // samengestelde lijst <-> kaartpunt
 EAT.forEach(e=>{const k=nrm(e.n);if(!k)return;let i=MD.food.findIndex(f=>nrm(f.n)===k);if(i<0&&k.length>5)i=MD.food.findIndex(f=>{const q=nrm(f.n);return q.length>5&&(q.includes(k)||k.includes(q))});if(i>=0&&FM[i]==null){EM[e.id]=i;FM[i]=e.id}});
 function eatOnMap(id){const e=EAT.find(x=>x.id===id);if(!e)return;if(EM[id]!=null){show('kaart',true);setTimeout(()=>mapMsg({k:'pick',kind:'food',i:EM[id]}),150)}else nodeOnMap(e.at)}
-function openEat(id){eatA='all';eatP=id;$$('#eatChips .chip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.a==='all'));show('eten',true);drawEat();const el=$('#c-'+id);if(el)el.scrollIntoView({block:'center'})}
+function openEat(id){openPlace('e:'+id)}
 let IDX=null;
 function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')},seen={},out=[];
   const add=(o)=>{if(!o.n||seen[o.key])return;seen[o.key]=1;o.q=nrm(o.n+' '+(o.sub||''))+' '+String(o.n).toLowerCase();out.push(o)};
   EAT.forEach(e=>add({key:'e:'+e.id,kind:'eat',n:e.n,sub:N[e.at].n+' · '+N[e.at].h+' m',go:()=>openEat(e.id)}));
-  MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',go:()=>mapPick('food',i)})});
+  MD.food.forEach((f,i)=>{if(FM[i]!=null)return;add({key:'f:'+f.n,kind:'eat',n:f.n,sub:ft[f.t]||'',go:()=>openPlace('f:'+f.n)})});
   MD.lifts.forEach((l,i)=>add({key:'l:'+l.n,kind:'lift',n:l.n,sub:'',go:()=>mapPick('lift',i)}));
   MD.pistes.forEach((p,i)=>{const nm=p.n&&p.n!==p.ref?p.n:(p.ref?t('kPisteOne')+' '+p.ref:'');if(!nm)return;add({key:'p:'+nm,kind:'piste',n:nm,sub:(p.n&&p.n!==p.ref&&p.ref?t('kPisteOne')+' '+p.ref+' · ':'')+t({b:'pB',r:'pR',k:'pK',f:'pF'}[p.d]),go:()=>mapPick('piste',i)})});
   ROUTES.forEach(r=>{const d=R(r.id);add({key:'r:'+r.id,kind:'route',n:d[0],sub:d[1]+' → '+d[2],go:()=>openRoute(r.id)})});
-  DO.forEach(d=>{const x=g('doen',d.id);add({key:'d:'+d.id,kind:'do',n:x[0],sub:x[1],go:()=>show('doen',true)})});
+  DO.forEach(d=>{const x=g('doen',d.id);add({key:'d:'+d.id,kind:'do',n:x[0],sub:x[1],go:()=>openPlace('d:'+d.id)})});
   SCHOOLS.forEach(c=>add({key:'s:'+c.n,kind:'school',n:c.n,sub:c.v,go:()=>show('school',true)}));
   MD.places.concat(MD.stations).forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:'',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
   MD.peaks.forEach(x=>add({key:'pl:'+x.n,kind:'place',n:x.n,sub:x.e+' m',go:()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'go',p:x.p,n:x.n}),150)}}));
@@ -1131,7 +1162,7 @@ $('#srchBtn').onclick=()=>{show('zoek',true);drawSearch();setTimeout(()=>$('#sq'
 $('#eatAll').onclick=()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'layer',l:'food',on:true}),150)};
 addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id)});
 $('#realmap').addEventListener('load',()=>mapMsg({k:'cur',m:FM}));
-const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch()};
+const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch();if(curView==='plek')drawPlace()};
 const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek'};
 /* ---------- weer per hoogte (MeteoSwiss) ---------- */
 let WX=null,wxAt=0;

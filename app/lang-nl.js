@@ -175,3 +175,5 @@ LANG.nl.doen={"sled": ["Sleeën", "Hele gebied", "Ongeveer 50 km sleebanen, van 
 Object.assign(LANG.nl.ui,{"qaTr": "Vervoer", "lvWx": "Weer", "lvHours": "Openingstijden", "lvOff": "Officiële status"});
 
 Object.assign(LANG.nl.ui,{"rtLevel": "Niveau", "rtTime": "duur", "rtDown": "daling", "rtTop": "hoogste punt", "rtLow": "laagste punt", "rtDesc": "Beschrijving"});
+
+Object.assign(LANG.nl.ui,{"plAlt": "hoogte", "plLift": "dichtstbijzijnde lift", "plWhere": "plaats", "plNet": "in het gebied"});

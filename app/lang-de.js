@@ -175,3 +175,5 @@ LANG.de.doen={"sled": ["Schlitteln", "Ganze Region", "Rund 50 km Schlittelwege, 
 Object.assign(LANG.de.ui,{"qaTr": "Anreise", "lvWx": "Wetter", "lvHours": "Betriebszeiten", "lvOff": "Offizieller Status"});
 
 Object.assign(LANG.de.ui,{"rtLevel": "Schwierigkeit", "rtTime": "Dauer", "rtDown": "Abfahrt", "rtTop": "höchster Punkt", "rtLow": "tiefster Punkt", "rtDesc": "Beschreibung"});
+
+Object.assign(LANG.de.ui,{"plAlt": "Höhe", "plLift": "nächster Lift", "plWhere": "Ort", "plNet": "in der Region"});

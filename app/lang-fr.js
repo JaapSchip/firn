@@ -175,3 +175,5 @@ LANG.fr.doen={"sled": ["Luge", "Toute la région", "Environ 50 km de pistes de l
 Object.assign(LANG.fr.ui,{"qaTr": "Transport", "lvWx": "Météo", "lvHours": "Horaires", "lvOff": "État officiel"});
 
 Object.assign(LANG.fr.ui,{"rtLevel": "Niveau", "rtTime": "durée", "rtDown": "descente", "rtTop": "point haut", "rtLow": "point bas", "rtDesc": "Description"});
+
+Object.assign(LANG.fr.ui,{"plAlt": "altitude", "plLift": "remontée la plus proche", "plWhere": "lieu", "plNet": "dans la région"});
