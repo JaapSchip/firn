@@ -1,0 +1,21 @@
+name: Hoogtes ophalen (swisstopo)
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+    paths: ['tools/fetch_heights.py', '.github/workflows/heights.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_heights.py
+      - run: python3 tools/build_map.py
+      - run: |
+          git config user.name "firn-bot"
+          git config user.email "firn-bot@users.noreply.github.com"
+          git add data/heights.json app/kaart/map-data.js
+          git diff --cached --quiet || git commit -m "Hoogtes bijgewerkt (© swisstopo)"
+          git push

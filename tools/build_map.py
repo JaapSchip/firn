@@ -5,6 +5,11 @@ import json, math, sys, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 els = json.load(open(os.path.join(ROOT, 'data', 'osm.json'), encoding='utf8'))['elements']
 
+HP = os.path.join(ROOT, 'data', 'heights.json')
+HT = json.load(open(HP)) if os.path.exists(HP) else {}
+def hts(c):
+    a, b, m = HT.get(f'{c[0][0]},{c[0][1]}'), HT.get(f'{c[-1][0]},{c[-1][1]}'), HT.get(f'{c[len(c)//2][0]},{c[len(c)//2][1]}')
+    return [a, b, m] if a is not None and b is not None else None
 def line(e):
     return [[round(p['lat'], 5), round(p['lon'], 5)] for p in e.get('geometry', []) if p]
 def length(c):
@@ -35,16 +40,16 @@ for e in els:
         if len(c) < 2: continue
         d = DIFF.get(t.get('piste:difficulty'), 'r' if not t.get('piste:difficulty') else 'b')
         if t.get('area') == 'yes': out['areas'].append({'c': c, 'd': d})
-        else: out['pistes'].append({'c': c, 'd': d, 'n': n, 'ref': t.get('piste:ref') or t.get('ref', ''), 'm': length(c), 'g': t.get('piste:grooming', '')})
+        else: out['pistes'].append({'c': c, 'd': d, 'n': n, 'ref': t.get('piste:ref') or t.get('ref', ''), 'm': length(c), 'g': t.get('piste:grooming', ''), 'h': hts(c)})
     elif e['type'] == 'way' and pt_ and 'sled' in pt_:
         c = line(e)
-        if len(c) > 1: out['sled'].append({'c': c, 'n': n, 'm': length(c)})
+        if len(c) > 1: out['sled'].append({'c': c, 'n': n, 'm': length(c), 'h': hts(c)})
     elif e['type'] == 'way' and pt_ == 'hike':
         c = line(e)
         if len(c) > 1: out['hike'].append({'c': c, 'n': n, 'm': length(c)})
     elif e['type'] == 'way' and 'aerialway' in t and t['aerialway'] not in SKIP_LIFT:
         c = line(e)
-        if len(c) > 1: out['lifts'].append({'c': c, 'n': n, 't': t['aerialway'], 'm': length(c), 'cap': t.get('aerialway:occupancy', '')})
+        if len(c) > 1: out['lifts'].append({'c': c, 'n': n, 't': t['aerialway'], 'm': length(c), 'cap': t.get('aerialway:occupancy', ''), 'h': hts(c)})
     elif e['type'] == 'way' and t.get('railway') in ('rail', 'narrow_gauge', 'funicular') and t.get('service') not in ('yard', 'siding', 'spur', 'crossover'):
         c = line(e)
         if len(c) > 1: out['rail'].append({'c': c, 'u': 1 if t.get('tunnel') == 'yes' else 0, 'f': 1 if t['railway'] == 'funicular' else 0})
