@@ -53,6 +53,7 @@ html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif
 .dot.food{background:var(--hi)}.dot.park{background:var(--ink);border-radius:3px}
 .me{width:16px;height:16px;border-radius:50%;background:#1C6DD0;border:3px solid #fff;box-shadow:0 0 0 2px rgba(28,109,208,.35);transform:translate(-50%,-50%);position:absolute}
 .leaflet-container{font-family:inherit;background:#EEF1F6}
+.relief{mix-blend-mode:multiply}
 .leaflet-control-attribution{font:400 10px "IBM Plex Mono",monospace;background:rgba(255,255,255,.8)!important;color:var(--muted)}
 .leaflet-control-attribution a{color:var(--muted)}
 </style>
@@ -84,6 +85,7 @@ const BOUNDS=L.latLngBounds([46.52,7.80],[46.70,8.13]);
 const map=L.map('map',{zoomControl:false,minZoom:11,maxZoom:17,maxBounds:BOUNDS.pad(.25),zoomSnap:.25,renderer:L.canvas({tolerance:12,padding:.4}),attributionControl:true});
 map.attributionControl.setPrefix(false).addAttribution('Kaartdata © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>');
 map.fitBounds(L.latLngBounds(D.pistes.flatMap(p=>[p.c[0],p.c[p.c.length-1]])).pad(.04));
+L.tileLayer('relief/{z}/{x}/{y}.jpg',{minNativeZoom:11,maxNativeZoom:14,bounds:BOUNDS,opacity:.45,className:'relief',attribution:'Reliëf © <a href="https://www.swisstopo.admin.ch" target="_blank" rel="noopener">swisstopo</a>'}).addTo(map);
 const G={};['base','areas','sled','pistes','lifts','labels','food','parking'].forEach(k=>G[k]=L.layerGroup());
 // ondergrond
 (D.ice||[]).forEach(r=>L.polygon(r,{stroke:false,fillColor:'#DCEBF5',fillOpacity:.9,interactive:false}).addTo(G.base));

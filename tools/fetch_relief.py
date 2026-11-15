@@ -27,7 +27,13 @@ for z in range(11, 15):
             os.makedirs(os.path.dirname(p), exist_ok=True)
             try:
                 b = get(f'https://wmts.geo.admin.ch/1.0.0/{layer}/default/current/3857/{z}/{x}/{y}.png')
-                open(p, 'wb').write(b); ok += 1; size += len(b)
+                try:
+                    import io; from PIL import Image
+                    im = Image.open(io.BytesIO(b)).convert('RGBA'); bg = Image.new('RGBA', im.size, (255, 255, 255, 255)); bg.alpha_composite(im)
+                    p = p[:-4] + '.jpg'; bg.convert('L').save(p, 'JPEG', quality=72, optimize=True); b = open(p, 'rb').read()
+                except ImportError:
+                    open(p, 'wb').write(b)
+                ok += 1; size += len(b)
             except Exception as e: print('mis', z, x, y, e)
             time.sleep(0.05)
 print(ok, 'tegels', size // 1024, 'KB')

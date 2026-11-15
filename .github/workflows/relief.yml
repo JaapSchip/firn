@@ -1,8 +1,6 @@
 name: Reliëf ophalen (swisstopo)
 on:
   workflow_dispatch:
-  push:
-    paths: ['tools/fetch_relief.py', '.github/workflows/relief.yml']
 permissions:
   contents: write
 jobs:
@@ -10,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tools/fetch_relief.py
+      - run: pip install -q pillow && python3 tools/fetch_relief.py
       - name: Commit
         run: |
           git config user.name "firn-bot"
