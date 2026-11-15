@@ -409,6 +409,17 @@ select,input[type=text]{background:var(--snow)}
 .sr>button.go{flex:1;min-width:0;text-align:left;background:none;border:0;padding:14px 0;color:var(--ink);font:400 17px "Hanken Grotesk",sans-serif;display:flex;flex-direction:column;gap:2px}
 .sr small{font-size:12.5px;color:var(--muted)}
 .shint{color:var(--muted);margin:18px 0}
+.dayh{display:flex;align-items:baseline;justify-content:space-between;margin:6px 0 2px}.dayh h1{margin:0}
+.dayh button{background:none;border:0;color:var(--muted);font:inherit;font-size:14px;text-decoration:underline;padding:6px 0}
+.dayi{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.dayi i{flex:none;width:28px;height:28px;border-radius:50%;background:var(--solid);color:#fff;font:600 13px/28px "IBM Plex Mono",monospace;text-align:center;font-style:normal}
+.dayi .go{flex:1;min-width:0;text-align:left;background:none;border:0;padding:0;color:inherit;font:inherit}
+.dayi .go span{display:block;font-weight:600}.dayi .go small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.dayi .mv{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:none;color:inherit;font-size:16px}
+.dayi .mv:disabled{opacity:.25}
+.dayc{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px;padding:16px 18px;border-radius:16px;border:1.5px solid var(--ink);background:none;color:inherit;font:inherit;text-align:left}
+.dayc b{display:block;font-size:17px}.dayc small{display:block;color:var(--muted);margin-top:2px}
+
 .topbar .right{display:flex;gap:8px}
 .xh{display:flex;justify-content:space-between;align-items:center;margin:22px 0 14px}.xh h1{font-size:2.6rem;font-weight:400;letter-spacing:-.03em}
 .qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 28px;border-top:0}
@@ -603,6 +614,7 @@ a{color:var(--ink)}
 </section>
 
 <section class="view" id="v-fav">
+  <div id="dayBox"></div>
   <div class="xh"><h1 data-i="sFav"></h1></div>
   <div id="favList"></div>
 </section>
@@ -1353,6 +1365,30 @@ const _show2=show;show=function(tb,push){_show2(tb,push);if(curView==='liften')l
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView==='liften')loadWx()});
 drawWx();loadWx(true);
 $('#main').addEventListener('scroll',()=>{if(curView!=='start')return;const q=$('#qa').getBoundingClientRect(),m=$('#main').getBoundingClientRect();$('#ibar').classList.toggle('on',q.bottom<m.top+4)},{passive:true});
+
+/* ---------- MIJN SKIDAG ---------- */
+function dayL(){return S.get('day',[])}
+function dayTog(key){const d=dayL().slice(),i=d.indexOf(key);i<0?d.push(key):d.splice(i,1);S.set('day',d);dayRefresh()}
+function dayMove(i,by){const d=dayL().slice(),j=i+by;if(j<0||j>=d.length)return;[d[i],d[j]]=[d[j],d[i]];S.set('day',d);dayRefresh()}
+function dayClear(){S.set('day',[]);dayRefresh()}
+function dayBtn(el,key){if(!el||!key)return;const old=el.querySelector('.dayb');if(old)old.remove();const on=dayL().includes(key);
+  el.insertAdjacentHTML('beforeend',`<div class="row dayb" style="margin:4px 0 10px"><button class="btn sm ${on?'alt':'ghost'}">${on?'✓ '+t('dayIn'):'+ '+t('dayAdd')}</button></div>`);
+  el.querySelector('.dayb button').onclick=()=>dayTog(key)}
+function drawDay(){const el=$('#dayBox');if(!el)return;if(!IDX)buildIdx();const d=dayL().map(k=>IDX.find(o=>o.key===k)).filter(Boolean);
+  el.innerHTML=`<div class="dayh"><h1>${t('dayH')}</h1>${d.length?`<button id="dayClr">${t('dayClear')}</button>`:''}</div>`+(d.length?d.map((o,i)=>`<div class="dayi"><i>${i+1}</i><button class="go" data-d="${i}"><span>${esc(o.n)}</span>${o.sub?`<small>${esc(o.sub)}</small>`:''}</button><button class="mv" data-u="${i}" aria-label="${esc(t('dayUp'))}" ${i?'':'disabled'}>↑</button><button class="mv" data-x="${i}" aria-label="${esc(t('dayDel'))}">✕</button></div>`).join(''):`<p class="shint">${t('dayHint')}</p>`);
+  el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>d[+b.dataset.d].go());
+  el.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>dayMove(dayL().indexOf(d[+b.dataset.u].key),-1));
+  el.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>dayTog(d[+b.dataset.x].key));
+  const c=$('#dayClr');if(c)c.onclick=dayClear}
+function dayHome(){const el=$('#home');if(!el)return;const old=el.querySelector('.dayc');if(old)old.remove();if(!IDX){try{buildIdx()}catch(e){return}}
+  const d=dayL().map(k=>IDX.find(o=>o.key===k)).filter(Boolean);if(!d.length)return;
+  el.insertAdjacentHTML('afterbegin',`<button class="dayc"><span><b>${t('dayH')}</b><small>${d.map(o=>esc(o.n)).slice(0,3).join(' · ')}${d.length>3?' …':''}</small></span><span>→</span></button>`);
+  el.querySelector('.dayc').onclick=()=>{NAV.length=0;navSaved=true;show('fav',false);$('#main').scrollTop=0}}
+function dayRefresh(){if(curView==='route')dayBtn($('#rtDetail'),'r:'+rtCur);if(curView==='plek')dayBtn($('#plDetail'),plCur);drawDay();dayHome()}
+{const a=drawRoute;drawRoute=function(){a();try{dayBtn($('#rtDetail'),'r:'+rtCur)}catch(e){}};
+ const b=drawPlace;drawPlace=function(){b();try{if(plCur)dayBtn($('#plDetail'),plCur)}catch(e){}};
+ const c=drawFav;drawFav=function(){c();try{drawDay()}catch(e){}};
+ const h=drawHome;drawHome=function(){h();try{dayHome()}catch(e){}}}
 renderAll();
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
