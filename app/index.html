@@ -411,6 +411,12 @@ select,input[type=text]{background:var(--snow)}
 .shint{color:var(--muted);margin:18px 0}
 #welc{position:absolute;inset:0;z-index:30;background:var(--snow);display:none;flex-direction:column;padding:calc(env(safe-area-inset-top) + 28px) 26px calc(env(safe-area-inset-bottom) + 22px);overflow-y:auto}
 #welc.on{display:flex}
+.hhero{margin:0 0 22px;position:relative}.hhero img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:18px}
+.hhero figcaption,.hcred{font-size:11px;color:var(--muted);margin:6px 2px 0}.hhero figcaption a,.hcred a{color:inherit}
+#welc .wimg{margin:calc(-28px - env(safe-area-inset-top)) -26px 0;position:relative}#welc .wimg img{display:block;width:100%;height:34vh;object-fit:cover}
+#welc .wimg small{position:absolute;right:8px;bottom:6px;font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+#welc .wimg+.wlogo{margin-top:18px}
+
 #welc .wlogo{font:500 13px "IBM Plex Mono",monospace;letter-spacing:.5em;text-transform:uppercase;color:var(--muted)}
 #welc .wbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0}
 #welc h1{font-size:40px;line-height:1.05;margin:0 0 14px;font-weight:400;letter-spacing:-.02em}
@@ -1233,8 +1239,12 @@ function loadTrip(i,el){const x=TRIPS[i],box=el.querySelector('.trb');box.innerH
 const DO=[{id:'sled',lay:'sled',z:[46.6,7.99]},{id:'hike',lay:'hike',z:[46.6,7.99]},{id:'jfj',at:'jfj'},{id:'piz',at:'sch'},{id:'birg',at:'bir'},{id:'cliff',at:'fir'},{id:'fly',at:'fir'},{id:'velo',at:'gw'},{id:'ice',at:'wen'},{id:'park',at:'fir'}];
 function doOnMap(id){const d=DO.find(x=>x.id===id);if(!d)return;show('kaart',true);setTimeout(()=>{if(d.lay)mapMsg({k:'layer',l:d.lay,on:true});else mapMsg({k:'go',p:NLL[d.at],n:g('doen',id)[0]})},150)}
 const DOC={"jfj":{"a":"Roy Egloff","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:CH.BE.Grindelwald_2021-04-20_Jungfraujoch_Sphinx-Observatory.jpg"},"piz":{"a":"Ximonic (Simo Räsänen)","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Schilthorn_with_Bernese_Alps,_2012_August.jpg"},"cliff":{"a":"Paradise Chronicle","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Cliff_walk_auf_Grindelwald_First_im_Winter.jpg"},"hike":{"a":"Jpatokal","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Mannlichn_Royal_Walk_Winter.jpg"},"birg":{"a":"Imceac","l":"CC0","u":"https://commons.wikimedia.org/wiki/File:Schilthornbahn_Funifor_Sektion_Birg_Schilthorn.jpeg"}};
+const JBP={hero:'CJiu7H6S~1772808304/Kleine-Scheidegg-Skifahrer-Eiger-Moench-Jungfrau-Key-Visual',sled:'GX5GLZ00~1771567176/Kleine-Scheidegg-Wengernalp_Fox-Run-2-Personen-am-schlitteln-von-vorne-links',hike:'Edt495rF~1772458409/Winterwandern-Kleine-Scheidegg-Maennlichen-Eiger-Moench-Jungfrau-1',park:'kgtt8eCJ~1787912853/Snowpark_Grindelwald_March_20_-_FULL-3338',jfj:'pBz9t1zE~1771246469/Jungfraubahn-Schnee-Jungfraujoch',cliff:'Mns4pKTu~1770297808/Grindelwald-First-Cliff-Walk-Eiger-Personen-Ferne',fly:'fGjHPRXP~1770358465/Grindelwald-First-Flieger-ohne-Personen-mit-Huetten-im-Schnee'};
+const JBC={a:'© Jungfraubahnen',l:'CC BY-NC 4.0',u:'https://dam.jungfrau.ch/en/terms-of-use'};
+function jbUrl(k){const x=JBP[k].split('~');return 'https://dam.media.jungfrau.ch/image/upload/s--'+x[0]+'--/c_limit,f_auto,h_800/v'+x[1]}
+function doImg(k,attr){const loc='media/'+DOP[k]+'.jpg';return JBP[k]?`<img src="${jbUrl(k)}" onerror="this.onerror=null;this.src='${loc}'" alt="" ${attr||''}>`:`<img src="${loc}" alt="" ${attr||''}>`}
 const DOP={sled:'e-lauberhorn',hike:'c-hike',jfj:'c-jfj',piz:'c-piz',birg:'c-birg',cliff:'c-cliff',fly:'e-grindelwald',velo:'e-grindelwald',ice:'e-dawn',park:'e-sessel'};
-function drawDo(){$('#doCred').innerHTML=t('phBy')+': '+Object.keys(DOC).map(k=>`${esc(g('doen',k)[0])} – <a href="${esc(DOC[k].u)}" target="_blank" rel="noopener">${esc(DOC[k].a)}</a>, ${esc(DOC[k].l)}`).join(' · ')+' (Wikimedia Commons)';$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<button class="rcard" onclick="openPlace('d:${d.id}')"><img src="media/${DOP[d.id]}.jpg" alt="" loading="lazy"><span class="in"><span class="label">${esc(x[1])}</span><b>${esc(x[0])}</b></span></button>`}).join('')}
+function drawDo(){$('#doCred').innerHTML=t('phBy')+': '+Object.keys(DOC).filter(k=>!JBP[k]).map(k=>`${esc(g('doen',k)[0])} – <a href="${esc(DOC[k].u)}" target="_blank" rel="noopener">${esc(DOC[k].a)}</a>, ${esc(DOC[k].l)}`).join(' · ')+' (Wikimedia Commons) · '+Object.keys(JBP).filter(k=>k!=='hero').map(k=>esc(g('doen',k)[0])).join(', ')+` – <a href="${JBC.u}" target="_blank" rel="noopener">${JBC.a}</a>`;$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<button class="rcard" onclick="openPlace('d:${d.id}')">${doImg(d.id,'loading="lazy"')}<span class="in"><span class="label">${esc(x[1])}</span><b>${esc(x[0])}</b></span></button>`}).join('')}
 const km=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+'<small> km</small>':m+'<small> m</small>';
 const dist=(a,b)=>{const x=(b[1]-a[1])*Math.cos((a[0]+b[0])/2*Math.PI/180),y=b[0]-a[0];return Math.hypot(x,y)*111195};
 function nearLift(p){let best=null;MD.lifts.forEach(l=>{if(!l.n||/carpet|rope/.test(l.t))return;[l.c[0],l.c[l.c.length-1]].forEach(q=>{const m=dist(p,q);if(!best||m<best.m)best={n:l.n,m}})});return best&&best.m<1500?best:null}
@@ -1248,7 +1258,7 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
     o={ttl:'qaEat',n:f.n,sub:ft[f.t]||'',p:f.p,tags:f.c?f.c.split(/[;_]/).map(x=>x.trim()).filter(Boolean):[],text:'',stats:[],web:f.w,ph:f.ph,fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key.replace(/'/g,"\\'")}');drawPlace()`,map:`mapPick('food',${fi})`}}
   else if(k==='d'){const d=DO.find(x=>x.id===id);if(!d)return;const x=g('doen',id),M=window.FIRN_MAP||{};
     o={ttl:'qaDo',n:x[0],sub:x[1],p:d.at?NLL[d.at]:null,photo:DOP[id],tags:[],text:x[2],stats:d.at?[[N[d.at].h+'<small> m</small>',t('plAlt')]]:[[(d.lay==='sled'?'50':'100')+'<small> km</small>',t('plNet')]],fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key}');drawPlace()`,map:`doOnMap('${id}')`,
-      lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote'),cr:DOC[id]}}
+      lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote'),cr:JBP[id]?JBC:DOC[id],jb:JBP[id]?id:null}}
   else if(k==='l'){const M=window.FIRN_MAP,segs=M.lifts.map((q,i)=>({q,i})).filter(x=>x.q.n===id);if(!segs.length)return;const LT=t('ltype'),l0=segs[0].q,
     tot=segs.reduce((a,x)=>a+x.q.m,0),hh=segs.flatMap(x=>(x.q.h||[]).slice(0,2)).filter(v=>v!=null),top=hh.length?Math.max(...hh):null,bot=hh.length?Math.min(...hh):null;
     const ends=segs.flatMap(x=>[{p:x.q.c[0],h:x.q.h?x.q.h[0]:0},{p:x.q.c[x.q.c.length-1],h:x.q.h?x.q.h[1]:0}]).sort((a,b)=>b.h-a.h),tp=ends[0].p;
@@ -1268,12 +1278,12 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
   if(o.sub&&k==='e')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
   const near=o.p&&MD.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-o.p[0])<.012&&Math.abs(c[1]-o.p[1])<.017));
   const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,solid:o.solid,hide:1,pad:o.solid?.006:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
-  $('#plDetail').innerHTML=`<div class="rmedia ${o.photo&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div><img src="media/${o.photo}.jpg" alt=""></div>`:''}</div>
+  $('#plDetail').innerHTML=`<div class="rmedia ${o.photo&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div>${o.jb?doImg(o.jb):`<img src="media/${o.photo}.jpg" alt="">`}</div>`:''}</div>
    <div class="rhead"><h1>${esc(o.n)}</h1><button class="heart" aria-label="♥" aria-pressed="${o.fav}" onclick="${o.favFn}">${o.fav?'♥':'♡'}</button></div>
    ${k!=='e'&&o.sub?`<p class="rsub">${esc(o.sub)}</p>`:''}
    ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,4)}" style="margin-top:14px">${o.stats.slice(0,4).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
    ${o.tags.length?`<div class="meta" style="margin:0 0 18px">${o.tags.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
-   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.extra||''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}, Wikimedia Commons</p>`:''}
+   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.extra||''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}${/wikimedia/.test(o.cr.u)?', Wikimedia Commons':''}</p>`:''}
    <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap">${o.ph?`<a class="btn sm alt" href="tel:${esc(o.ph.replace(/[^+\d]/g,''))}" style="text-decoration:none">${t('plCall')}</a>`:''}${/^https?:\/\//.test(o.web||'')?`<a class="btn sm ${o.ph?'ghost':'alt'}" href="${esc(o.web)}" target="_blank" rel="noopener" style="text-decoration:none">${t(k==='d'?'scSite':'plBook')} ↗</a>`:''}<button class="btn sm ghost" onclick="${o.map}">${t('onMap')}</button>${k!=='d'&&o.p?`<a class="btn sm ghost" style="text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.n+' '+o.p[0]+','+o.p[1])}">${t('plRev')} ↗</a>`:''}</div>${o.ph?`<p class="small muted">${esc(o.ph)}</p>`:''}`}
 /* ---------- zoeken en favorieten ---------- */
 const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
@@ -1373,14 +1383,14 @@ function routeToday(){const p=WX&&WX.pts&&WX.pts.find(x=>x.k==='ks'),ic=p&&p.d[0
 function drawHome(){const el=$('#home');if(!el)return;let rt;try{rt=routeToday();NLL;EM}catch(e){return}
   const loc=cur==='en'?'en-GB':cur,ks=WX&&WX.pts&&WX.pts.find(x=>x.k==='ks'),h0=ks&&ks.h[0],d1=ks&&ks.d[1],se=season(),r=rt.r,d=R(r.id),lv=t('lv'),e=EAT.find(x=>x.id===r.eat),ed=g('eat',e.id),f=EM[e.id]!=null?MD.food[EM[e.id]]:null;
   const today=h0?`${t('wc')[h0[5]]} ${t('hmAt')} Kleine Scheidegg, ${deg(h0[1])}.${d1?` ${t('hmTom')}: ${t('wc')[d1[5]].toLowerCase()}, ${deg(d1[1])} / ${deg(d1[2])}.`:''}`:t('wxNo');
-  el.innerHTML=`<div class="hb"><h2>${t('hmToday')}</h2><p>${today}</p><div id="nowIn"></div></div>
+  el.innerHTML=`<figure class="hhero"><img src="${jbUrl('hero')}" onerror="this.onerror=null;this.src='media/e-hero.jpg';this.nextElementSibling.hidden=true" alt=""><figcaption>Kleine Scheidegg · <a href="${JBC.u}" target="_blank" rel="noopener">${JBC.a}</a></figcaption></figure><div class="hb"><h2>${t('hmToday')}</h2><p>${today}</p><div id="nowIn"></div></div>
    ${se?`<div class="hb"><div class="hbig"><b>${se.n}</b><span>${t(se.k)}</span></div><p>Grindelwald-Wengen ${t('d1')} · Mürren-Schilthorn ${t('d2')}</p></div>`:''}
    <div class="hb"><h2>${t('hmRoute')}</h2><p>${t(rt.bad?'hmRouteBad':'hmRouteSun')}</p>
      <button class="hcard" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="in"><span><span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span></span><b>${esc(d[0])}</b><span class="tm">${esc(d[1])} → ${esc(d[2])} · ${esc(d[4])}</span></span></button>
      <button class="hlink" onclick="show('routes',true)">${t('hmAllR')} →</button></div>
    <div class="hb"><h2>${t('hmLunch')}</h2><div class="hlunch"><span class="label">${esc(N[e.at].n)} · ${N[e.at].h} m</span><h3>${esc(e.n)}</h3><p>${esc(ed[1])}</p><div class="row">${f&&f.ph?`<a class="btn sm alt" style="text-decoration:none" href="tel:${esc(f.ph.replace(/[^+\d]/g,''))}">${t('plCall')}</a>`:''}<button class="btn sm ${f&&f.ph?'ghost':'alt'}" onclick="openPlace('e:${e.id}')">${t('more')}</button></div></div>
      <button class="hlink" onclick="show('eten',true)">${t('hmAllE')} →</button></div>
-   <div class="hb"><h2>${t('hmDo')}</h2><div class="hrow">${['jfj','cliff','piz','hike'].map(k=>{const x=g('doen',k);return `<button class="hmini" onclick="openPlace('d:${k}')"><img src="media/${DOP[k]}.jpg" alt="" loading="lazy"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></button>`}).join('')}</div>
+   <div class="hb"><h2>${t('hmDo')}</h2><div class="hrow">${['sled','jfj','cliff','hike'].map(k=>{const x=g('doen',k);return `<button class="hmini" onclick="openPlace('d:${k}')">${doImg(k,'loading="lazy"')}<b>${esc(x[0])}</b><span>${esc(x[1])}</span></button>`}).join('')}</div><p class="hcred"><a href="${JBC.u}" target="_blank" rel="noopener">${JBC.a}</a></p>
      <button class="hlink" style="margin-top:8px" onclick="show('doen',true)">${t('hmAllD')} →</button></div>`;
   const nb=$('#nowCard .nowb');if(nb){$('#nowIn').appendChild(nb);const hd=nb.querySelector('.sgh');if(hd)hd.remove()}}
 function loadWx(force){if(!force&&Date.now()-wxAt<10*6e4)return;wxAt=Date.now();
@@ -1447,7 +1457,7 @@ function drawWelc(){const el=$('#welc'),n=wSteps(),k=n[wStep],ios=/iphone|ipad|i
     foot=(wLoc==='ok'||wLoc==='no'?`<button class="btn alt" onclick="welcNext()">${n.length>2?t('wNext'):t('wStart')}</button>`:`<button class="btn alt" onclick="welcLoc()">${t('wLoc')}</button><button class="wskip" onclick="welcNext()">${t('wLater')}</button>`)}
   if(k===2){body=`<h1>${t('wH3')}</h1><p>${t('wInstP')}</p><ul>${t(wInst?'wInstA':ios?'wInstI':'wInstO').map(x=>`<li>${x}</li>`).join('')}</ul>`;
     foot=(wInst?`<button class="btn alt" onclick="welcInst()">${t('wInstB')}</button><button class="wskip" onclick="welcDone()">${t('wLater')}</button>`:`<button class="btn alt" onclick="welcDone()">${t('wStart')}</button>`)}
-  el.innerHTML=`<div class="wlogo">Firn</div><div class="wbody">${body}</div><div class="wfoot">${dots}${foot}</div>`}
+  el.innerHTML=`${k===0?`<div class="wimg"><img src="${jbUrl('hero')}" onerror="this.parentNode.remove()" alt=""><small>${JBC.a}</small></div>`:''}<div class="wlogo">Firn</div><div class="wbody">${body}</div><div class="wfoot">${dots}${foot}</div>`}
 if(!S.get('seen',0)&&!/[?&]nowelcome/.test(location.search)){$('#welc').classList.add('on');drawWelc()}
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
