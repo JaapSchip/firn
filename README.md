@@ -10,4 +10,4 @@ Onafhankelijke ski-app voor het Jungfrau-gebied (Wengen, Mürren, Grindelwald).
 
 Kaartdata © OpenStreetMap-bijdragers, beschikbaar onder de Open Database License (ODbL).
 
-Reliëf © swisstopo. Foto's © Jaap Schippers.
+Reliëf © swisstopo. Foto's © Firn.
