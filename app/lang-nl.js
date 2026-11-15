@@ -161,7 +161,7 @@ Object.assign(LANG.nl.ui,{"tStart": "Ontdek", "tLifts": "Live", "qaRoutes": "Ski
 LANG.nl.travel=[["Wengen", "Autovrij. Parkeer in de parkeergarage direct onder station Lauterbrunnen (940 plaatsen) en neem de tandradtrein: ongeveer 15 minuten, rond de 40 treinen per dag."], ["Mürren", "Autovrij. Parkeer bij de Schilthornbahn in Stechelberg en je bent in 4 minuten boven, of parkeer in Lauterbrunnen en neem de kabelbaan naar Grütschalp plus het treintje."], ["Grindelwald", "Hier kom je gewoon met de auto. Het handigst voor skiërs is parkeergarage Terminal (1000 plaatsen), met een loopbrug naar de Eiger Express, de Männlichenbahn en de trein. In het dorp: Parkhaus Eiger+ (252 plaatsen) en Sportzentrum (160)."], ["Met de trein", "Vanaf Interlaken Ost rijden treinen naar Lauterbrunnen en naar Grindelwald. Voor Wengen of Mürren stap je over in Lauterbrunnen. Check de tijden in de SBB-app."], ["Goed om te weten", "De garages in Lauterbrunnen en Stechelberg raken op drukke dagen vol: kom vroeg. Vol? Parkeer in Wilderswil of in Matten bij Interlaken (alleen overdag) en reis verder met de trein. Volg je navigatie niet naar Wengen of Mürren: er loopt geen openbare weg naartoe."]];
 LANG.nl.ui.realH="Het gebied";
 
-Object.assign(LANG.nl.ui,{"qaSchool": "Skischolen", "fSchoolS": "Zes scholen in drie dorpen. Les voor beginners, kinderen en gevorderden.", "scOff": "Officiële Zwitserse skischool", "scInd": "Onafhankelijke school", "scGroup": "Groepsles", "scPriv": "Privéles", "scKids": "Kinderles", "scBoard": "Snowboard", "scOffp": "Off-piste met gids", "scMur": "Kantoor midden in het dorp, achter Hotel Jungfrau.", "scSite": "Website", "scTipH": "Goed om te weten", "scTipT": "Boek in de kerstvakantie en in februari ruim van tevoren. Prijzen en tijden wisselen per school; kijk op hun eigen site. Firn is onafhankelijk en verdient niets aan deze lijst."});
+Object.assign(LANG.nl.ui,{"qaSchool": "Skischolen", "fSchoolS": "Zeven scholen in drie dorpen. Les voor beginners, kinderen en gevorderden.", "scOff": "Officiële Zwitserse skischool", "scInd": "Onafhankelijke school", "scGroup": "Groepsles", "scPriv": "Privéles", "scKids": "Kinderles", "scBoard": "Snowboard", "scOffp": "Off-piste met gids", "scMur": "Kantoor midden in het dorp, achter Hotel Jungfrau.", "scSite": "Website", "scTipH": "Goed om te weten", "scTipT": "Boek in de kerstvakantie en in februari ruim van tevoren. Prijzen en tijden wisselen per school; kijk op hun eigen site. Firn is onafhankelijk en verdient niets aan deze lijst."});
 
 Object.assign(LANG.nl.ui,{"wxH": "Weer per hoogte", "wxZero": "Nulgradengrens", "wxUpd": "Bijgewerkt", "wxSrc": "Bron: MeteoSwiss", "wxNo": "Het weer is nu niet beschikbaar.", "wxGust": "vlagen", "wxSun": "u zon", "wxOld": "Let op: deze verwachting is ouder dan 6 uur.", "wxToday": "Vandaag"});
 
@@ -182,3 +182,7 @@ Object.assign(LANG.nl.ui,{"plCall": "Bellen", "plBook": "Website en reserveren",
 
 Object.assign(LANG.nl.ui,{"phBy": "Foto"});
 Object.assign(LANG.nl.ui,{"localOnly": "Meldingen staan nu alleen op je eigen toestel."});
+
+Object.assign(LANG.nl.ui,{"eRec": "Aanraders", "eRecOne": "aanrader", "eBerg": "Op de berg", "nowH": "Nu in het gebied"});
+
+Object.assign(LANG.nl.ui,{"liveA": "De officiële status van elke lift en piste staat op jungfrau.ch."});

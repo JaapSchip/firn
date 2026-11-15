@@ -435,6 +435,8 @@ select,input[type=text]{background:var(--snow)}
 .rmedia.one>*{width:100%}
 .tr>summary{padding:15px 0;font-size:17px}.tr .arr{color:var(--muted);font-size:13px}
 .trt{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:15px}.trt td{padding:9px 0;border-top:1px solid var(--line)}.trt td:first-child{font-weight:500;font-size:1.15rem;width:4.2em}.trt .dl{color:#D42A3A;font-size:12px;margin-left:4px}.trt td:last-child{text-align:right;color:var(--muted);font-size:13px}
+.nowb{display:block;width:100%;border:0;background:none;padding:0;margin:0 0 30px;color:var(--ink)}.nowb .rstats div{padding:16px 8px 14px}.nowb .rstats b{font-size:1.5rem;font-weight:300}.nowb .wxi{width:30px;height:30px}
+.sc .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.sc .row .pill{margin-top:0}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 </style>
 </head>
@@ -451,12 +453,13 @@ select,input[type=text]{background:var(--snow)}
   <div class="ibar" id="ibar"></div>
   <div class="xh"><h1 data-i="tStart"></h1></div>
   <div class="qa" id="qa"></div>
-  <div class="hero" id="heroArt"><img src="media/e-wengen2.jpg" alt="Wengen, Lauterbrunnental">
+  <div id="nowCard"></div>
+  <div hidden><div class="hero" id="heroArt"><img src="media/e-wengen2.jpg" alt="Wengen, Lauterbrunnental">
     <div class="hero-in"><span class="label" style="color:rgba(255,255,255,.85);letter-spacing:.3em">Jungfrau Ski Guide</span><h1><span>Firn</span></h1>
       <div class="hero-foot"><p data-i="tagline"></p><div class="hero-card"><span class="label" data-i="lsSet"></span><b class="num" id="heroSun"></b></div></div></div>
   </div>
   <p id="sunchip" hidden></p>
-  <div class="facts"><div class="fact"><strong>211</strong><span data-i="sKm"></span></div><div class="fact"><strong>3</strong><span data-i="sAreas"></span></div><div class="fact"><strong>2970</strong><span data-i="sTop"></span></div></div>
+  <div class="facts"><div class="fact"><strong>211</strong><span data-i="sKm"></span></div><div class="fact"><strong>3</strong><span data-i="sAreas"></span></div><div class="fact"><strong>2970</strong><span data-i="sTop"></span></div></div></div>
 
   <div class="sec"><h2 data-i="routesH"></h2><p class="lead" data-i="fRoutesS"></p><div class="tiles" id="tiles"></div></div>
   <div class="sec"><h2 data-i="realH"></h2><div class="reel" id="reel" style="margin-top:14px">
@@ -478,12 +481,12 @@ select,input[type=text]{background:var(--snow)}
   <div class="xh"><h1 data-i="tLifts"></h1></div>
   <div class="qa" id="qaLive"></div>
   <div id="wx"></div>
-  <h1 style="margin:22px 0 4px" data-i="lsH"></h1>
+  <div hidden><h1 style="margin:22px 0 4px" data-i="lsH"></h1>
   <p class="small muted" data-i="radarSub"></p>
   <div class="lsgrid" id="liveSum" style="margin-top:14px"></div>
   <div id="liveLong"></div>
     <div id="liftList"></div>
-  <p class="small muted" id="localNote" style="margin-top:10px;display:none" data-i="localOnly"></p>
+  <p class="small muted" id="localNote" style="margin-top:10px;display:none" data-i="localOnly"></p></div>
   <div class="card" style="margin-top:18px"><b data-i="liveQ"></b> <span data-i="liveA"></span><div style="margin-top:8px"><a href="https://www.jungfrau.ch/en-gb/jungfrau-ski-region/wintersportinfo/" target="_blank" rel="noopener" data-i="liveLink"></a></div></div>
   <div class="card" id="seasonCard" style="margin-top:12px"><h3 data-i="seasonH"></h3>
     <table style="margin-top:8px"><tr><td>Grindelwald-Wengen</td><td class="num" data-i="d1"></td></tr><tr><td>Mürren-Schilthorn</td><td class="num" data-i="d2"></td></tr><tr><td>Grindelwald-First</td><td data-i="sFirst"></td></tr></table>
@@ -509,9 +512,9 @@ select,input[type=text]{background:var(--snow)}
 </section>
 
 <section class="view" id="v-routes">
-  <p class="lead" data-i="routesSub"></p>
+  <p class="lead" data-i="fRoutesS"></p>
   <div class="chips" id="rtChips"></div>
-  <div class="rprog"><div class="row" style="justify-content:space-between"><span id="rpT"></span><span class="small muted" id="rpR"></span></div><div class="prog" style="margin-top:10px"><i id="rpB"></i></div></div>
+  <div class="rprog" hidden><div class="row" style="justify-content:space-between"><span id="rpT"></span><span class="small muted" id="rpR"></span></div><div class="prog" style="margin-top:10px"><i id="rpB"></i></div></div>
   <div id="routeList"></div>
   <div class="trow" style="margin-top:34px"><h3 data-i="sledH"></h3><p data-i="sledD"></p></div>
 </section>
@@ -523,7 +526,6 @@ select,input[type=text]{background:var(--snow)}
 <section class="view" id="v-eten">
   <p class="lead" data-i="eatSub"></p>
   <div class="chips" id="eatChips">
-    <button class="chip" data-a="all" aria-pressed="true" data-i="cAll"></button><button class="chip" data-a="w" aria-pressed="false" data-i="cW"></button><button class="chip" data-a="g" aria-pressed="false" data-i="cG"></button><button class="chip" data-a="m" aria-pressed="false" data-i="cM"></button><button class="chip" data-a="fav" aria-pressed="false" data-i="cFav"></button>
   </div>
   <div class="row" style="margin:12px 0"><button class="btn" id="eatPick" data-i="pick"></button></div>
   <div id="eatList" style="border-bottom:1px solid var(--line)"></div>
@@ -548,6 +550,11 @@ select,input[type=text]{background:var(--snow)}
   <p class="small muted" id="doCred" style="margin-top:8px"></p>
 </section>
 
+<section class="view" id="v-fav">
+  <div class="xh"><h1 data-i="sFav"></h1></div>
+  <div id="favList"></div>
+</section>
+
 <section class="view" id="v-zoek">
   <input id="sq" type="search" autocomplete="off" autocapitalize="off" spellcheck="false">
   <div id="sres"></div>
@@ -564,9 +571,9 @@ select,input[type=text]{background:var(--snow)}
     <p class="lead" style="margin-top:20px" data-i="fPlayS"></p>
     <div class="games" style="margin-top:0">
       <button class="gcard wide" data-g="race"><b>Lauberhorn Racer</b><span class="muted" data-i="g1d"></span><span class="small" id="bestLine"></span></button>
-      <button class="gcard" data-g="quiz"><b data-i="gQuiz"></b><span class="muted small" data-i="g2d"></span></button>
-      <button class="gcard" data-g="bingo"><b data-i="gBingo"></b><span class="muted small" data-i="g3d"></span></button>
-      <button class="gcard" data-g="taal" style="grid-column:1/-1;min-height:0"><b data-i="gPhr"></b><span class="muted small" data-i="g5d"></span></button>
+      <button class="gcard wide" data-g="quiz"><b data-i="gQuiz"></b><span class="muted small" data-i="g2d"></span></button>
+      <button class="gcard" data-g="bingo" hidden><b data-i="gBingo"></b><span class="muted small" data-i="g3d"></span></button>
+      <button class="gcard" data-g="taal" hidden style="grid-column:1/-1;min-height:0"><b data-i="gPhr"></b><span class="muted small" data-i="g5d"></span></button>
     </div>
   </div>
   <div class="panel" id="g-race">
@@ -598,7 +605,7 @@ select,input[type=text]{background:var(--snow)}
   <button data-t="start"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span data-i="tStart"></span></button>
   <button data-t="liften"><svg viewBox="0 0 24 24"><path d="M3 19l6-9 4 5 2-3 6 7"/><circle cx="17" cy="5" r="1.6"/></svg><span data-i="tLifts"></span></button>
   <button data-t="kaart"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span data-i="tMap"></span></button>
-  <button data-t="spelen"><svg viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 014 4v3a3 3 0 01-5.6 1.5L15 15H9l-1.4 1.5A3 3 0 012 15v-3a4 4 0 014-4zM7 11v3M5.5 12.5h3M16.5 12h.01M18.5 13.5h.01"/></svg><span data-i="tPlay"></span></button>
+  <button data-t="fav"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0112 7.3 4.3 4.3 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/></svg><span data-i="sFav"></span></button>
 </nav>
 
 <div class="lbox" id="lbox" role="dialog" aria-modal="true"><button data-ia="close">×</button></div>
@@ -692,8 +699,8 @@ const PHR=['Grüessech','Merci vilmal','Ä Guete!','Uf Widerluege','Es Rivella, 
 const R=id=>g('routes',id);
 
 /* ---------- NAV ---------- */
-const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route','plek'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1,plek:1};
-const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'qaEat',reis:'qaTr',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH',plek:'qaEat'};
+const VIEWS=['start','liften','kaart','spelen','routes','eten','reis','school','zoek','doen','route','plek','fav'],SUB={routes:1,eten:1,reis:1,school:1,zoek:1,doen:1,route:1,plek:1,spelen:1};
+const TITLE={start:'tStart',liften:'tLifts',kaart:'mapH',spelen:'playH',routes:'routesH',eten:'qaEat',reis:'qaTr',school:'qaSchool',zoek:'sH',doen:'qaDo',route:'routesH',plek:'qaEat',fav:'sFav'};
 let curView='start';
 function show(tb,push){
   if(!VIEWS.includes(tb))tb='start';curView=tb;
@@ -752,9 +759,9 @@ function season(){const now=new Date(),open=new Date(2026,10,21),close=new Date(
 
 function drawStart(){
   sky();
-  $('#qa').innerHTML=[['eten','qaEat',IC.eat],['reis','qaTr',IC.car],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['doen','qaDo',IC.pin],['zoek','sFav',IC.heart]].map(q=>`<button class="qab" onclick="show('${q[0]}',true);${q[0]==='zoek'?"$('#sq').value='';drawSearch()":''}">${q[2]}<span>${t(q[1])}</span></button>`).join('');
-  $('#qaLive').innerHTML=[['wx','lvWx',IC.sun],['liftList','kLift',IC.lift],['seasonCard','lvHours',IC.cal]].map(q=>`<button class="qab" onclick="document.getElementById('${q[0]}').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<a class="qab" href="https://www.jungfrau.ch/en-gb/live/slope-data/" target="_blank" rel="noopener">${IC.msg}<span>${t('lvOff')} ↗</span></a>`;
-  $('#ibar').innerHTML=[['eten',IC.eat,'qaEat'],['reis',IC.car,'qaTr'],['school',IC.school,'qaSchool'],['routes',IC.route,'qaRoutes'],['doen',IC.pin,'qaDo'],['zoek',IC.heart,'sFav']].map(q=>`<button aria-label="${esc(t(q[2]))}" onclick="show('${q[0]}',true);${q[0]==='zoek'?"$('#sq').value='';drawSearch()":''}">${q[1]}</button>`).join('')+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
+  $('#qa').innerHTML=[['eten','qaEat',IC.eat],['reis','qaTr',IC.car],['school','qaSchool',IC.school],['routes','qaRoutes',IC.route],['doen','qaDo',IC.pin],['spelen','tPlay',IC.play]].map(q=>`<button class="qab" onclick="show('${q[0]}',true)">${q[2]}<span>${t(q[1])}</span></button>`).join('');
+  $('#qaLive').innerHTML=[['wx','lvWx',IC.sun],['seasonCard','lvHours',IC.cal]].map(q=>`<button class="qab" onclick="document.getElementById('${q[0]}').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})">${q[2]}<span>${t(q[1])}</span></button>`).join('')+`<a class="qab" style="grid-column:1/-1" href="https://www.jungfrau.ch/en-gb/live/slope-data/" target="_blank" rel="noopener">${IC.msg}<span>${t('lvOff')} ↗</span></a>`;
+  $('#ibar').innerHTML=[['eten',IC.eat,'qaEat'],['reis',IC.car,'qaTr'],['school',IC.school,'qaSchool'],['routes',IC.route,'qaRoutes'],['doen',IC.pin,'qaDo'],['spelen',IC.play,'tPlay']].map(q=>`<button aria-label="${esc(t(q[2]))}" onclick="show('${q[0]}',true)">${q[1]}</button>`).join('')+`<button class="qab ai" style="grid-column:1/-1" onclick="Guide.open()">${IC.ai}<span>${t('gName')}</span></button>`;
   const G={blue:'#1C6DD0',red:'#D42A3A',black:'#2B2B31'},lv=t('lv');
   $('#tiles').innerHTML=ROUTES.map(r=>{const d=R(r.id);return `<button class="tile" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="label">${t('route')} ${r.id} · ${lv[r.lv]}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></button>`}).join('');
   $('#heroSun').textContent=zt(sunTimes(Date.now())[1]);
@@ -767,13 +774,14 @@ function drawStart(){
   drawRadarSum();
 }
 const SCHOOLS=[
- {v:'Wengen',n:'Schweizer Skischule Wengen',o:1,t:['scGroup','scPriv','scKids']},
- {v:'Wengen',n:'Privat Ski & Snowboardschule Wengen',o:0,t:['scPriv','scBoard','scOffp']},
- {v:'Wengen · Grindelwald',n:'Altitude Ski & Snowboard School',o:0,t:['scGroup','scPriv','scKids','scBoard'],u:'https://www.altitudeskischool.com/grindelwald/'},
+ {v:'Wengen',n:'Schweizer Ski- und Snowboardschule Wengen',o:1,t:['scGroup','scPriv','scKids','scBoard'],u:'https://www.skiwengen.ch',ph:'+41 33 855 20 22'},
+ {v:'Wengen',n:'Privat Ski & Snowboardschule Wengen',o:0,t:['scPriv','scBoard','scOffp'],u:'https://www.skiprivat.ch'},
+ {v:'Wengen · Grindelwald',n:'Altitude Ski & Snowboard School',o:0,t:['scGroup','scPriv','scKids','scBoard'],u:'https://www.altitudeskischool.com/wengen/',ph:'+41 33 853 00 40'},
+ {v:'Kleine Scheidegg',n:'Schweizer Skischule Kleine Scheidegg',o:1,t:[],u:'https://snowsportsscheidegg.ch/en/'},
  {v:'Grindelwald',n:'Schweizer Skischule Grindelwald',o:1,t:['scGroup','scPriv','scKids']},
- {v:'Grindelwald',n:'Buri Sport Skischule',o:0,t:[]},
- {v:'Mürren',n:'Schweizer Skischule Mürren-Schilthorn',o:1,t:['scGroup','scPriv','scKids','scBoard'],x:'scMur'}];
-function drawSchools(){$('#schoolList').innerHTML=SCHOOLS.map(c=>`<div class="trow sc"><span class="label">${c.v} · ${t(c.o?'scOff':'scInd')}</span><h3>${c.n}</h3><p>${c.t.map(k=>t(k)).join(' · ')}${c.x?'<br>'+t(c.x):''}</p>${c.u?`<a class="pill" href="${c.u}" target="_blank" rel="noopener">${t('scSite')} ↗</a>`:''}</div>`).join('')}
+ {v:'Grindelwald',n:'Buri Sport Skischule',o:0,t:['scPriv','scBoard']},
+ {v:'Mürren',n:'Schweizer Skischule Mürren-Schilthorn',o:1,t:['scGroup','scPriv','scKids','scBoard'],x:'scMur',u:'https://www.skischule-muerren.ch'}];
+function drawSchools(){$('#schoolList').innerHTML=SCHOOLS.map(c=>`<div class="trow sc"><span class="label">${c.v} · ${t(c.o?'scOff':'scInd')}</span><h3>${c.n}</h3>${c.t.length||c.x?`<p>${c.t.map(k=>t(k)).join(' · ')}${c.x?(c.t.length?'<br>':'')+t(c.x):''}</p>`:''}<div class="row">${c.ph?`<a class="pill" href="tel:${c.ph.replace(/\s/g,'')}">${t('plCall')}</a>`:''}${c.u?`<a class="pill" href="${c.u}" target="_blank" rel="noopener">${t('scSite')} ↗</a>`:''}</div></div>`).join('')}
 
 /* ---------- KAART ---------- */
 const POS={r:[13,5,'start'],l:[-13,5,'end'],t:[0,-14,'middle'],b:[0,25,'middle'],bl:[-8,24,'end'],br:[8,24,'start'],tl:[-10,-11,'end'],tr:[10,-11,'start']};
@@ -833,7 +841,7 @@ const rcol=r=>PC[r.c.slice().sort((a,b)=>HARD[b]-HARD[a])[0]];
 function drawRoutes(){
   const done=st('done',[]),lv=t('lv');
   $('#rtChips').innerHTML=[['all',t('cAll')]].concat(lv.map((x,i)=>[String(i),x])).map(c=>`<button class="chip" aria-pressed="${rtF===c[0]}" onclick="rtF='${c[0]}';drawRoutes()">${c[1]}</button>`).join('');
-  $('#routeList').innerHTML=ROUTES.filter(r=>rtF==='all'||String(r.lv)===rtF).map(r=>{const ok=done.includes(r.id),d=R(r.id);return `<button class="rcard" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="in"><span><span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span>${ok?' <span class="small muted">✓</span>':''}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></span></button>`}).join('');
+  $('#routeList').innerHTML=ROUTES.filter(r=>rtF==='all'||String(r.lv)===rtF).map(r=>{const ok=done.includes(r.id),d=R(r.id);return `<button class="rcard" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="in"><span><span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span></span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></span></button>`}).join('');
   const k=done.length;$('#rpT').textContent=t('ofDone',{k,n:ROUTES.length});$('#rpB').style.width=(k/ROUTES.length*100)+'%';$('#rpR').textContent=t('ranks')[k]||'';
   if(rtCur&&curView==='route')drawRoute();
 }
@@ -857,7 +865,7 @@ function drawRoute(){const r=ROUTES.find(x=>x.id===rtCur);if(!r)return;const d=R
    <div class="rstats"><div><b>${esc(d[4])}</b><span>${t('rtTime')}</span></div><div><b>${dn||'–'}<small> m</small></b><span>↘ ${t('rtDown')}</span></div><div><b>${Math.max(...hs)}<small> m</small></b><span>▲ ${t('rtTop')}</span></div><div><b>${Math.min(...hs)}<small> m</small></b><span>▼ ${t('rtLow')}</span></div></div>
    <div class="rdesc"><h3>${t('rtDesc')}</h3><p>${d[5]}</p><ol>${d[6].map(x=>`<li>${x}</li>`).join('')}</ol>
    <p class="small muted" style="margin-top:14px">${t('eatTip')}: <a href="#" onclick="event.preventDefault();openEat('${e.id}')">${esc(e.n)}</a></p></div>
-   <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap"><button class="btn sm alt" onclick="routeOnMap(${r.id})">${t('showMap')}</button><button class="btn sm ghost" aria-pressed="${ok}" onclick="toggleDone(${r.id})">${t(ok?'ticked':'tick')}</button></div>`}
+   <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap"><button class="btn sm alt" onclick="routeOnMap(${r.id})">${t('showMap')}</button></div>`}
 function toggleDone(id){const d=st('done',[]).slice(),i=d.indexOf(id);i<0?d.push(id):d.splice(i,1);put('done',d);drawRoutes()}
 
 /* ---------- PISTE RADAR (gedeeld via db, anders lokaal) ---------- */
@@ -898,16 +906,26 @@ function drawRadarSum(){
 function drawRadar(){drawLifts();drawRadarSum();if(sheetId)sheet(sheetId)}
 
 /* ---------- ETEN ---------- */
-let eatA='all',eatP=null;
-function eatFilter(){const fav=st('fav',[]);return EAT.filter(e=>eatA==='all'||(eatA==='fav'?fav.includes(e.id):e.a===eatA))}
+let eatA='rec',eatP=null;
+function eatFilter(){return eatList()}
 const openE={};
-function drawEat(){
-  const fav=st('fav',[]),list=eatFilter();
-  $('#eatList').innerHTML=list.length?list.map(e=>{const d=g('eat',e.id),f=fav.includes(e.id);return `<div class="sr erow"><button class="go" onclick="openPlace('e:${e.id}')"><span>${esc(e.n)}</span><small>${N[e.at].n} · ${N[e.at].h} m · ${d[0].join(' · ')}</small></button><button class="heart" aria-label="♥" aria-pressed="${f}" onclick="toggleFav('${e.id}')">${f?'♥':'♡'}</button></div>`}).join(''):`<p class="shint">${t('sNoFav')}</p>`;
-}
-function toggleFav(id){const f=st('fav',[]).slice(),i=f.indexOf(id);i<0?f.push(id):f.splice(i,1);put('fav',f);drawEat()}
-$$('#eatChips .chip').forEach(c=>c.onclick=()=>{$$('#eatChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));eatA=c.dataset.a;eatP=null;drawEat()});
-$('#eatPick').onclick=()=>{const list=eatFilter();if(!list.length)return;openPlace('e:'+list[Math.floor(Math.random()*list.length)].id)};
+let EALL=null;
+function eatBuild(){const M=window.FIRN_MAP||{food:[],pistes:[]},V=[['wen',NLL.wen],['mur',NLL.mur],['gw',NLL.gw],['lau',NLL.lau]],ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')};
+  const area=p=>{let b=null;V.forEach(v=>{const m=dist(p,v[1]);if(m<1300&&(!b||m<b.m))b={a:v[0],m}});if(b)return b.a;
+    return M.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-p[0])<.0045&&Math.abs(c[1]-p[1])<.0065&&dist(p,c)<500))?'berg':null};
+  const out=[];
+  EAT.forEach(e=>{const p=EM[e.id]!=null?M.food[EM[e.id]].p:NLL[e.at];out.push({key:'e:'+e.id,n:e.n,rec:1,a:area(p)||'berg',sub:N[e.at].n+' · '+N[e.at].h+' m'})});
+  M.food.forEach((f,i)=>{if(FM[i]!=null)return;const a=area(f.p);if(!a)return;out.push({key:'f:'+f.n,n:f.n,rec:0,a,sub:[ft[f.t]||'',f.c?f.c.split(/[;_]/)[0]:''].filter(Boolean).join(' · ')})});
+  const seen={};EALL=out.filter(o=>seen[o.key]?0:(seen[o.key]=1)).sort((x,y)=>y.rec-x.rec||x.n.localeCompare(y.n))}
+function eatList(){if(!EALL)eatBuild();return EALL.filter(o=>eatA==='rec'?o.rec:o.a===eatA)}
+function drawEat(){try{NLL;favs;MD}catch(e){return}if(!EALL)eatBuild();const fv=favs(),CH=[['rec','eRec'],['wen','Wengen'],['mur','Mürren'],['gw','Grindelwald'],['lau','Lauterbrunnen'],['berg','eBerg']];
+  if(!CH.some(c=>c[0]===eatA))eatA='rec';
+  $('#eatChips').innerHTML=CH.map(c=>`<button class="chip" aria-pressed="${eatA===c[0]}" onclick="eatA='${c[0]}';drawEat()">${/^e[RB]/.test(c[1])?t(c[1]):c[1]} <span style="opacity:.55">${EALL.filter(o=>c[0]==='rec'?o.rec:o.a===c[0]).length}</span></button>`).join('');
+  const list=eatList();
+  $('#eatList').innerHTML=list.map(o=>{const f=fv.includes(o.key);return `<div class="sr erow"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}${o.rec&&eatA!=='rec'?' <span class="bdg" style="background:var(--ink);font-size:9px">'+t('eRecOne')+'</span>':''}</span><small>${esc(o.sub)}</small></button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}).join('')}
+function toggleFav(id){favTog('e:'+id)}
+$('#eatPick').onclick=()=>{const list=eatList();if(!list.length)return;openPlace(list[Math.floor(Math.random()*list.length)].key)};
+$('#eatList').addEventListener('click',e=>{const f=e.target.closest('[data-f]');if(f){favTog(f.dataset.f);return}const b=e.target.closest('[data-k]');if(b)openPlace(b.dataset.k)});
 
 /* ---------- SPELEN ---------- */
 let curGame='menu';
@@ -1141,12 +1159,12 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
       lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote'),cr:DOC[id]}}
   if(!o)return;TITLE.plek=o.ttl;$('#ttl').textContent=t(o.ttl);
   if(o.p&&k!=='d'){const nl=nearLift(o.p);if(nl)o.stats.push([`<span class="tx">${esc(nl.n)}</span>`,t('plLift')+' · '+(Math.round(nl.m/10)*10)+' m'])}
-  if(o.sub&&k!=='d')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
+  if(o.sub&&k==='e')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
   const near=o.p&&MD.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-o.p[0])<.012&&Math.abs(c[1]-o.p[1])<.017));
   const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,hide:1,pad:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
   $('#plDetail').innerHTML=`<div class="rmedia ${o.photo&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div><img src="media/${o.photo}.jpg" alt=""></div>`:''}</div>
    <div class="rhead"><h1>${esc(o.n)}</h1><button class="heart" aria-label="♥" aria-pressed="${o.fav}" onclick="${o.favFn}">${o.fav?'♥':'♡'}</button></div>
-   ${k==='d'?`<p class="rsub">${esc(o.sub)}</p>`:''}
+   ${k!=='e'&&o.sub?`<p class="rsub">${esc(o.sub)}</p>`:''}
    ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,3)}" style="margin-top:14px">${o.stats.slice(0,3).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
    ${o.tags.length?`<div class="meta" style="margin:0 0 18px">${o.tags.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
    ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}, Wikimedia Commons</p>`:''}
@@ -1173,8 +1191,11 @@ function buildIdx(){const ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut
   IDX=out}
 function mapPick(kind,i){show('kaart',true);setTimeout(()=>mapMsg({k:'pick',kind,i}),150)}
 const favs=()=>S.get('fav2',[]).concat(st('fav',[]).map(x=>'e:'+x));
-function favTog(key){if(key.startsWith('e:')){toggleFav(key.slice(2))}else{const f=S.get('fav2',[]),i=f.indexOf(key);i<0?f.push(key):f.splice(i,1);S.set('fav2',f)}drawSearch()}
-const KIND=[['eat','kEat'],['route','qaRoutes'],['do','qaDo'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
+function favTog(key){if(key.startsWith('e:')){const id=key.slice(2),f=st('fav',[]).slice(),i=f.indexOf(id);i<0?f.push(id):f.splice(i,1);put('fav',f)}else{const f=S.get('fav2',[]),i=f.indexOf(key);i<0?f.push(key):f.splice(i,1);S.set('fav2',f)}
+  if(curView==='zoek')drawSearch();if(curView==='eten')drawEat();if(curView==='fav')drawFav()}
+function drawFav(){if(!IDX)buildIdx();const fv=favs(),fl=IDX.filter(o=>fv.includes(o.key));$('#favList').innerHTML=fl.length?KIND.map(([k,l])=>{const g=fl.filter(o=>o.kind===k);return g.length?`<div class="sgh">${t(l)}</div>`+g.map(o=>srow(o,fv)).join(''):''}).join(''):`<p class="shint">${t('sNoFav')}</p>`}
+$('#favList').addEventListener('click',e=>{const f=e.target.closest('[data-f]');if(f){favTog(f.dataset.f);return}const b=e.target.closest('[data-k]');if(b){const o=IDX.find(x=>x.key===b.dataset.k);if(o)o.go()}});
+var KIND=[['eat','kEat'],['route','qaRoutes'],['do','qaDo'],['lift','kLift'],['piste','kPiste'],['school','kSchool'],['place','kPlace']];
 function srow(o,fv){const f=fv.includes(o.key);return `<div class="sr"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}</span>${o.sub?`<small>${esc(o.sub)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`}
 function drawSearch(){if(!IDX)buildIdx();const q=nrm($('#sq').value),raw=$('#sq').value.trim().toLowerCase(),fv=favs();$('#sq').placeholder=t('sPh');let h='';
   if(!raw){const fl=IDX.filter(o=>fv.includes(o.key));h=`<div class="sgh">${t('sFav')}</div>`+(fl.length?fl.map(o=>srow(o,fv)).join(''):`<p class="shint">${t('sNoFav')}</p>`)}
@@ -1187,8 +1208,8 @@ $('#srchBtn').onclick=()=>{show('zoek',true);drawSearch();setTimeout(()=>$('#sq'
 $('#eatAll').onclick=()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'layer',l:'food',on:true}),150)};
 addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id)});
 $('#realmap').addEventListener('load',()=>mapMsg({k:'cur',m:FM}));
-const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();drawTrips();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch();if(curView==='plek')drawPlace()};
-const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek'};
+const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();drawTrips();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch();if(curView==='plek')drawPlace();EALL=null;drawEat();drawFav();drawNow()};
+const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek';if(tb==='fav')drawFav();if(tb==='eten')drawEat()};
 /* ---------- weer per hoogte (MeteoSwiss) ---------- */
 let WX=null,wxAt=0;
 const WXI={sun:'<circle class="y" cx="12" cy="12" r="4.2"/><path class="y" d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M5.3 18.7L7 17M17 7l1.7-1.7"/>',
@@ -1210,8 +1231,11 @@ function drawWx(){const el=$('#wx');if(!el)return;
      <div class="wxhr">${p.h.slice(0,24).map(h=>`<div><small>${h[0].slice(11)}:00</small>${wxIcon(h[5],+h[0].slice(11))}<span>${deg(h[1])}</span><span class="pp">${h[2]>=0.1?h[2].toLocaleString(loc,{maximumFractionDigits:1})+' mm':''}</span></div>`).join('')}</div>
      <table class="wxd">${p.d.map((d,i)=>`<tr><td>${i===0?t('wxToday'):new Date(d[0]+'T12:00').toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short'})}</td><td>${wxIcon(d[5])}</td><td>${deg(d[1])} / ${deg(d[2])}</td><td class="mu">${d[3]>=0.1?d[3].toLocaleString(loc)+' mm':d[4].toLocaleString(loc)+' '+t('wxSun')}</td><td class="mu">${d[6]==null?'':d[6]+' km/h'}</td></tr>`).join('')}</table></details>`}).join('')+
    `<p class="wxsrc">${t("wxSrc")} · km/h = ${t("wxGust")}</p>`}
+function drawNow(){const el=$('#nowCard');if(!el)return;const loc=cur==='en'?'en-GB':cur,pt=k=>WX&&WX.pts&&WX.pts.find(p=>p.k===k),a=pt('ks'),b=pt('wen'),z=a&&a.h[0]&&a.h[0][6];
+  const tile=(p)=>p&&p.h[0]?`<div>${wxIcon(p.h[0][5],+p.h[0][0].slice(11))}<b>${deg(p.h[0][1])}</b><span>${esc(p.n)} · ${p.alt.toLocaleString(loc)} m</span></div>`:'';
+  el.innerHTML=`<button class="nowb" onclick="NAV.length=0;navSaved=true;show('liften',false)"><span class="sgh" style="margin:0 0 10px;display:block;text-align:left">${t('nowH')}</span><div class="rstats n2" style="margin:0">${tile(a)}${tile(b)}<div><b>${z?z.toLocaleString(loc)+'<small> m</small>':'–'}</b><span>${t('wxZero')}</span></div><div><b>${zt(sunTimes(Date.now())[1])}</b><span>${t('lsSet')}</span></div></div></button>`}
 function loadWx(force){if(!force&&Date.now()-wxAt<10*6e4)return;wxAt=Date.now();
-  fetch('data/weather.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.pts){WX=j;S.set('wx',j)}drawWx()}).catch(()=>drawWx())}
+  fetch('data/weather.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.pts){WX=j;S.set('wx',j)}drawWx();drawNow()}).catch(()=>{drawWx();drawNow()})}
 WX=S.get('wx',null);
 const _ra=renderAll;renderAll=function(){_ra();drawWx()};
 const _show2=show;show=function(tb,push){_show2(tb,push);if(curView==='liften')loadWx()};

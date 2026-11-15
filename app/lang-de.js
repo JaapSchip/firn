@@ -161,7 +161,7 @@ Object.assign(LANG.de.ui,{"tStart": "Entdecken", "tLifts": "Live", "qaRoutes": "
 LANG.de.travel=[["Wengen", "Autofrei. Parkiere im Parkhaus direkt unter dem Bahnhof Lauterbrunnen (940 Plätze) und nimm die Zahnradbahn: rund 15 Minuten, etwa 40 Züge pro Tag."], ["Mürren", "Autofrei. Parkiere bei der Schilthornbahn in Stechelberg und du bist in 4 Minuten oben, oder parkiere in Lauterbrunnen und nimm die Seilbahn nach Grütschalp plus die Bahn."], ["Grindelwald", "Hier kannst du mit dem Auto hinfahren. Am praktischsten für Skifahrer ist das Parkhaus Terminal (1000 Plätze) mit Passerelle zum Eiger Express, zur Männlichenbahn und zum Zug. Im Dorf: Parkhaus Eiger+ (252 Plätze) und Sportzentrum (160)."], ["Mit dem Zug", "Ab Interlaken Ost fahren Züge nach Lauterbrunnen und nach Grindelwald. Für Wengen oder Mürren steigst du in Lauterbrunnen um. Zeiten in der SBB-App prüfen."], ["Gut zu wissen", "Die Parkhäuser in Lauterbrunnen und Stechelberg sind an starken Tagen voll: komm früh. Voll? Parkiere in Wilderswil oder in Matten bei Interlaken (nur tagsüber) und fahr mit dem Zug weiter. Folge dem Navi nicht nach Wengen oder Mürren: Es gibt keine öffentliche Strasse."]];
 LANG.de.ui.realH="Das Gebiet";
 
-Object.assign(LANG.de.ui,{"qaSchool": "Skischulen", "fSchoolS": "Sechs Schulen in drei Dörfern. Unterricht für Anfänger, Kinder und Könner.", "scOff": "Offizielle Schweizer Skischule", "scInd": "Unabhängige Schule", "scGroup": "Gruppenunterricht", "scPriv": "Privatunterricht", "scKids": "Kinderkurse", "scBoard": "Snowboard", "scOffp": "Off-Piste mit Guide", "scMur": "Büro mitten im Dorf, hinter dem Hotel Jungfrau.", "scSite": "Website", "scTipH": "Gut zu wissen", "scTipT": "Über Weihnachten und im Februar früh buchen. Preise und Zeiten sind je Schule verschieden; siehe deren eigene Website. Firn ist unabhängig und verdient nichts an dieser Liste."});
+Object.assign(LANG.de.ui,{"qaSchool": "Skischulen", "fSchoolS": "Sieben Schulen in drei Dörfern. Unterricht für Anfänger, Kinder und Könner.", "scOff": "Offizielle Schweizer Skischule", "scInd": "Unabhängige Schule", "scGroup": "Gruppenunterricht", "scPriv": "Privatunterricht", "scKids": "Kinderkurse", "scBoard": "Snowboard", "scOffp": "Off-Piste mit Guide", "scMur": "Büro mitten im Dorf, hinter dem Hotel Jungfrau.", "scSite": "Website", "scTipH": "Gut zu wissen", "scTipT": "Über Weihnachten und im Februar früh buchen. Preise und Zeiten sind je Schule verschieden; siehe deren eigene Website. Firn ist unabhängig und verdient nichts an dieser Liste."});
 
 Object.assign(LANG.de.ui,{"wxH": "Wetter nach Höhe", "wxZero": "Nullgradgrenze", "wxUpd": "Aktualisiert", "wxSrc": "Quelle: MeteoSchweiz", "wxNo": "Das Wetter ist gerade nicht verfügbar.", "wxGust": "Böen", "wxSun": "Std. Sonne", "wxOld": "Achtung: Diese Prognose ist älter als 6 Stunden.", "wxToday": "Heute"});
 
@@ -182,3 +182,7 @@ Object.assign(LANG.de.ui,{"plCall": "Anrufen", "plBook": "Website und Reservatio
 
 Object.assign(LANG.de.ui,{"phBy": "Foto"});
 Object.assign(LANG.de.ui,{"localOnly": "Meldungen bleiben vorerst nur auf deinem Gerät."});
+
+Object.assign(LANG.de.ui,{"eRec": "Empfehlungen", "eRecOne": "Tipp", "eBerg": "Am Berg", "nowH": "Jetzt im Gebiet"});
+
+Object.assign(LANG.de.ui,{"liveA": "Den offiziellen Status aller Lifte und Pisten gibt es auf jungfrau.ch."});

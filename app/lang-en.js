@@ -162,7 +162,7 @@ Object.assign(LANG.en.ui,{"tStart": "Explore", "tLifts": "Live", "qaRoutes": "Sk
 LANG.en.travel=[["Wengen", "Car-free. Park in the multi-storey car park right below Lauterbrunnen station (940 spaces), then take the cog railway: about 15 minutes, around 40 trains a day."], ["Mürren", "Car-free. Park at the Schilthorn cable car in Stechelberg and ride up in 4 minutes, or park in Lauterbrunnen and take the cable car to Grütschalp plus the little train."], ["Grindelwald", "You can drive here. Easiest for skiers is the Terminal car park (1000 spaces), with a footbridge to the Eiger Express, the Männlichen gondola and the train. In the village: Parkhaus Eiger+ (252 spaces) and Sportzentrum (160)."], ["By train", "Trains run from Interlaken Ost to Lauterbrunnen and to Grindelwald. Change in Lauterbrunnen for Wengen or Mürren. Check times in the SBB app."], ["Good to know", "The car parks in Lauterbrunnen and Stechelberg fill up on busy days: come early. Full? Park in Wilderswil or in Matten near Interlaken (day parking only) and continue by train. Do not follow your sat nav to Wengen or Mürren: there is no public road."]];
 LANG.en.ui.realH="The area";
 
-Object.assign(LANG.en.ui,{"qaSchool": "Ski schools", "fSchoolS": "Six schools in three villages. Lessons for beginners, kids and experts.", "scOff": "Official Swiss ski school", "scInd": "Independent school", "scGroup": "Group lessons", "scPriv": "Private lessons", "scKids": "Kids lessons", "scBoard": "Snowboard", "scOffp": "Off-piste with a guide", "scMur": "Office in the village centre, behind Hotel Jungfrau.", "scSite": "Website", "scTipH": "Good to know", "scTipT": "Book well ahead for Christmas and February. Prices and times differ per school; check their own site. Firn is independent and earns nothing from this list."});
+Object.assign(LANG.en.ui,{"qaSchool": "Ski schools", "fSchoolS": "Seven schools in three villages. Lessons for beginners, kids and experts.", "scOff": "Official Swiss ski school", "scInd": "Independent school", "scGroup": "Group lessons", "scPriv": "Private lessons", "scKids": "Kids lessons", "scBoard": "Snowboard", "scOffp": "Off-piste with a guide", "scMur": "Office in the village centre, behind Hotel Jungfrau.", "scSite": "Website", "scTipH": "Good to know", "scTipT": "Book well ahead for Christmas and February. Prices and times differ per school; check their own site. Firn is independent and earns nothing from this list."});
 
 Object.assign(LANG.en.ui,{"wxH": "Weather by altitude", "wxZero": "Freezing level", "wxUpd": "Updated", "wxSrc": "Source: MeteoSwiss", "wxNo": "Weather is not available right now.", "wxGust": "gusts", "wxSun": "h sun", "wxOld": "Note: this forecast is more than 6 hours old.", "wxToday": "Today"});
 
@@ -183,3 +183,7 @@ Object.assign(LANG.en.ui,{"plCall": "Call", "plBook": "Website and booking", "tr
 
 Object.assign(LANG.en.ui,{"phBy": "Photo"});
 Object.assign(LANG.en.ui,{"localOnly": "Reports are stored on your own device only for now."});
+
+Object.assign(LANG.en.ui,{"eRec": "Our picks", "eRecOne": "pick", "eBerg": "On the mountain", "nowH": "Right now"});
+
+Object.assign(LANG.en.ui,{"liveA": "The official status of every lift and piste is on jungfrau.ch."});
