@@ -1,0 +1,12 @@
+name: Weer ophalen (MeteoSwiss)
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+    paths: ['tools/weather_probe.py']
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/weather_probe.py
