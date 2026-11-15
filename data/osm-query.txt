@@ -10,5 +10,9 @@
   node["natural"="peak"]["name"](46.52,7.80,46.70,8.13);
   nwr["amenity"~"^(restaurant|cafe|bar|parking)$"](46.52,7.80,46.70,8.13);
   nwr["tourism"="alpine_hut"](46.52,7.80,46.70,8.13);
+  way["waterway"="river"](46.52,7.80,46.70,8.13);
+  nwr["natural"="glacier"](46.52,7.80,46.70,8.13);
+  nwr["natural"="water"]["name"](46.52,7.80,46.70,8.13);
+  way["highway"~"^(primary|secondary|tertiary)$"](46.52,7.80,46.70,8.13);
 );
 out body geom;

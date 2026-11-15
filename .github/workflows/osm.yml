@@ -13,7 +13,7 @@ jobs:
       - name: Overpass
         run: |
           for host in overpass-api.de overpass.kumi.systems; do
-            if curl -sS --fail -m 300 --data-urlencode "data@data/osm-query.txt" "https://$host/api/interpreter" -o data/osm.json && grep -q '"elements"' data/osm.json; then break; fi
+            if curl -sS --fail -m 300 -A "firn-app (github.com/JaapSchip/firn)" --data-urlencode "data@data/osm-query.txt" "https://$host/api/interpreter" -o data/osm.json && grep -q '"elements"' data/osm.json; then break; fi
             sleep 20
           done
           grep -q '"elements"' data/osm.json
