@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Firn – kaart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="leaflet.css">
+<style>
+:root{--snow:#FFFFFF;--card:#F2F4F8;--ink:#0A1633;--muted:#4B5675;--hush:#C3C9D6;--line:#E3E7EF;--blue:#1C6DD0;--red:#D42A3A;--black:#16181D;--free:#E8A20A;--hi:#E8540A;--ice:#DCEBF5;--water:#BBD7EE}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:"Hanken Grotesk",system-ui,sans-serif;color:var(--ink);background:var(--card);-webkit-font-smoothing:antialiased}
+#map{position:fixed;inset:0;background:#EEF1F6}
+.top{position:fixed;left:0;right:0;top:0;z-index:1000;padding:calc(10px + env(safe-area-inset-top)) 14px 0;pointer-events:none}
+.bar{display:flex;align-items:center;gap:10px;pointer-events:auto}
+.brand{background:var(--snow);border:1px solid var(--line);border-radius:99px;padding:9px 16px;font:500 12px "IBM Plex Mono",monospace;letter-spacing:.28em;text-transform:uppercase}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 6px;pointer-events:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;background:var(--snow);border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:9px 15px;font:400 14px "Hanken Grotesk",sans-serif;display:flex;align-items:center;gap:8px}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--hush);flex:none}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip[aria-pressed=true] i{background:#fff}
+.chip.go{border-style:dashed}
+.side{position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px}
+.rb{width:48px;height:48px;border-radius:50%;background:var(--snow);border:1px solid var(--line);color:var(--ink);font-size:22px;font-weight:300;display:grid;place-items:center}
+.rb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5}
+.rb.on{background:var(--ink);color:#fff}
+.legend{position:fixed;left:14px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:1000;background:var(--snow);border:1px solid var(--line);border-radius:14px;padding:9px 13px;display:flex;gap:13px;font:400 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}.legend b{width:16px;height:4px;border-radius:2px;display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:1100;background:var(--snow);border-radius:22px 22px 0 0;padding:22px 22px calc(26px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);box-shadow:0 -10px 40px rgba(10,22,51,.12)}
+.sheet.on{transform:none}
+.sheet .label{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.sheet .label i{width:10px;height:10px;border-radius:50%}
+.sheet h2{margin:8px 0 0;font-weight:300;font-size:1.9rem;letter-spacing:-.02em;line-height:1.1}
+.facts{display:flex;gap:26px;margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.facts div{font-size:13px;color:var(--muted)}.facts b{display:block;font-weight:300;font-size:1.5rem;color:var(--ink);letter-spacing:-.02em}
+.sheet a{display:inline-block;margin-top:16px;border:1px solid var(--ink);border-radius:99px;padding:9px 18px;color:var(--ink);text-decoration:none;font-size:14px}
+.x{position:absolute;right:16px;top:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:none;font-size:18px;color:var(--ink)}
+.toast{position:fixed;left:50%;top:calc(120px + env(safe-area-inset-top));transform:translateX(-50%);z-index:1200;background:var(--ink);color:#fff;padding:11px 18px;border-radius:99px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.on{opacity:1}
+.lbl{white-space:nowrap;transform:translate(-50%,-50%);position:absolute;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
+.lbl.pl{font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.lbl.pl.k2{font-weight:400;font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.lbl.pk{font:400 10.5px "IBM Plex Mono",monospace;color:var(--muted);text-align:center;line-height:1.25}
+.lbl.pk::before{content:"▲";display:block;font-size:9px;color:var(--ink)}
+.lbl.lf{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.lbl.st{font-size:11px;color:var(--muted)}
+.z-lo .k2,.z-lo .lf,.z-lo .st,.z-lo .pkm{display:none}
+.z-mid .pkm{display:none}
+.z-mid .lf,.z-mid .st{display:none}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(10,22,51,.25);transform:translate(-50%,-50%);position:absolute}
+.dot.food{background:var(--hi)}.dot.park{background:var(--ink);border-radius:3px}
+.me{width:16px;height:16px;border-radius:50%;background:#1C6DD0;border:3px solid #fff;box-shadow:0 0 0 2px rgba(28,109,208,.35);transform:translate(-50%,-50%);position:absolute}
+.leaflet-container{font-family:inherit;background:#EEF1F6}
+.leaflet-control-attribution{font:400 10px "IBM Plex Mono",monospace;background:rgba(255,255,255,.8)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="top">
+  <div class="bar"><span class="brand">Firn</span></div>
+  <div class="chips" id="chips"></div>
+</div>
+<div class="side">
+  <button class="rb" id="loc" aria-label="Mijn positie"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
+  <button class="rb" id="zi" aria-label="Inzoomen">+</button>
+  <button class="rb" id="zo" aria-label="Uitzoomen">−</button>
+</div>
+<div class="legend"><span><b style="background:var(--blue)"></b>Blauw</span><span><b style="background:var(--red)"></b>Rood</span><span><b style="background:var(--black)"></b>Zwart</span><span><b style="background:var(--ink);height:2px"></b>Lift</span></div>
+<div class="sheet" id="sheet" role="dialog" aria-live="polite"><button class="x" id="sx" aria-label="Sluiten">×</button><div id="sb"></div></div>
+<div class="toast" id="toast"></div>
+<script src="leaflet.js"></script>
+<script src="map-data.js"></script>
+<script>
+(function(){
+const D=window.FIRN_MAP,$=s=>document.querySelector(s);
+const COL={b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'},DN={b:'Blauw · makkelijk',r:'Rood · gemiddeld',k:'Zwart · moeilijk',f:'Freeride · niet geprepareerd'};
+const LT={gondola:'Gondel',cable_car:'Kabelbaan',chair_lift:'Stoeltjeslift',mixed_lift:'Combilift','t-bar':'Sleeplift',platter:'Sleeplift',drag_lift:'Sleeplift',rope_tow:'Touwlift',magic_carpet:'Loopband'};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const km=m=>m>=1000?(m/1000).toFixed(1).replace('.',',')+' km':m+' m';
+const BOUNDS=L.latLngBounds([46.52,7.80],[46.70,8.13]);
+const map=L.map('map',{zoomControl:false,minZoom:11,maxZoom:17,maxBounds:BOUNDS.pad(.25),zoomSnap:.25,renderer:L.canvas({tolerance:12,padding:.4}),attributionControl:true});
+map.attributionControl.setPrefix(false).addAttribution('Kaartdata © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>');
+map.fitBounds(L.latLngBounds(D.pistes.flatMap(p=>[p.c[0],p.c[p.c.length-1]])).pad(.04));
+const G={};['base','areas','sled','pistes','lifts','labels','food','parking'].forEach(k=>G[k]=L.layerGroup());
+// ondergrond
+(D.ice||[]).forEach(r=>L.polygon(r,{stroke:false,fillColor:'#DCEBF5',fillOpacity:.9,interactive:false}).addTo(G.base));
+(D.water||[]).forEach(r=>L.polygon(r,{stroke:false,fillColor:'#BBD7EE',fillOpacity:1,interactive:false}).addTo(G.base));
+(D.rivers||[]).forEach(c=>L.polyline(c,{color:'#BBD7EE',weight:2.5,interactive:false}).addTo(G.base));
+(D.roads||[]).forEach(c=>L.polyline(c,{color:'#FFFFFF',weight:3,interactive:false}).addTo(G.base));
+D.rail.forEach(r=>{L.polyline(r.c,{color:'#8E97AC',weight:r.u?1:2.2,dashArray:r.u?'2 5':null,interactive:false}).addTo(G.base);if(!r.u)L.polyline(r.c,{color:'#EEF1F6',weight:1,dashArray:'5 5',interactive:false}).addTo(G.base)});
+D.areas.forEach(a=>L.polygon(a.c,{stroke:false,fillColor:COL[a.d],fillOpacity:.14,interactive:false}).addTo(G.areas));
+// pistes: wit randje eronder, kleur erboven
+let hl=null;
+function pick(layer,html){if(hl){hl.remove();hl=null}
+  if(layer){hl=L.polyline(layer.getLatLngs(),{color:'#E8540A',weight:9,opacity:.45,interactive:false}).addTo(map);}
+  $('#sb').innerHTML=html;$('#sheet').classList.add('on')}
+function closeSheet(){$('#sheet').classList.remove('on');if(hl){hl.remove();hl=null}}
+$('#sx').onclick=closeSheet;
+D.pistes.forEach(p=>L.polyline(p.c,{color:'#fff',weight:5.5,interactive:false}).addTo(G.pistes));
+D.pistes.forEach(p=>{const l=L.polyline(p.c,{color:COL[p.d],weight:3.2,dashArray:p.d==='f'?'6 6':null}).addTo(G.pistes);
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:${COL[p.d]}"></i>Piste${p.ref?' '+esc(p.ref):''}</span><h2>${esc(p.n&&p.n!==p.ref?p.n:p.ref?'Piste '+p.ref:'Piste zonder naam')}</h2><div class="facts"><div><b>${km(p.m)}</b>dit deel</div><div><b>${DN[p.d].split(' · ')[0]}</b>${DN[p.d].split(' · ')[1]}</div></div>`)})});
+D.sled.forEach(s=>{const l=L.polyline(s.c,{color:'#7A4FD0',weight:2.6,dashArray:'2 6',lineCap:'round'}).addTo(G.sled);
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#7A4FD0"></i>Sleepiste</span><h2>${esc(s.n||'Sleepiste')}</h2><div class="facts"><div><b>${km(s.m)}</b>dit deel</div></div>`)})});
+D.lifts.forEach(f=>{const big=f.t==='gondola'||f.t==='cable_car',l=L.polyline(f.c,{color:'#0A1633',weight:big?2.6:1.8}).addTo(G.lifts);
+  [f.c[0],f.c[f.c.length-1]].forEach(p=>L.circleMarker(p,{radius:big?4:3,color:'#0A1633',weight:1.5,fillColor:'#fff',fillOpacity:1,interactive:false}).addTo(G.lifts));
+  l.on('click',e=>{L.DomEvent.stop(e);pick(l,`<span class="label"><i style="background:#0A1633"></i>${LT[f.t]||'Lift'}</span><h2>${esc(f.n||'Lift')}</h2><div class="facts"><div><b>${km(f.m)}</b>lengte</div>${f.cap?`<div><b>${esc(f.cap)}</b>personen</div>`:''}</div>`)});
+  if(f.n&&f.m>350){const m=f.c[Math.floor(f.c.length/2)];L.marker(m,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl lf">${esc(f.n)}</span>`})}).addTo(G.labels)}});
+// labels
+const seen={};
+D.places.forEach(p=>L.marker(p.p,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl pl ${p.k===2?'k2':''}">${esc(p.n)}</span>`})}).addTo(G.labels));
+D.peaks.forEach((p,i)=>L.marker(p.p,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl pk ${p.k?'pkm':''}">${esc(p.n)}<br>${p.e}</span>`})}).addTo(G.labels));
+D.stations.forEach(s=>{if(D.places.some(p=>p.n===s.n))return;L.marker(s.p,{interactive:false,icon:L.divIcon({className:'',html:`<span class="lbl st">${esc(s.n)}</span>`})}).addTo(G.labels)});
+// eten en parkeren
+const FT={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:'Berghut'};
+D.food.forEach(f=>L.marker(f.p,{icon:L.divIcon({className:'',html:'<span class="dot food"></span>',iconSize:[24,24]})}).addTo(G.food).on('click',()=>pick(null,`<span class="label"><i style="background:#E8540A"></i>${FT[f.t]||'Eten'}</span><h2>${esc(f.n)}</h2>${f.c?`<div class="facts"><div><b style="font-size:1.1rem">${esc(f.c.replace(/[;_]/g,' · '))}</b>keuken</div></div>`:''}${/^https?:\/\//.test(f.w)?`<a href="${esc(f.w)}" target="_blank" rel="noopener">Website ↗</a>`:''}`)));
+D.parking.forEach(k=>L.marker(k.p,{icon:L.divIcon({className:'',html:'<span class="dot park"></span>',iconSize:[24,24]})}).addTo(G.parking).on('click',()=>pick(null,`<span class="label"><i style="background:#0A1633;border-radius:2px"></i>Parkeren</span><h2>${esc(k.n||'Parkeerplaats')}</h2><div class="facts">${k.cap?`<div><b>${k.cap}</b>plaatsen</div>`:''}${k.fee?`<div><b>${k.fee==='yes'?'Betaald':k.fee==='no'?'Gratis':esc(k.fee)}</b>tarief</div>`:''}</div>`)));
+['base','areas','pistes','lifts','labels'].forEach(k=>G[k].addTo(map));
+map.on('click',closeSheet);
+function zc(){const z=map.getZoom(),c=map.getContainer().classList;c.toggle('z-lo',z<12.75);c.toggle('z-mid',z>=12.75&&z<14)}
+map.on('zoomend',zc);zc();
+// chips
+const LAYERS=[['lifts','Liften',1],['sled','Sleeën',0],['food','Eten',0],['parking','Parkeren',0]];
+const GO=[['Wengen',[46.596,7.935],14],['Mürren',[46.560,7.880],14],['Grindelwald',[46.622,8.020],13.5],['First',[46.659,8.060],14]];
+$('#chips').innerHTML=LAYERS.map(l=>`<button class="chip" data-l="${l[0]}" aria-pressed="${!!l[2]}"><i></i>${l[1]}</button>`).join('')+GO.map((g,i)=>`<button class="chip go" data-g="${i}">${g[0]}</button>`).join('');
+$('#chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;
+  if(b.dataset.g){const g=GO[b.dataset.g];map.flyTo(g[1],g[2],{duration:.8});return}
+  const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);const k=b.dataset.l;on?G[k].addTo(map):G[k].remove();
+  if(on&&(k==='food'||k==='parking')&&map.getZoom()<13)toast('Zoom in om alle punten te zien')};
+$('#zi').onclick=()=>map.zoomIn(1);$('#zo').onclick=()=>map.zoomOut(1);
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
+// eigen positie
+let me=null,acc=null,watch=null,follow=false;
+$('#loc').onclick=()=>{
+  if(!navigator.geolocation){toast('Positie is op dit toestel niet beschikbaar');return}
+  if(watch!==null&&me){map.flyTo(me.getLatLng(),Math.max(map.getZoom(),15),{duration:.6});return}
+  follow=true;$('#loc').classList.add('on');
+  try{watch=navigator.geolocation.watchPosition(p=>{const ll=[p.coords.latitude,p.coords.longitude];
+    if(!me){me=L.marker(ll,{interactive:false,zIndexOffset:1000,icon:L.divIcon({className:'',html:'<span class="me"></span>'})}).addTo(map);acc=L.circle(ll,{radius:p.coords.accuracy,stroke:false,fillColor:'#1C6DD0',fillOpacity:.12,interactive:false}).addTo(map)}
+    else{me.setLatLng(ll);acc.setLatLng(ll).setRadius(p.coords.accuracy)}
+    if(follow){follow=false;if(BOUNDS.contains(ll))map.flyTo(ll,15,{duration:.8});else toast('Je bent nu buiten het skigebied')}},
+   err=>{$('#loc').classList.remove('on');watch=null;toast(err.code===1?'Geef toestemming voor je locatie om jezelf te zien':'Positie nu niet te bepalen')},
+   {enableHighAccuracy:true,maximumAge:5000,timeout:15000})}catch(e){$('#loc').classList.remove('on');toast('Positie is hier niet beschikbaar')}};
+window.FIRN={map,G,D};
+})();
+</script>
+</body>
+</html>
