@@ -13,7 +13,7 @@ PTS = {('380133', '2'): ('jfj', 'Jungfraujoch', 3450), ('1028', '3'): ('sch', 'S
        ('4271', '1'): ('fir', 'First · Oberläger', 1980), ('382500', '2'): ('mur', 'Mürren', 1650),
        ('382300', '2'): ('wen', 'Wengen', 1277), ('381800', '2'): ('gw', 'Grindelwald', 1038),
        ('233', '1'): ('lau', 'Lauterbrunnen', 815)}
-PARAMS = ['tre200h0', 'rre150h0', 'fu3010h0', 'fu3010h1', 'sre000h0', 'nprolohs', 'npromths', 'zprfr0hs']
+PARAMS = ['tre200h0', 'rre150h0', 'fu3010h0', 'fu3010h1', 'sre000h0', 'nprolohs', 'npromths', 'nprohihs', 'zprfr0hs']
 def req(u): return urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent': 'firn-app (github.com/JaapSchip/firn)'}), timeout=120)
 items = json.load(req(f'{B}api/stac/v1/collections/{COL}/items?limit=20'))['features']
 runs = {}
@@ -34,10 +34,13 @@ for prm, href in runs[run].items():
         except ValueError: pass
     print(prm, n)
 now = dt.datetime.now(dt.timezone.utc).replace(minute=0, second=0, microsecond=0)
-def icon(t, p, cl, sun=None):
+DAY = range(9, 17)  # uren (lokale tijd) waarin de zon boven de bergen kan staan
+def icon(t, p, cl, sun, day):
+    """Eigen, eenvoudig weerbeeld per uur: overdag uit zonneschijnduur, 's nachts uit bewolking."""
     if p is not None and p >= 0.2: return 'snow' if (t is not None and t <= 1.0) else 'rain'
-    if cl is None: return 'sun' if (sun or 0) >= 40 else 'part' if (sun or 0) >= 15 else 'cloud'
-    return 'sun' if cl < 25 else 'part' if cl < 70 else 'cloud'
+    if day and sun is not None: return 'sun' if sun >= 40 else 'part' if sun >= 12 else 'cloud'
+    if cl is None: return 'cloud'
+    return 'sun' if cl < 30 else 'part' if cl < 75 else 'cloud'
 out = {'run': run, 'made': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%MZ'), 'src': 'MeteoSwiss', 'pts': []}
 for key, name, alt in sorted(PTS.values(), key=lambda x: -x[2]):
     rows = []
@@ -45,26 +48,28 @@ for key, name, alt in sorted(PTS.values(), key=lambda x: -x[2]):
         if k != key: continue
         u = dt.datetime.strptime(ts, '%Y%m%d%H%M').replace(tzinfo=dt.timezone.utc)
         if u < now: continue
-        cl = max(v['nprolohs'], v.get('npromths', 0)) if 'nprolohs' in v else None
+        cl = max(v['nprolohs'], v.get('npromths', 0), v.get('nprohihs', 0) * 0.6) if 'nprolohs' in v else None
         rows.append((u, v.get('tre200h0'), v.get('rre150h0'), v.get('fu3010h0'), v.get('fu3010h1'), v.get('sre000h0'), cl, v.get('zprfr0hs')))
     rows.sort()
     if not rows: continue
-    hours = [[u.astimezone(TZ).strftime('%Y-%m-%dT%H'), t, p, None if w is None else round(w), None if g is None else round(g), icon(t, p, cl, s), None if z is None else round(z / 50) * 50] for u, t, p, w, g, s, cl, z in rows[:36]]
+    hours = [[u.astimezone(TZ).strftime('%Y-%m-%dT%H'), t, p, None if w is None else round(w), None if g is None else round(g), icon(t, p, cl, s, u.astimezone(TZ).hour in DAY), None if z is None else round(z / 50) * 50] for u, t, p, w, g, s, cl, z in rows[:36]]
     days = {}
     for u, t, p, w, g, s, cl, z in rows:
-        l = u.astimezone(TZ); d = days.setdefault(l.strftime('%Y-%m-%d'), {'t': [], 'p': 0.0, 's': 0.0, 'g': [], 'cl': [], 'dt': [], 'n': 0})
+        l = u.astimezone(TZ); d = days.setdefault(l.strftime('%Y-%m-%d'), {'t': [], 'p': 0.0, 's': 0.0, 'g': [], 'ds': [], 'dt': [], 'n': 0})
         if t is not None: d['t'].append(t)
         d['p'] += p or 0; d['s'] += s or 0; d['n'] += 1
         if g is not None: d['g'].append(g)
-        if 8 <= l.hour <= 17:
-            if cl is not None: d['cl'].append(cl)
+        if l.hour in DAY:
+            if s is not None: d['ds'].append(s)
             if t is not None: d['dt'].append(t)
     dl = []
     for k2 in sorted(days)[:7]:
         d = days[k2]
-        if d['n'] < 8 or not d['t']: continue
-        cl = sum(d['cl']) / len(d['cl']) if d['cl'] else None; mt = sum(d['dt']) / len(d['dt']) if d['dt'] else sum(d['t']) / len(d['t'])
-        dl.append([k2, round(min(d['t'])), round(max(d['t'])), round(d['p'], 1), round(d['s'] / 60, 1), icon(mt, d['p'] / 5 if d['p'] >= 1 else 0, cl, 30), round(max(d['g'])) if d['g'] else None])
+        if d['n'] < 6 or not d['t']: continue
+        mt = sum(d['dt']) / len(d['dt']) if d['dt'] else sum(d['t']) / len(d['t'])
+        frac = sum(d['ds']) / (60 * len(d['ds'])) if d['ds'] else None  # deel van de daguren met zon
+        ic = ('snow' if mt <= 1.0 else 'rain') if d['p'] >= 1 else 'cloud' if frac is None else 'sun' if frac >= 0.6 else 'part' if frac >= 0.2 else 'cloud'
+        dl.append([k2, round(min(d['t'])), round(max(d['t'])), round(d['p'], 1), round(d['s'] / 60, 1), ic, round(max(d['g'])) if d['g'] else None])
     out['pts'].append({'k': key, 'n': name, 'alt': alt, 'h': hours, 'd': dl})
 if len(out['pts']) < 5: sys.exit('te weinig punten: %d' % len(out['pts']))
 os.makedirs(os.path.join(ROOT, 'app', 'data'), exist_ok=True)
