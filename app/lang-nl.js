@@ -179,3 +179,6 @@ Object.assign(LANG.nl.ui,{"rtLevel": "Niveau", "rtTime": "duur", "rtDown": "dali
 Object.assign(LANG.nl.ui,{"plAlt": "hoogte", "plLift": "dichtstbijzijnde lift", "plWhere": "plaats", "plNet": "in het gebied"});
 
 Object.assign(LANG.nl.ui,{"plCall": "Bellen", "plBook": "Website en reserveren", "trH": "Vertrektijden", "trS": "Tik op een traject voor de eerstvolgende vertrektijden, met vertraging en perron.", "trInfo": "Aanreis en parkeren", "trNone": "Geen verbinding gevonden.", "trErr": "Vertrektijden nu niet beschikbaar. Je hebt hiervoor internet nodig.", "trPl": "perron"});
+
+Object.assign(LANG.nl.ui,{"phBy": "Foto"});
+Object.assign(LANG.nl.ui,{"localOnly": "Meldingen staan nu alleen op je eigen toestel."});

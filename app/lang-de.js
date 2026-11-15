@@ -179,3 +179,6 @@ Object.assign(LANG.de.ui,{"rtLevel": "Schwierigkeit", "rtTime": "Dauer", "rtDown
 Object.assign(LANG.de.ui,{"plAlt": "Höhe", "plLift": "nächster Lift", "plWhere": "Ort", "plNet": "in der Region"});
 
 Object.assign(LANG.de.ui,{"plCall": "Anrufen", "plBook": "Website und Reservation", "trH": "Abfahrten", "trS": "Tippe auf eine Strecke für die nächsten Abfahrten, mit Verspätung und Gleis.", "trInfo": "Anreise und Parken", "trNone": "Keine Verbindung gefunden.", "trErr": "Abfahrten gerade nicht verfügbar. Dafür braucht es Internet.", "trPl": "Gleis"});
+
+Object.assign(LANG.de.ui,{"phBy": "Foto"});
+Object.assign(LANG.de.ui,{"localOnly": "Meldungen bleiben vorerst nur auf deinem Gerät."});

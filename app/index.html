@@ -545,6 +545,7 @@ select,input[type=text]{background:var(--snow)}
   <p class="lead" style="margin-top:20px" data-i="fDoS"></p>
   <div id="doList"></div>
   <p class="small muted" style="margin-top:14px" data-i="doNote"></p>
+  <p class="small muted" id="doCred" style="margin-top:8px"></p>
 </section>
 
 <section class="view" id="v-zoek">
@@ -1122,8 +1123,9 @@ function loadTrip(i,el){const x=TRIPS[i],box=el.querySelector('.trb');box.innerH
 /* ---------- activiteiten naast het skiën ---------- */
 const DO=[{id:'sled',lay:'sled',z:[46.6,7.99]},{id:'hike',lay:'hike',z:[46.6,7.99]},{id:'jfj',at:'jfj'},{id:'piz',at:'sch'},{id:'birg',at:'bir'},{id:'cliff',at:'fir'},{id:'fly',at:'fir'},{id:'velo',at:'gw'},{id:'ice',at:'wen'},{id:'park',at:'fir'}];
 function doOnMap(id){const d=DO.find(x=>x.id===id);if(!d)return;show('kaart',true);setTimeout(()=>{if(d.lay)mapMsg({k:'layer',l:d.lay,on:true});else mapMsg({k:'go',p:NLL[d.at],n:g('doen',id)[0]})},150)}
-const DOP={sled:'e-lauberhorn',hike:'e-wengen2',jfj:'e-monch2',piz:'e-murrenpano',birg:'e-murrenpano',cliff:'e-grindelwald',fly:'e-grindelwald',velo:'e-grindelwald',ice:'e-dawn',park:'e-sessel'};
-function drawDo(){$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<button class="rcard" onclick="openPlace('d:${d.id}')"><img src="media/${DOP[d.id]}.jpg" alt="" loading="lazy"><span class="in"><span class="label">${esc(x[1])}</span><b>${esc(x[0])}</b></span></button>`}).join('')}
+const DOC={"jfj":{"a":"Roy Egloff","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:CH.BE.Grindelwald_2021-04-20_Jungfraujoch_Sphinx-Observatory.jpg"},"piz":{"a":"Ximonic (Simo Räsänen)","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Schilthorn_with_Bernese_Alps,_2012_August.jpg"},"cliff":{"a":"Paradise Chronicle","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Cliff_walk_auf_Grindelwald_First_im_Winter.jpg"},"hike":{"a":"Jpatokal","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Mannlichn_Royal_Walk_Winter.jpg"},"birg":{"a":"Imceac","l":"CC0","u":"https://commons.wikimedia.org/wiki/File:Schilthornbahn_Funifor_Sektion_Birg_Schilthorn.jpeg"}};
+const DOP={sled:'e-lauberhorn',hike:'c-hike',jfj:'c-jfj',piz:'c-piz',birg:'c-birg',cliff:'c-cliff',fly:'e-grindelwald',velo:'e-grindelwald',ice:'e-dawn',park:'e-sessel'};
+function drawDo(){$('#doCred').innerHTML=t('phBy')+': '+Object.keys(DOC).map(k=>`${esc(g('doen',k)[0])} – <a href="${esc(DOC[k].u)}" target="_blank" rel="noopener">${esc(DOC[k].a)}</a>, ${esc(DOC[k].l)}`).join(' · ')+' (Wikimedia Commons)';$('#doList').innerHTML=DO.map(d=>{const x=g('doen',d.id);return `<button class="rcard" onclick="openPlace('d:${d.id}')"><img src="media/${DOP[d.id]}.jpg" alt="" loading="lazy"><span class="in"><span class="label">${esc(x[1])}</span><b>${esc(x[0])}</b></span></button>`}).join('')}
 const dist=(a,b)=>{const x=(b[1]-a[1])*Math.cos((a[0]+b[0])/2*Math.PI/180),y=b[0]-a[0];return Math.hypot(x,y)*111195};
 function nearLift(p){let best=null;MD.lifts.forEach(l=>{if(!l.n||/carpet|rope/.test(l.t))return;[l.c[0],l.c[l.c.length-1]].forEach(q=>{const m=dist(p,q);if(!best||m<best.m)best={n:l.n,m}})});return best&&best.m<1500?best:null}
 let plCur=null;
@@ -1136,18 +1138,18 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
     o={ttl:'qaEat',n:f.n,sub:ft[f.t]||'',p:f.p,tags:f.c?f.c.split(/[;_]/).map(x=>x.trim()).filter(Boolean):[],text:'',stats:[],web:f.w,ph:f.ph,fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key.replace(/'/g,"\\'")}');drawPlace()`,map:`mapPick('food',${fi})`}}
   else if(k==='d'){const d=DO.find(x=>x.id===id);if(!d)return;const x=g('doen',id),M=window.FIRN_MAP||{};
     o={ttl:'qaDo',n:x[0],sub:x[1],p:d.at?NLL[d.at]:null,photo:DOP[id],tags:[],text:x[2],stats:d.at?[[N[d.at].h+'<small> m</small>',t('plAlt')]]:[[(d.lay==='sled'?'50':'100')+'<small> km</small>',t('plNet')]],fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key}');drawPlace()`,map:`doOnMap('${id}')`,
-      lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote')}}
+      lines:d.lay?(M[d.lay]||[]).map(q=>q.c):null,lc:d.lay==='hike'?'#1F8A6B':'#7A4FD0',note:t('doNote'),cr:DOC[id]}}
   if(!o)return;TITLE.plek=o.ttl;$('#ttl').textContent=t(o.ttl);
   if(o.p&&k!=='d'){const nl=nearLift(o.p);if(nl)o.stats.push([`<span class="tx">${esc(nl.n)}</span>`,t('plLift')+' · '+(Math.round(nl.m/10)*10)+' m'])}
   if(o.sub&&k!=='d')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
   const near=o.p&&MD.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-o.p[0])<.012&&Math.abs(c[1]-o.p[1])<.017));
-  const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,hide:1,pad:.004}):(o.p&&near)?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
+  const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,hide:1,pad:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
   $('#plDetail').innerHTML=`<div class="rmedia ${o.photo&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div><img src="media/${o.photo}.jpg" alt=""></div>`:''}</div>
    <div class="rhead"><h1>${esc(o.n)}</h1><button class="heart" aria-label="♥" aria-pressed="${o.fav}" onclick="${o.favFn}">${o.fav?'♥':'♡'}</button></div>
    ${k==='d'?`<p class="rsub">${esc(o.sub)}</p>`:''}
    ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,3)}" style="margin-top:14px">${o.stats.slice(0,3).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
    ${o.tags.length?`<div class="meta" style="margin:0 0 18px">${o.tags.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
-   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}
+   ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}, Wikimedia Commons</p>`:''}
    <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap">${o.ph?`<a class="btn sm alt" href="tel:${esc(o.ph.replace(/[^+\d]/g,''))}" style="text-decoration:none">${t('plCall')}</a>`:''}${/^https?:\/\//.test(o.web||'')?`<a class="btn sm ${o.ph?'ghost':'alt'}" href="${esc(o.web)}" target="_blank" rel="noopener" style="text-decoration:none">${t(k==='d'?'scSite':'plBook')} ↗</a>`:''}<button class="btn sm ghost" onclick="${o.map}">${t('onMap')}</button></div>${o.ph?`<p class="small muted">${esc(o.ph)}</p>`:''}`}
 /* ---------- zoeken en favorieten ---------- */
 const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
