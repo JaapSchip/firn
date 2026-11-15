@@ -626,6 +626,7 @@ a{color:var(--ink)}
   <div class="chips" id="eatWhere"></div>
   <div class="row" style="margin:18px 0 6px;justify-content:space-between;align-items:center"><span class="small muted" id="eatCount"></span><span class="row" style="gap:8px"><button class="chip" id="eatNearB" aria-pressed="false" onclick="eatNearTog()" data-i="eNear"></button><button class="btn sm ghost" id="eatPick" data-i="pick"></button></span></div>
   <p class="small muted" id="eatMsg" hidden style="margin:6px 0 0"></p>
+  <div id="eatFeat" hidden style="margin:14px 0 4px"></div>
   <div id="eatList" style="border-bottom:1px solid var(--line)"></div>
   <button class="btn ghost" id="eatAll" style="margin-top:18px"></button>
   <p class="small muted" style="margin-top:14px" data-i="eatNote"></p>
@@ -1019,6 +1020,8 @@ let eatA='rec',eatP=null;
 function eatFilter(){return eatList()}
 const openE={};
 let EALL=null;
+const EPH={e2:'k27w5TBw~1772455623/Winterkampagne-Gastro-Kleine-Scheidegg',e8:'BkjNWGcd~1771926923/Restaurant-EGL-aussen-Cordonbleu-anstossen-2Personen',e11:'rRuWxB4h~1770294200/Grindelwald-First-Bergrestaurant-First-Terasse',e19:'6xjRdX04~1772443724/Winteregg-Bahnhof-und-BLM-mit-Restaurant-im-Hintergrund'};
+const ephUrl=id=>{const x=EPH[id].split('~');return 'https://dam.media.jungfrau.ch/image/upload/s--'+x[0]+'--/c_limit,f_auto,h_800/v'+x[1]};
 const EFLAG={ter:['e1','e4','e5','e12','e15','e18','e19'],ap:['e3','e7','e20']};
 const EAREA=[['ks',[[46.585,7.961],[46.575,7.975],[46.589,7.938],[46.607,8.0]]],['man',[[46.613,7.941],[46.628,7.985]]],['fir',[[46.659,8.054],[46.642,8.048],[46.652,8.05]]],['sch',[[46.557,7.835],[46.5615,7.859],[46.566,7.882]]]];
 const EAN={ks:'Kleine Scheidegg',man:'Männlichen',fir:'First',sch:'Mürren-Schilthorn',wen:'Wengen',mur:'Mürren',gw:'Grindelwald',lau:'Lauterbrunnen'},EORD=['ks','man','fir','sch','wen','mur','gw','lau'],EMT=['ks','man','fir','sch'];
@@ -1046,6 +1049,7 @@ function drawEat(){try{NLL;favs;MD}catch(e){return}if(!EALL)eatBuild();const fv=
   const list=eatList(),row=o=>{const f=fv.includes(o.key);return `<div class="sr erow"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}${o.rec&&eatA!=='rec'?' <span class="bdg" style="background:var(--solid);font-size:9px">'+t('eRecOne')+'</span>':''}</span><small>${eatNear&&o.m!=null?mtxt(o.m)+' · ':''}${esc(o.sub)}</small>${o.tags?`<small class="etg">${esc(o.tags)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`};
   $('#eatCount').textContent=t('eN',{n:list.length});
   const nb=$('#eatNearB');nb.setAttribute('aria-pressed',eatNear);$('#eatMsg').textContent=eatMsg;$('#eatMsg').hidden=!eatMsg;
+  const ft=$('#eatFeat');ft.hidden=!(eatA==='rec'&&eatW==='all'&&!eatNear);if(!ft.hidden&&!ft.dataset.l||ft.dataset.l!==cur){ft.dataset.l=cur;ft.innerHTML=`<div class="hrow">${Object.keys(EPH).map(id=>{const e=EAT.find(x=>x.id===id),d=g('eat',id);return `<button class="hmini" data-k="e:${id}" onclick="openPlace('e:${id}')"><img src="${ephUrl(id)}" onerror="this.closest('.hmini').remove()" alt="" loading="lazy"><b>${esc(e.n)}</b><span>${esc((d[0]||[]).join(' · '))}</span></button>`}).join('')}</div><p class="hcred">${JBCR}</p>`}
   $('#eatList').innerHTML=!list.length?`<p class="shint">${t('sNone')}</p>`:eatW==='all'&&!eatNear?EORD.map(a=>{const g=list.filter(o=>o.a===a);return g.length?`<div class="sgh egh">${esc(EAN[a])} <span>${g.length}</span></div>`+g.map(row).join(''):''}).join(''):list.map(row).join('')}
 function toggleFav(id){favTog('e:'+id)}
 $('#eatPick').onclick=()=>{const list=eatList();if(!list.length)return;openPlace(list[Math.floor(Math.random()*list.length)].key)};
@@ -1305,7 +1309,7 @@ function openPlace(key){navSave();plCur=key;show('plek',true);drawPlace();$('#ma
 function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(2),ft={restaurant:'Restaurant',cafe:'Café',bar:'Bar',hut:t('kHut')};
   let o=null;
   if(k==='e'){const e=EAT.find(x=>x.id===id);if(!e)return;const d=g('eat',id),fi=EM[id],f=fi!=null?MD.food[fi]:null,p=f?f.p:NLL[e.at];
-    o={ttl:'qaEat',n:e.n,sub:N[e.at].n,p,tags:d[0],text:d[1],stats:[[N[e.at].h+'<small> m</small>',t('plAlt')]],web:f&&f.w,ph:f&&f.ph,fav:st('fav',[]).includes(id),favFn:`toggleFav('${id}');drawPlace()`,map:`eatOnMap('${id}')`}}
+    o={ttl:'qaEat',n:e.n,sub:N[e.at].n,p,tags:d[0],text:d[1],stats:[[N[e.at].h+'<small> m</small>',t('plAlt')]],jbu:EPH[id]?ephUrl(id):'',cr:EPH[id]?JBC:null,web:f&&f.w,ph:f&&f.ph,fav:st('fav',[]).includes(id),favFn:`toggleFav('${id}');drawPlace()`,map:`eatOnMap('${id}')`}}
   else if(k==='f'){const fi=MD.food.findIndex(x=>x.n===id);if(fi<0)return;const f=MD.food[fi];
     o={ttl:'qaEat',n:f.n,sub:ft[f.t]||'',p:f.p,tags:f.c?f.c.split(/[;_]/).map(x=>x.trim()).filter(Boolean):[],text:'',stats:[],web:f.w,ph:f.ph,fav:S.get('fav2',[]).includes(key),favFn:`favTog('${key.replace(/'/g,"\\'")}');drawPlace()`,map:`mapPick('food',${fi})`}}
   else if(k==='d'){const d=DO.find(x=>x.id===id);if(!d)return;const x=g('doen',id),M=window.FIRN_MAP||{};
@@ -1333,7 +1337,7 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
   if(o.sub&&k==='e')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
   const near=o.p&&MD.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-o.p[0])<.012&&Math.abs(c[1]-o.p[1])<.017));
   const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,solid:o.solid,hide:1,pad:o.solid?.006:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';
-  $('#plDetail').innerHTML=`<div class="rmedia ${o.photo&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.photo?`<div>${o.jb?doImg(o.jb):`<img src="media/${o.photo}.jpg" alt="">`}</div>`:''}</div>
+  $('#plDetail').innerHTML=`<div class="rmedia ${(o.photo||o.jbu)&&mm?'':'one'}">${mm?`<button onclick="${o.map}" aria-label="${esc(t('onMap'))}">${mm}</button>`:''}${o.jbu?`<div><img src="${o.jbu}" onerror="this.closest('.rmedia').classList.add('one');this.parentNode.remove()" alt=""></div>`:''}${o.photo?`<div>${o.jb?doImg(o.jb):`<img src="media/${o.photo}.jpg" alt="">`}</div>`:''}</div>
    <div class="rhead"><h1>${esc(o.n)}</h1><button class="heart" aria-label="♥" aria-pressed="${o.fav}" onclick="${o.favFn}">${o.fav?'♥':'♡'}</button></div>
    ${k!=='e'&&o.sub?`<p class="rsub">${esc(o.sub)}</p>`:''}
    ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,4)}" style="margin-top:14px">${o.stats.slice(0,4).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
