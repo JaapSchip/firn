@@ -30,3 +30,4 @@ for k, q in Q.items():
         except Exception as e: print('mis', k, i, e)
     res[k] = c; print(k, len(c), [x['title'][:40] for x in c])
 json.dump(res, open(os.path.join(OUT, 'credits.json'), 'w'), ensure_ascii=False, indent=1)
+# start
