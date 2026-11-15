@@ -56,7 +56,7 @@ for e in els:
         try: out['peaks'].append({'p': pt(e), 'n': n, 'e': int(float(t['ele'].replace(',', '.').split()[0]))})
         except ValueError: pass
     elif (t.get('amenity') in ('restaurant', 'cafe', 'bar') or t.get('tourism') == 'alpine_hut') and n and pt(e):
-        out['food'].append({'p': pt(e), 'n': n, 't': t.get('amenity') or 'hut', 'w': t.get('website') or t.get('contact:website', ''), 'c': t.get('cuisine', '')})
+        out['food'].append({'p': pt(e), 'n': n, 't': t.get('amenity') or 'hut', 'w': t.get('website') or t.get('contact:website', ''), 'c': t.get('cuisine', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip()})
     elif t.get('amenity') == 'parking' and pt(e) and t.get('access') not in ('private', 'customers', 'no', 'permit'):
         cap = int(t['capacity']) if t.get('capacity', '').isdigit() else 0
         if n or cap >= 40 or t.get('parking') in ('multi-storey', 'underground'):

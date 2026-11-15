@@ -177,3 +177,5 @@ Object.assign(LANG.de.ui,{"qaTr": "Anreise", "lvWx": "Wetter", "lvHours": "Betri
 Object.assign(LANG.de.ui,{"rtLevel": "Schwierigkeit", "rtTime": "Dauer", "rtDown": "Abfahrt", "rtTop": "höchster Punkt", "rtLow": "tiefster Punkt", "rtDesc": "Beschreibung"});
 
 Object.assign(LANG.de.ui,{"plAlt": "Höhe", "plLift": "nächster Lift", "plWhere": "Ort", "plNet": "in der Region"});
+
+Object.assign(LANG.de.ui,{"plCall": "Anrufen", "plBook": "Website und Reservation", "trH": "Abfahrten", "trS": "Tippe auf eine Strecke für die nächsten Abfahrten, mit Verspätung und Gleis.", "trInfo": "Anreise und Parken", "trNone": "Keine Verbindung gefunden.", "trErr": "Abfahrten gerade nicht verfügbar. Dafür braucht es Internet.", "trPl": "Gleis"});

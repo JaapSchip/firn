@@ -178,3 +178,5 @@ Object.assign(LANG.en.ui,{"qaTr": "Transport", "lvWx": "Weather", "lvHours": "Op
 Object.assign(LANG.en.ui,{"rtLevel": "Level of difficulty", "rtTime": "duration", "rtDown": "descent", "rtTop": "highest point", "rtLow": "lowest point", "rtDesc": "Description"});
 
 Object.assign(LANG.en.ui,{"plAlt": "altitude", "plLift": "nearest lift", "plWhere": "location", "plNet": "in the region"});
+
+Object.assign(LANG.en.ui,{"plCall": "Call", "plBook": "Website and booking", "trH": "Departures", "trS": "Tap a route for the next departures, with delay and platform.", "trInfo": "Getting there and parking", "trNone": "No connection found.", "trErr": "Departures are not available right now. You need an internet connection.", "trPl": "platform"});

@@ -1,0 +1,18 @@
+name: Fotokandidaten ophalen (Wikimedia Commons)
+on:
+  workflow_dispatch:
+  push:
+    branches: [photos]
+    paths: ['tools/fetch_photos.py', '.github/workflows/photos.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_photos.py
+      - run: |
+          git config user.name "firn-bot"
+          git config user.email "firn-bot@users.noreply.github.com"
+          git add photos-cand && git commit -q -m "Fotokandidaten" && git push

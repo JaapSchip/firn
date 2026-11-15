@@ -177,3 +177,5 @@ Object.assign(LANG.fr.ui,{"qaTr": "Transport", "lvWx": "Météo", "lvHours": "Ho
 Object.assign(LANG.fr.ui,{"rtLevel": "Niveau", "rtTime": "durée", "rtDown": "descente", "rtTop": "point haut", "rtLow": "point bas", "rtDesc": "Description"});
 
 Object.assign(LANG.fr.ui,{"plAlt": "altitude", "plLift": "remontée la plus proche", "plWhere": "lieu", "plNet": "dans la région"});
+
+Object.assign(LANG.fr.ui,{"plCall": "Appeler", "plBook": "Site web et réservation", "trH": "Départs", "trS": "Touchez un trajet pour voir les prochains départs, avec retard et voie.", "trInfo": "Accès et parking", "trNone": "Aucune correspondance trouvée.", "trErr": "Départs indisponibles pour le moment. Une connexion internet est nécessaire.", "trPl": "voie"});
