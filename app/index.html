@@ -867,7 +867,7 @@ function drawStart(){
   const G={blue:'#1C6DD0',red:'#D42A3A',black:'#2B2B31'},lv=t('lv');
   $('#tiles').innerHTML=ROUTES.map(r=>{const d=R(r.id);return `<button class="tile" onclick="openRoute(${r.id})">${rtImg(r.id,'loading="lazy"')}<span class="label">${t('route')} ${r.id} · ${lv[r.lv]}</span><b>${d[0]}</b><span class="tm">${d[1]} → ${d[2]} · ${d[4]}</span></button>`}).join('');
   $('#heroSun').textContent=zt(sunTimes(Date.now())[1]);
-    $('#banTravel').innerHTML=`<img src="https://dam.media.jungfrau.ch/image/upload/s--GcE6Jh4g--/c_limit,f_auto,h_800/v1772439890/Wengernalpbahn-Zug-im-Schnee-mit-KLS-im-Hintergrund" onerror="this.onerror=null;this.src='media/e-wengen2.jpg';var n=this.nextElementSibling;if(n)n.hidden=true" alt=""><figcaption>Wengernalpbahn · ${JBCR}</figcaption>`;
+    $('#banTravel').innerHTML=`<img src="https://dam.media.jungfrau.ch/image/upload/s--_GtRHbPy--/c_limit,f_auto,h_800/v1770914592/Haltestelle-Matten-bei-Interlaken-BOB-Winter" onerror="this.onerror=null;this.src='media/e-wengen2.jpg';var n=this.nextElementSibling;if(n)n.hidden=true" alt=""><figcaption>Matten bei Interlaken · ${JBCR}</figcaption>`;
   $('#imgNote').hidden=!IMG.ai;
   $('#rulesL').innerHTML=sec('rules').map(r=>`<li>${r}</li>`).join('');$('#tipsL').innerHTML=sec('tips').map(r=>`<li>${r}</li>`).join('');
   $('#ttl').textContent=curView==='start'?'Firn':t(TITLE[curView]);
