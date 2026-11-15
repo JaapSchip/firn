@@ -624,7 +624,8 @@ a{color:var(--ink)}
   <div class="chips" id="eatChips"></div>
   <div class="sgh" style="margin:16px 0 8px" data-i="eQ2"></div>
   <div class="chips" id="eatWhere"></div>
-  <div class="row" style="margin:18px 0 6px;justify-content:space-between;align-items:center"><span class="small muted" id="eatCount"></span><button class="btn sm ghost" id="eatPick" data-i="pick"></button></div>
+  <div class="row" style="margin:18px 0 6px;justify-content:space-between;align-items:center"><span class="small muted" id="eatCount"></span><span class="row" style="gap:8px"><button class="chip" id="eatNearB" aria-pressed="false" onclick="eatNearTog()" data-i="eNear"></button><button class="btn sm ghost" id="eatPick" data-i="pick"></button></span></div>
+  <p class="small muted" id="eatMsg" hidden style="margin:6px 0 0"></p>
   <div id="eatList" style="border-bottom:1px solid var(--line)"></div>
   <button class="btn ghost" id="eatAll" style="margin-top:18px"></button>
   <p class="small muted" style="margin-top:14px" data-i="eatNote"></p>
@@ -1032,16 +1033,20 @@ function eatBuild(){const M=window.FIRN_MAP||{food:[],pistes:[]},V=[['wen',NLL.w
   M.food.forEach((f,i)=>{if(FM[i]!=null)return;const a=area(f.p);if(!a)return;out.push({key:'f:'+f.n,n:f.n,rec:0,p:f.p,a,ty:f.t,sub:[ft[f.t]||'',eCu(f.c)].filter(Boolean).join(' · '),tags:f.o?t('eTerOne'):'',ter:!!f.o,ap:f.t==='bar'})});
   const seen={};EALL=out.filter(o=>seen[o.key]?0:(seen[o.key]=1)).sort((x,y)=>y.rec-x.rec||x.n.localeCompare(y.n))}
 function eatIs(o,k){return k==='rec'?o.rec:k==='piste'?EMT.includes(o.a):k==='ter'?o.ter:k==='apres'?o.ap:k==='dorp'?(!EMT.includes(o.a)&&o.ty==='restaurant'):true}
-function eatList(){if(!EALL)eatBuild();return EALL.filter(o=>eatIs(o,eatA)&&(eatW==='all'||o.a===eatW))}
+let eatNear=false,eatPos=null,eatMsg='';
+function eatList(){if(!EALL)eatBuild();const l=EALL.filter(o=>eatIs(o,eatA)&&(eatW==='all'||o.a===eatW));if(eatNear&&eatPos){l.forEach(o=>o.m=dist(eatPos,o.p));return l.slice().sort((x,y)=>x.m-y.m)}return l}
+function eatNearTog(){eatMsg='';if(eatNear){eatNear=false;drawEat();return}if(!navigator.geolocation){eatMsg=t('nrNone');drawEat();return}eatMsg=t('nrWait');drawEat();
+  navigator.geolocation.getCurrentPosition(p=>{const q=[p.coords.latitude,p.coords.longitude];if(inArea(q)){eatPos=q;eatNear=true;eatMsg=''}else eatMsg=t('eOut');drawEat()},e=>{eatMsg=t(e.code===1?'nrDeny':'nrNone');drawEat()},{enableHighAccuracy:true,timeout:15000,maximumAge:30000})}
 function drawEat(){try{NLL;favs;MD}catch(e){return}if(!EALL)eatBuild();const fv=favs(),CH=[['rec','eRec'],['piste','ePiste'],['ter','eTer'],['apres','eAp'],['dorp','eDorp']];
   if(!CH.some(c=>c[0]===eatA))eatA='rec';if(eatW!=='all'&&!EAN[eatW])eatW='all';
   $('#eatChips').innerHTML=CH.map(c=>`<button class="chip" aria-pressed="${eatA===c[0]}" onclick="eatA='${c[0]}';drawEat()">${t(c[1])}</button>`).join('');
   const avail=EORD.filter(a=>EALL.some(o=>o.a===a&&eatIs(o,eatA)));
   $('#eatWhere').innerHTML=[['all',t('eAllW')]].concat(avail.map(a=>[a,EAN[a]])).map(c=>`<button class="chip" aria-pressed="${eatW===c[0]}" onclick="eatW='${c[0]}';S.set('eatw',eatW);drawEat()">${esc(c[1])}</button>`).join('');
   if(eatW!=='all'&&!avail.includes(eatW))eatW='all';
-  const list=eatList(),row=o=>{const f=fv.includes(o.key);return `<div class="sr erow"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}${o.rec&&eatA!=='rec'?' <span class="bdg" style="background:var(--solid);font-size:9px">'+t('eRecOne')+'</span>':''}</span><small>${esc(o.sub)}</small>${o.tags?`<small class="etg">${esc(o.tags)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`};
+  const list=eatList(),row=o=>{const f=fv.includes(o.key);return `<div class="sr erow"><button class="go" data-k="${esc(o.key)}"><span>${esc(o.n)}${o.rec&&eatA!=='rec'?' <span class="bdg" style="background:var(--solid);font-size:9px">'+t('eRecOne')+'</span>':''}</span><small>${eatNear&&o.m!=null?mtxt(o.m)+' · ':''}${esc(o.sub)}</small>${o.tags?`<small class="etg">${esc(o.tags)}</small>`:''}</button><button class="heart" aria-label="♥" aria-pressed="${f}" data-f="${esc(o.key)}">${f?'♥':'♡'}</button></div>`};
   $('#eatCount').textContent=t('eN',{n:list.length});
-  $('#eatList').innerHTML=!list.length?`<p class="shint">${t('sNone')}</p>`:eatW==='all'?EORD.map(a=>{const g=list.filter(o=>o.a===a);return g.length?`<div class="sgh egh">${esc(EAN[a])} <span>${g.length}</span></div>`+g.map(row).join(''):''}).join(''):list.map(row).join('')}
+  const nb=$('#eatNearB');nb.setAttribute('aria-pressed',eatNear);$('#eatMsg').textContent=eatMsg;$('#eatMsg').hidden=!eatMsg;
+  $('#eatList').innerHTML=!list.length?`<p class="shint">${t('sNone')}</p>`:eatW==='all'&&!eatNear?EORD.map(a=>{const g=list.filter(o=>o.a===a);return g.length?`<div class="sgh egh">${esc(EAN[a])} <span>${g.length}</span></div>`+g.map(row).join(''):''}).join(''):list.map(row).join('')}
 function toggleFav(id){favTog('e:'+id)}
 $('#eatPick').onclick=()=>{const list=eatList();if(!list.length)return;openPlace(list[Math.floor(Math.random()*list.length)].key)};
 $('#eatList').addEventListener('click',e=>{const f=e.target.closest('[data-f]');if(f){favTog(f.dataset.f);return}const b=e.target.closest('[data-k]');if(b)openPlace(b.dataset.k)});
@@ -1322,6 +1327,9 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
       lines:segs.map(x=>x.q.c),lc:'#E8540A',solid:1,extra:(lifts.length?`<div class="sgh">${t('pLifts')}</div>`+lifts.slice(0,4).map(l=>`<button class="pseg" onclick="mapPick('lift',${l.li})"><span>${esc(l.n)}</span><small>›</small></button>`).join(''):'')+(eats.length?`<div class="sgh">${t('pEat')}</div>`+eats.slice(0,5).map(x=>`<button class="pseg" onclick="openPlace('${x.key.replace(/'/g,"\\'")}')"><span>${esc(x.n)}</span><small>${Math.round(x.m/10)*10} m ›</small></button>`).join(''):'')}}
   if(!o)return;TITLE.plek=o.ttl;$('#ttl').textContent=t(o.ttl);
   if(o.p&&k!=='d'){const nl=nearLift(o.p);if(nl)o.stats.push([`<span class="tx">${esc(nl.n)}</span>`,t('plLift')+' · '+(Math.round(nl.m/10)*10)+' m'])}
+  if((k==='e'||k==='f')&&o.p){const M=window.FIRN_MAP||{pistes:[]},E=z=>z.replace(/\\/g,'\\\\').replace(/'/g,"\\'"),ps=[];
+    M.pistes.forEach(q=>{const nm=q.n&&q.n!==q.ref?q.n:(q.ref?t('kPisteOne')+' '+q.ref:'');if(!nm||ps.some(z=>z.n===nm))return;let m=1e9;q.c.forEach(c=>{if(Math.abs(c[0]-o.p[0])<.003&&Math.abs(c[1]-o.p[1])<.004){const d=dist(o.p,c);if(d<m)m=d}});if(m<170)ps.push({n:nm,m,d:q.d})});ps.sort((x,y)=>x.m-y.m);
+    if(ps.length)o.extra=(o.extra||'')+`<div class="sgh">${t('ePistes')}</div>`+ps.slice(0,5).map(x=>`<button class="pseg" onclick="openPlace('p:${E(x.n)}')"><span><span class="bdg" style="background:${{b:'#1C6DD0',r:'#D42A3A',k:'#16181D',f:'#E8A20A'}[x.d]};margin-right:8px">&nbsp;</span>${esc(x.n)}</span><small>${Math.max(10,Math.round(x.m/10)*10)} m ›</small></button>`).join('')}
   if(o.sub&&k==='e')o.stats.unshift([`<span class="tx">${esc(o.sub)}</span>`,t('plWhere')]);
   const near=o.p&&MD.pistes.some(q=>q.c.some(c=>Math.abs(c[0]-o.p[0])<.012&&Math.abs(c[1]-o.p[1])<.017));
   const mm=o.lines?mmap(o.lines.flatMap(c=>[{p:c[0],n:''},{p:c[c.length-1],n:''}]),{lines:o.lines,lc:o.lc,solid:o.solid,hide:1,pad:o.solid?.006:.004}):(o.p&&near&&k!=='d')?mmap([{p:o.p,n:o.n}],{pad:.011}):'';

@@ -208,3 +208,5 @@ Object.assign(LANG.nl.ui,{"trPk": "Route naar de parkeerplaats", "trLast": "laat
 Object.assign(LANG.nl.ui,{"trTom":"morgen"});
 
 Object.assign(LANG.nl.ui,{"eQ1": "Wat zoek je?", "eQ2": "Waar?", "ePiste": "Lunch aan de piste", "eTer": "Zonneterras", "eAp": "Après-ski", "eDorp": "Diner in het dorp", "eAllW": "Overal", "eN": "{n} adressen", "eTerOne": "terras", "eCu": {"sw": "Zwitsers", "pz": "Pizza", "it": "Italiaans", "in": "Indiaas", "as": "Aziatisch", "bu": "Burgers", "cf": "Koffie en taart", "int": "Internationaal"}, "eatSub": "Kies wat je zoekt en waar. Bewaar je favorieten met het hartje."});
+
+Object.assign(LANG.nl.ui,{"eNear": "Dichtbij eerst", "eOut": "Je bent nu buiten het skigebied. In het gebied staat het dichtstbijzijnde adres bovenaan.", "ePistes": "Pistes hierlangs"});

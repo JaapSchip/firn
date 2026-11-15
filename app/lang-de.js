@@ -208,3 +208,5 @@ Object.assign(LANG.de.ui,{"trPk": "Route zum Parkplatz", "trLast": "letzte heute
 Object.assign(LANG.de.ui,{"trTom":"morgen"});
 
 Object.assign(LANG.de.ui,{"eQ1": "Was suchst du?", "eQ2": "Wo?", "ePiste": "Mittag an der Piste", "eTer": "Sonnenterrasse", "eAp": "Après-Ski", "eDorp": "Abendessen im Dorf", "eAllW": "Überall", "eN": "{n} Adressen", "eTerOne": "Terrasse", "eCu": {"sw": "Schweizer Küche", "pz": "Pizza", "it": "Italienisch", "in": "Indisch", "as": "Asiatisch", "bu": "Burger", "cf": "Kaffee und Kuchen", "int": "International"}, "eatSub": "Wähle, was du suchst und wo. Speichere Favoriten mit dem Herz."});
+
+Object.assign(LANG.de.ui,{"eNear": "Nächste zuerst", "eOut": "Du bist ausserhalb des Skigebiets. Im Gebiet steht die nächste Adresse zuoberst.", "ePistes": "Pisten hier vorbei"});

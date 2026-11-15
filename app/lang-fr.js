@@ -209,3 +209,5 @@ Object.assign(LANG.fr.ui,{"trPk": "Itinéraire vers le parking", "trLast": "dern
 Object.assign(LANG.fr.ui,{"trTom":"demain"});
 
 Object.assign(LANG.fr.ui,{"eQ1": "Que cherchez-vous ?", "eQ2": "Où ?", "ePiste": "Déjeuner sur les pistes", "eTer": "Terrasse au soleil", "eAp": "Après-ski", "eDorp": "Dîner au village", "eAllW": "Partout", "eN": "{n} adresses", "eTerOne": "terrasse", "eCu": {"sw": "Suisse", "pz": "Pizza", "it": "Italien", "in": "Indien", "as": "Asiatique", "bu": "Burgers", "cf": "Café et gâteaux", "int": "International"}, "eatSub": "Choisissez ce que vous cherchez et où. Enregistrez vos favoris avec le cœur."});
+
+Object.assign(LANG.fr.ui,{"eNear": "Les plus proches", "eOut": "Vous êtes hors du domaine skiable. Dans le domaine, l’adresse la plus proche s’affiche en premier.", "ePistes": "Pistes à proximité"});
