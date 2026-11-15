@@ -31,7 +31,7 @@ def rings(e):
 
 DIFF = {'novice': 'b', 'easy': 'b', 'intermediate': 'r', 'advanced': 'k', 'expert': 'k', 'freeride': 'f'}
 SKIP_LIFT = {'zip_line', 'goods', 'station', 'pylon', 'yes'}
-out = {k: [] for k in ('hike', 'pistes', 'areas', 'sled', 'lifts', 'rail', 'stations', 'places', 'peaks', 'food', 'parking', 'rivers', 'ice', 'water', 'roads')}
+out = {k: [] for k in ('wc', 'hike', 'pistes', 'areas', 'sled', 'lifts', 'rail', 'stations', 'places', 'peaks', 'food', 'parking', 'rivers', 'ice', 'water', 'roads')}
 for e in els:
     t = e.get('tags', {}); n = t.get('name', '')
     pt_ = t.get('piste:type')
@@ -62,6 +62,8 @@ for e in els:
         except ValueError: pass
     elif (t.get('amenity') in ('restaurant', 'cafe', 'bar') or t.get('tourism') == 'alpine_hut') and n and pt(e):
         out['food'].append({'p': pt(e), 'n': n, 't': t.get('amenity') or 'hut', 'w': t.get('website') or t.get('contact:website', ''), 'c': t.get('cuisine', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip()})
+    elif t.get('amenity') == 'toilets' and pt(e) and t.get('access') not in ('private', 'customers', 'no'):
+        out['wc'].append({'p': pt(e), 'n': n, 'fee': t.get('fee', '')})
     elif t.get('amenity') == 'parking' and pt(e) and t.get('access') not in ('private', 'customers', 'no', 'permit'):
         cap = int(t['capacity']) if t.get('capacity', '').isdigit() else 0
         if n or cap >= 40 or t.get('parking') in ('multi-storey', 'underground'):
