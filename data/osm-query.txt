@@ -11,6 +11,8 @@
   nwr["amenity"~"^(restaurant|cafe|bar|parking)$"](46.52,7.80,46.70,8.13);
   nwr["tourism"="alpine_hut"](46.52,7.80,46.70,8.13);
   nwr["amenity"="toilets"](46.52,7.80,46.70,8.13);
+  nwr["shop"~"^(sports|ski|outdoor)$"](46.52,7.80,46.70,8.13);
+  nwr["amenity"="ski_rental"](46.52,7.80,46.70,8.13);
   way["waterway"="river"](46.52,7.80,46.70,8.13);
   nwr["natural"="glacier"](46.52,7.80,46.70,8.13);
   nwr["natural"="water"]["name"](46.52,7.80,46.70,8.13);

@@ -62,6 +62,9 @@ for e in els:
         except ValueError: pass
     elif (t.get('amenity') in ('restaurant', 'cafe', 'bar') or t.get('tourism') == 'alpine_hut') and n and pt(e):
         out['food'].append({'p': pt(e), 'n': n, 't': t.get('amenity') or 'hut', 'w': t.get('website') or t.get('contact:website', ''), 'c': t.get('cuisine', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip()})
+    elif (t.get('shop') in ('sports', 'ski', 'outdoor') or t.get('amenity') == 'ski_rental') and n and pt(e):
+        rent = t.get('amenity') == 'ski_rental' or t.get('shop') == 'ski' or 'yes' in (t.get('rental', ''), t.get('ski:rental', ''), t.get('service:ski:rental', '')) or 'ski' in t.get('rental', '')
+        out['shops'].append({'p': pt(e), 'n': n, 'r': 1 if rent else 0, 'w': t.get('website') or t.get('contact:website', ''), 'ph': (t.get('phone') or t.get('contact:phone', '')).split(';')[0].strip()})
     elif t.get('amenity') == 'toilets' and pt(e) and t.get('access') not in ('private', 'customers', 'no'):
         out['wc'].append({'p': pt(e), 'n': n, 'fee': t.get('fee', '')})
     elif t.get('amenity') == 'parking' and pt(e) and t.get('access') not in ('private', 'customers', 'no', 'permit'):
