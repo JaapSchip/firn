@@ -1,0 +1,20 @@
+name: Reliëf ophalen (swisstopo)
+on:
+  workflow_dispatch:
+  push:
+    paths: ['tools/fetch_relief.py', '.github/workflows/relief.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_relief.py
+      - name: Commit
+        run: |
+          git config user.name "firn-bot"
+          git config user.email "firn-bot@users.noreply.github.com"
+          git add app/kaart/relief
+          git diff --cached --quiet || git commit -m "Reliëftegels bijgewerkt (© swisstopo)"
+          git push
