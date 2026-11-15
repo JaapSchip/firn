@@ -202,3 +202,5 @@ Object.assign(LANG.nl.ui,{"qaRent": "Verhuur", "rnS": "Skiverhuur en sportwinkel
 Object.assign(LANG.nl.ui,{"qaRent": "Sportwinkels", "rnS": "Sportwinkels in de dorpen en op de berg. Veel ervan verhuren ook ski’s: bel of kijk op de website, en reserveer in het hoogseizoen vooraf.", "rnMt": "Op de berg"});
 
 Object.assign(LANG.nl.ui,{"trQ": "Waar ga je heen?", "trHow": "Zo kom je er", "trTo": "Heen", "trBack": "Terug", "trUp": "De berg op", "trRail": "Van en naar Interlaken", "trMore": "Meer weten", "trS": "Tik op een traject voor de eerstvolgende treinen, met vertraging en perron."});
+
+Object.assign(LANG.nl.ui,{"trPk": "Route naar de parkeerplaats", "trLast": "laatste vandaag", "trMt": "Trein", "trMc": "Kabelbaan", "trMb": "Bus", "trS": "Rechts staat de eerstvolgende vertrektijd. Tik voor meer tijden, vertraging en perron.", "trF": {"wen": [["940", "parkeerplaatsen in Lauterbrunnen"], ["15 min", "met de tandradtrein"], ["±40", "treinen per dag"]], "mur": [["4 min", "kabelbaan vanaf Stechelberg"], ["P", "bij de Schilthornbahn in Stechelberg"]], "gri": [["1000", "plaatsen bij Terminal"], ["252", "Parkhaus Eiger+"], ["160", "Sportzentrum"]]}});

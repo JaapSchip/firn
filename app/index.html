@@ -412,6 +412,10 @@ select,input[type=text]{background:var(--snow)}
 .trban{margin:20px 0 22px;position:relative}.trban figcaption{position:absolute;right:10px;bottom:8px;font-size:10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.65)}.trban figcaption a{color:#fff}
 .trhow{background:var(--card);border-radius:16px;padding:16px 18px;margin:18px 0 26px}.trhow p{margin:8px 0 0;line-height:1.5}
 .trh3{font-size:1.35rem;font-weight:400;margin:0}
+.tr summary{display:flex;align-items:center;gap:10px}.tr .trn{flex:1;min-width:0}.tr .trn b{display:block;font-weight:400}.tr .trm{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;min-height:1em}
+.tr .trnx{flex:none;font-size:1.25rem;font-weight:500;font-variant-numeric:tabular-nums}.tr .trnx i{font-style:normal;font-size:12px;color:#D42A3A;margin-left:3px}
+.trf{margin:20px 0 26px!important}.trf b{white-space:nowrap}.trf span{line-height:1.3;padding:0 4px}
+
 #trBody .sgh{margin:18px 0 0}
 
 #welc{position:absolute;inset:0;z-index:30;background:var(--snow);display:none;flex-direction:column;padding:calc(env(safe-area-inset-top) + 28px) 26px calc(env(safe-area-inset-bottom) + 22px);overflow-y:auto}
@@ -1238,18 +1242,31 @@ const TRIPS=[['Lauterbrunnen','Wengen'],['Wengen','Lauterbrunnen'],['Lauterbrunn
 const trNm=x=>x.replace(' BLM','').replace(', Schilthornbahn','');
 const TRG={wen:[['trTo',[0]],['trBack',[1]],['trUp',[8]],['trRail',[5,9]]],mur:[['trTo',[2,4]],['trBack',[3]],['trRail',[5,9]]],gri:[['trTo',[6]],['trBack',[10]],['trUp',[7]]]};
 let trV=S.get('trv','wen');
+const TRC={},TRP={wen:'Parkhaus Lauterbrunnen',mur:'Schilthornbahn Stechelberg Parkplatz',gri:'Parkhaus Grindelwald Terminal'};
+function trGet(i,last){const x=TRIPS[i],k=i+(last?'L':''),c=TRC[k];if(c&&Date.now()-c.t<(last?6e5:6e4))return Promise.resolve(c.d);
+  const n=new Date(),p2=v=>String(v).padStart(2,'0'),ds=n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate());
+  return fetch('https://transport.opendata.ch/v1/connections?limit='+(last?3:5)+'&from='+encodeURIComponent(x[0])+'&to='+encodeURIComponent(x[1])+(last?'&date='+ds+'&time=23:59&isArrivalTime=1':'')).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const d=j.connections||[];TRC[k]={t:Date.now(),d};return d})}
+const trHm=s=>s?s.slice(11,16):'';
+function trMode(c){const m=[];(c.sections||[]).forEach(q=>{if(!q.journey)return;const k=/^(PB|GB|LSB|SL|FUN)/.test(q.journey.category||'')?'trMc':/^(B|BUS|NFB)/.test(q.journey.category||'')?'trMb':'trMt';if(!m.includes(k))m.push(k)});return m.map(k=>t(k)).join(' + ')}
+function trFill(i,el){const nx=el.querySelector('.trnx'),sm=el.querySelector('.trm');
+  trGet(i).then(c=>{if(!c.length){nx.textContent='–';return}const q=c[0],d=q.from.delay;nx.innerHTML=trHm(q.from.departure)+(d?`<i>+${d}</i>`:'');sm.dataset.m=trMode(q);trSub(sm)}).catch(()=>{});
+  trGet(i,true).then(c=>{if(!c.length)return;const l=c.map(q=>q.from.departure).sort().pop();sm.dataset.l=trHm(l);trSub(sm)}).catch(()=>{})}
+function trSub(sm){sm.textContent=[sm.dataset.m,sm.dataset.l?t('trLast')+' '+sm.dataset.l:''].filter(Boolean).join(' · ')}
 function drawTrips(){const el=$('#trBody');if(!el)return;const tv=sec('travel'),V=[['wen',0],['mur',1],['gri',2]];if(!TRG[trV])trV='wen';
   $('#trChips').innerHTML=V.map(v=>`<button class="chip" aria-pressed="${trV===v[0]}" data-v="${v[0]}">${esc(tv[v[1]][0])}</button>`).join('');
   $('#trChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{trV=b.dataset.v;S.set('trv',trV);drawTrips()});
-  const me=tv[V.find(v=>v[0]===trV)[1]],row=i=>{const x=TRIPS[i];return `<details class="lf tr" ontoggle="if(this.open)loadTrip(${i},this)"><summary><span>${esc(trNm(x[0]))} → ${esc(trNm(x[1]))}</span><span class="arr">›</span></summary><div class="trb"><p class="small muted">…</p></div></details>`};
-  el.innerHTML=`<div class="trhow"><span class="shopk">${t('trHow')}</span><p>${me[1]}</p></div>
+  const me=tv[V.find(v=>v[0]===trV)[1]],F=(t('trF')||{})[trV]||[],row=i=>{const x=TRIPS[i];return `<details class="lf tr" data-i="${i}" ontoggle="if(this.open)loadTrip(${i},this)"><summary><span class="trn"><b>${esc(trNm(x[0]))} → ${esc(trNm(x[1]))}</b><small class="trm"></small></span><span class="trnx"></span><span class="arr">›</span></summary><div class="trb"><p class="small muted">…</p></div></details>`};
+  el.innerHTML=`<div class="rstats n${F.length} trf">${F.map(f=>`<div><b>${esc(f[0])}</b><span>${esc(f[1])}</span></div>`).join('')}</div>
+   <div class="row" style="margin:-12px 0 28px"><a class="btn sm ghost" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(TRP[trV])}" target="_blank" rel="noopener">${t('trPk')} ↗</a></div>
    <h3 class="trh3">${t('trH')}</h3><p class="small muted" style="margin:2px 0 6px">${t('trS')}</p>
    ${TRG[trV].map(g=>`<div class="sgh">${t(g[0])}</div>${g[1].map(row).join('')}`).join('')}
    <h3 class="trh3" style="margin-top:34px">${t('trMore')}</h3>
-   ${[3,4].map(k=>`<details class="lf tr"><summary><span>${tv[k][0]}</span><span class="arr">›</span></summary><div class="trb"><p style="margin:0 0 14px">${tv[k][1]}</p></div></details>`).join('')}`}
-function loadTrip(i,el){const x=TRIPS[i],box=el.querySelector('.trb');box.innerHTML='<p class="small muted">…</p>';
-  fetch('https://transport.opendata.ch/v1/connections?limit=5&from='+encodeURIComponent(x[0])+'&to='+encodeURIComponent(x[1])).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const c=(j.connections||[]);if(!c.length){box.innerHTML=`<p class="small muted">${t('trNone')}</p>`;return}
-    const hm=s=>s?s.slice(11,16):'';box.innerHTML=`<table class="trt">${c.map(q=>{const d=q.from.delay,du=(q.duration||'').match(/(\d+):(\d+):/),min=du?(+du[1]*60+ +du[2]):null;return `<tr><td>${hm(q.from.departure)}${d?`<span class="dl">+${d}</span>`:''}</td><td>→ ${hm(q.to.arrival)}${q.from.platform?` · ${t('trPl')} ${esc(q.from.platform)}`:''}</td><td>${min!=null?min+' min':''}${q.transfers?` · ${q.transfers}×`:''}</td></tr>`}).join('')}</table>`}).catch(()=>{box.innerHTML=`<p class="small muted">${t('trErr')}</p>`})}
+   ${[[me[0],me[1]],tv[3],tv[4]].map(x=>`<details class="lf tr"><summary><span class="trn"><b>${x[0]}</b></span><span class="arr">›</span></summary><div class="trb"><p style="margin:0 0 14px">${x[1]}</p></div></details>`).join('')}`;
+  if(curView==='reis')el.querySelectorAll('details[data-i]').forEach(d=>trFill(+d.dataset.i,d))}
+function loadTrip(i,el){const box=el.querySelector('.trb');box.innerHTML='<p class="small muted">…</p>';
+  trGet(i).then(c=>{if(!c.length){box.innerHTML=`<p class="small muted">${t('trNone')}</p>`;return}
+    box.innerHTML=`<table class="trt">${c.map(q=>{const d=q.from.delay,du=(q.duration||'').match(/(\d+):(\d+):/),min=du?(+du[1]*60+ +du[2]):null;return `<tr><td>${trHm(q.from.departure)}${d?`<span class="dl">+${d}</span>`:''}</td><td>→ ${trHm(q.to.arrival)}${q.from.platform?` · ${t('trPl')} ${esc(q.from.platform)}`:''}</td><td>${min!=null?min+' min':''}${q.transfers?` · ${q.transfers}×`:''}</td></tr>`}).join('')}</table>`}).catch(()=>{box.innerHTML=`<p class="small muted">${t('trErr')}</p>`})}
+{const a=show;show=function(tb,push){a(tb,push);if(tb==='reis')drawTrips()}}
 /* ---------- activiteiten naast het skiën ---------- */
 const DO=[{id:'sled',lay:'sled',z:[46.6,7.99]},{id:'hike',lay:'hike',z:[46.6,7.99]},{id:'jfj',at:'jfj'},{id:'piz',at:'sch'},{id:'birg',at:'bir'},{id:'cliff',at:'fir'},{id:'fly',at:'fir'},{id:'velo',at:'gw'},{id:'ice',at:'wen'},{id:'park',at:'fir'}];
 function doOnMap(id){const d=DO.find(x=>x.id===id);if(!d)return;show('kaart',true);setTimeout(()=>{if(d.lay)mapMsg({k:'layer',l:d.lay,on:true});else mapMsg({k:'go',p:NLL[d.at],n:g('doen',id)[0]})},150)}
