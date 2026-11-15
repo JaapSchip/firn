@@ -437,6 +437,16 @@ select,input[type=text]{background:var(--snow)}
 .trt{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:15px}.trt td{padding:9px 0;border-top:1px solid var(--line)}.trt td:first-child{font-weight:500;font-size:1.15rem;width:4.2em}.trt .dl{color:#D42A3A;font-size:12px;margin-left:4px}.trt td:last-child{text-align:right;color:var(--muted);font-size:13px}
 .nowb{display:block;width:100%;border:0;background:none;padding:0;margin:0 0 30px;color:var(--ink)}.nowb .rstats div{padding:16px 8px 14px}.nowb .rstats b{font-size:1.5rem;font-weight:300}.nowb .wxi{width:30px;height:30px}
 .sc .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.sc .row .pill{margin-top:0}
+.hb{margin:0 0 40px}.hb h2{font-size:1.75rem;font-weight:400;letter-spacing:-.02em;margin:0 0 6px}.hb>p{color:var(--muted);margin:0 0 16px;font-size:1.05rem;line-height:1.4}
+.hbig{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}.hbig b{font-weight:300;font-size:4.2rem;letter-spacing:-.04em;line-height:1}.hbig span{color:var(--muted);font-size:1.05rem}
+.hlink{background:none;border:0;padding:6px 0;color:var(--ink);font:400 15px "Hanken Grotesk",sans-serif;text-decoration:underline;text-underline-offset:3px}
+.hcard{display:block;width:100%;border:0;padding:0;border-radius:var(--r);overflow:hidden;position:relative;color:#fff;text-align:left;background:#0B1830}
+.hcard img{display:block;width:100%;aspect-ratio:4/5;max-height:460px;object-fit:cover}.hcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,14,34,0) 45%,rgba(6,14,34,.78) 100%)}
+.hcard .in{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:20px;display:flex;flex-direction:column;gap:8px}.hcard b{font-weight:300;font-size:2.1rem;letter-spacing:-.02em;line-height:1.05}.hcard .tm{font-size:15px;opacity:.92}
+.hlunch{background:var(--card);border-radius:var(--r);padding:20px}.hlunch h3{font-size:1.35rem;font-weight:400;margin:6px 0 6px}.hlunch p{margin:0 0 14px;color:var(--muted)}.hlunch .row{display:flex;gap:10px;flex-wrap:wrap}
+.hrow{display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 4px;scrollbar-width:none}.hrow::-webkit-scrollbar{display:none}
+.hmini{flex:none;width:62%;border:0;padding:0;background:none;text-align:left;color:var(--ink)}.hmini img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px}.hmini b{display:block;font-weight:400;font-size:1.1rem;margin:10px 0 2px}.hmini span{font-size:13px;color:var(--muted)}
+.nowb{margin-bottom:0}
 @media (max-width:360px){.qab{font-size:15px;padding:14px 12px}}
 </style>
 </head>
@@ -461,6 +471,8 @@ select,input[type=text]{background:var(--snow)}
   <p id="sunchip" hidden></p>
   <div class="facts"><div class="fact"><strong>211</strong><span data-i="sKm"></span></div><div class="fact"><strong>3</strong><span data-i="sAreas"></span></div><div class="fact"><strong>2970</strong><span data-i="sTop"></span></div></div></div>
 
+  <div id="home"></div>
+  <div hidden>
   <div class="sec"><h2 data-i="routesH"></h2><p class="lead" data-i="fRoutesS"></p><div class="tiles" id="tiles"></div></div>
   <div class="sec"><h2 data-i="realH"></h2><div class="reel" id="reel" style="margin-top:14px">
     <button class="shot" data-src="media/e-wengen2.jpg"><img src="media/e-wengen2.jpg" alt="Wengen" loading="lazy"><span>Wengen</span></button>
@@ -472,6 +484,7 @@ select,input[type=text]{background:var(--snow)}
     <button class="shot" data-src="media/e-murrenpano.jpg"><img src="media/e-murrenpano.jpg" alt="Mönch · Jungfrau" loading="lazy"><span>Mönch · Jungfrau</span></button>
     <button class="shot" data-src="media/e-dawn.jpg"><img src="media/e-dawn.jpg" alt="Wengen · Jungfrau" loading="lazy"><span>Wengen · Jungfrau</span></button>
   </div></div>
+  </div>
   <p class="small muted" style="margin-top:72px" data-i="disclaimer"></p>
   <p class="small muted" data-i="indie"></p>
   <p class="small muted" id="imgNote" hidden data-i="imgNote"></p>
@@ -1168,7 +1181,7 @@ function drawPlace(){const key=plCur;if(!key)return;const k=key[0],id=key.slice(
    ${o.stats.length?`<div class="rstats n${Math.min(o.stats.length,3)}" style="margin-top:14px">${o.stats.slice(0,3).map(x=>`<div><b${/class="tx"/.test(x[0])?' class="tx"':''}>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}
    ${o.tags.length?`<div class="meta" style="margin:0 0 18px">${o.tags.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
    ${o.text?`<div class="rdesc"><h3>${t('rtDesc')}</h3><p>${esc(o.text)}</p></div>`:''}${o.note?`<p class="small muted" style="margin-top:12px">${esc(o.note)}</p>`:''}${o.cr?`<p class="small muted" style="margin-top:8px">${t('phBy')}: <a href="${esc(o.cr.u)}" target="_blank" rel="noopener">${esc(o.cr.a)}</a>, ${esc(o.cr.l)}, Wikimedia Commons</p>`:''}
-   <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap">${o.ph?`<a class="btn sm alt" href="tel:${esc(o.ph.replace(/[^+\d]/g,''))}" style="text-decoration:none">${t('plCall')}</a>`:''}${/^https?:\/\//.test(o.web||'')?`<a class="btn sm ${o.ph?'ghost':'alt'}" href="${esc(o.web)}" target="_blank" rel="noopener" style="text-decoration:none">${t(k==='d'?'scSite':'plBook')} ↗</a>`:''}<button class="btn sm ghost" onclick="${o.map}">${t('onMap')}</button></div>${o.ph?`<p class="small muted">${esc(o.ph)}</p>`:''}`}
+   <div class="row" style="margin:20px 0 10px;gap:10px;flex-wrap:wrap">${o.ph?`<a class="btn sm alt" href="tel:${esc(o.ph.replace(/[^+\d]/g,''))}" style="text-decoration:none">${t('plCall')}</a>`:''}${/^https?:\/\//.test(o.web||'')?`<a class="btn sm ${o.ph?'ghost':'alt'}" href="${esc(o.web)}" target="_blank" rel="noopener" style="text-decoration:none">${t(k==='d'?'scSite':'plBook')} ↗</a>`:''}<button class="btn sm ghost" onclick="${o.map}">${t('onMap')}</button>${k!=='d'&&o.p?`<a class="btn sm ghost" style="text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.n+' '+o.p[0]+','+o.p[1])}">${t('plRev')} ↗</a>`:''}</div>${o.ph?`<p class="small muted">${esc(o.ph)}</p>`:''}`}
 /* ---------- zoeken en favorieten ---------- */
 const MD=window.FIRN_MAP||{food:[],lifts:[],pistes:[],places:[],peaks:[],stations:[]};
 const nrm=x=>String(x).toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]/g,'').replace(/\b(berg)?(restaurant|haus|gasthaus|hotel)\b/g,'').replace(/\s+/g,' ').trim();
@@ -1208,7 +1221,7 @@ $('#srchBtn').onclick=()=>{show('zoek',true);drawSearch();setTimeout(()=>$('#sq'
 $('#eatAll').onclick=()=>{show('kaart',true);setTimeout(()=>mapMsg({k:'layer',l:'food',on:true}),150)};
 addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||!e.data.firn)return;if(e.data.k==='eat'&&e.data.id)openEat(e.data.id)});
 $('#realmap').addEventListener('load',()=>mapMsg({k:'cur',m:FM}));
-const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();drawTrips();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch();if(curView==='plek')drawPlace();EALL=null;drawEat();drawFav();drawNow()};
+const _ra0=renderAll;renderAll=function(){_ra0();IDX=null;drawDo();drawTrips();$('#eatAll').textContent=t('eatAll',{n:MD.food.length});$('#srchBtn').setAttribute('aria-label',t('sH'));if(curView==='zoek')drawSearch();if(curView==='plek')drawPlace();EALL=null;drawEat();drawFav();drawNow();drawHome()};
 const _show0=show;show=function(tb,push){_show0(tb,push);$('#srchBtn').hidden=tb==='zoek';if(tb==='fav')drawFav();if(tb==='eten')drawEat()};
 /* ---------- weer per hoogte (MeteoSwiss) ---------- */
 let WX=null,wxAt=0;
@@ -1234,8 +1247,24 @@ function drawWx(){const el=$('#wx');if(!el)return;
 function drawNow(){const el=$('#nowCard');if(!el)return;const loc=cur==='en'?'en-GB':cur,pt=k=>WX&&WX.pts&&WX.pts.find(p=>p.k===k),a=pt('ks'),b=pt('wen'),z=a&&a.h[0]&&a.h[0][6];
   const tile=(p)=>p&&p.h[0]?`<div>${wxIcon(p.h[0][5],+p.h[0][0].slice(11))}<b>${deg(p.h[0][1])}</b><span>${esc(p.n)} · ${p.alt.toLocaleString(loc)} m</span></div>`:'';
   el.innerHTML=`<button class="nowb" onclick="NAV.length=0;navSaved=true;show('liften',false)"><span class="sgh" style="margin:0 0 10px;display:block;text-align:left">${t('nowH')}</span><div class="rstats n2" style="margin:0">${tile(a)}${tile(b)}<div><b>${z?z.toLocaleString(loc)+'<small> m</small>':'–'}</b><span>${t('wxZero')}</span></div><div><b>${zt(sunTimes(Date.now())[1])}</b><span>${t('lsSet')}</span></div></div></button>`}
+/* ---------- dagpagina op Ontdek ---------- */
+function routeToday(){const p=WX&&WX.pts&&WX.pts.find(x=>x.k==='ks'),ic=p&&p.d[0]?p.d[0][5]:'sun',bad=ic==='snow'||ic==='rain'||ic==='cloud',pool=bad?[4,6,3]:[1,2,5,7,8];
+  const n=new Date(),doy=Math.floor((n-new Date(n.getFullYear(),0,0))/864e5);return {r:ROUTES.find(x=>x.id===pool[doy%pool.length]),bad}}
+function drawHome(){const el=$('#home');if(!el)return;let rt;try{rt=routeToday();NLL;EM}catch(e){return}
+  const loc=cur==='en'?'en-GB':cur,ks=WX&&WX.pts&&WX.pts.find(x=>x.k==='ks'),h0=ks&&ks.h[0],d1=ks&&ks.d[1],se=season(),r=rt.r,d=R(r.id),lv=t('lv'),e=EAT.find(x=>x.id===r.eat),ed=g('eat',e.id),f=EM[e.id]!=null?MD.food[EM[e.id]]:null;
+  const today=h0?`${t('wc')[h0[5]]} ${t('hmAt')} Kleine Scheidegg, ${deg(h0[1])}.${d1?` ${t('hmTom')}: ${t('wc')[d1[5]].toLowerCase()}, ${deg(d1[1])} / ${deg(d1[2])}.`:''}`:t('wxNo');
+  el.innerHTML=`<div class="hb"><h2>${t('hmToday')}</h2><p>${today}</p><div id="nowIn"></div></div>
+   ${se?`<div class="hb"><div class="hbig"><b>${se.n}</b><span>${t(se.k)}</span></div><p>Grindelwald-Wengen ${t('d1')} · Mürren-Schilthorn ${t('d2')}</p></div>`:''}
+   <div class="hb"><h2>${t('hmRoute')}</h2><p>${t(rt.bad?'hmRouteBad':'hmRouteSun')}</p>
+     <button class="hcard" onclick="openRoute(${r.id})"><img src="media/${TP[r.id]}.jpg" alt="" loading="lazy"><span class="in"><span><span class="bdg" style="background:${rcol(r)}">${lv[r.lv]}</span></span><b>${esc(d[0])}</b><span class="tm">${esc(d[1])} → ${esc(d[2])} · ${esc(d[4])}</span></span></button>
+     <button class="hlink" onclick="show('routes',true)">${t('hmAllR')} →</button></div>
+   <div class="hb"><h2>${t('hmLunch')}</h2><div class="hlunch"><span class="label">${esc(N[e.at].n)} · ${N[e.at].h} m</span><h3>${esc(e.n)}</h3><p>${esc(ed[1])}</p><div class="row">${f&&f.ph?`<a class="btn sm alt" style="text-decoration:none" href="tel:${esc(f.ph.replace(/[^+\d]/g,''))}">${t('plCall')}</a>`:''}<button class="btn sm ${f&&f.ph?'ghost':'alt'}" onclick="openPlace('e:${e.id}')">${t('more')}</button></div></div>
+     <button class="hlink" onclick="show('eten',true)">${t('hmAllE')} →</button></div>
+   <div class="hb"><h2>${t('hmDo')}</h2><div class="hrow">${['jfj','cliff','piz','hike'].map(k=>{const x=g('doen',k);return `<button class="hmini" onclick="openPlace('d:${k}')"><img src="media/${DOP[k]}.jpg" alt="" loading="lazy"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></button>`}).join('')}</div>
+     <button class="hlink" style="margin-top:8px" onclick="show('doen',true)">${t('hmAllD')} →</button></div>`;
+  const nb=$('#nowCard .nowb');if(nb){$('#nowIn').appendChild(nb);const hd=nb.querySelector('.sgh');if(hd)hd.remove()}}
 function loadWx(force){if(!force&&Date.now()-wxAt<10*6e4)return;wxAt=Date.now();
-  fetch('data/weather.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.pts){WX=j;S.set('wx',j)}drawWx();drawNow()}).catch(()=>{drawWx();drawNow()})}
+  fetch('data/weather.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.pts){WX=j;S.set('wx',j)}drawWx();drawNow();drawHome()}).catch(()=>{drawWx();drawNow();drawHome()})}
 WX=S.get('wx',null);
 const _ra=renderAll;renderAll=function(){_ra();drawWx()};
 const _show2=show;show=function(tb,push){_show2(tb,push);if(curView==='liften')loadWx()};
